@@ -1,7 +1,7 @@
 /**
- * Catatan konseling (UC11 / F13). Keputusan tim: catatan INTERNAL BK (siswa tidak bisa
- * membaca); semua BK di sekolah yang sama bisa membaca, hanya penulis yang bisa
- * mengubah/menghapus.
+ * Catatan konseling (UC11 / F13). Keputusan tim: catatan INTERNAL BK/guru (siswa tidak bisa
+ * membaca); semua BK/guru di sekolah yang sama bisa membaca, hanya penulis yang bisa
+ * mengubah/menghapus. Kolom bk_id = profil penulis (BK atau guru).
  */
 import type { AuthUser } from '../types/express';
 import { AppError } from '../middleware/errorHandler';

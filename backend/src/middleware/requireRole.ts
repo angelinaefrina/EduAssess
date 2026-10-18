@@ -2,7 +2,7 @@ import type { RequestHandler } from 'express';
 import type { PeranPengguna } from '../types/express';
 import { AppError } from './errorHandler';
 
-/** Pasang SETELAH `auth`. Contoh: router.get('/x', auth, requireRole('bk'), handler) */
+/** Pasang SETELAH `auth`. Contoh: router.get('/x', auth, requireRole('bk', 'guru'), handler) */
 export const requireRole =
   (...peran: PeranPengguna[]): RequestHandler =>
   (req, _res, next) => {

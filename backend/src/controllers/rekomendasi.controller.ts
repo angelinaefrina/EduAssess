@@ -18,7 +18,7 @@ const JENIS = {
 } satisfies Record<string, { enum: JenisRekomendasi; hitung: (siswaId: string) => Promise<HasilRekomendasi> }>;
 type SegmenJenis = keyof typeof JENIS;
 
-/** Siswa: dirinya sendiri. BK: siswa :siswaId di sekolah yang sama (selain itu 404). */
+/** Siswa: dirinya sendiri. BK/guru: siswa :siswaId di sekolah yang sama (selain itu 404). */
 async function siswaTujuan(req: Request): Promise<string> {
   const user = userOf(req);
   if (user.peran === 'siswa') return user.id;

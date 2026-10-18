@@ -1,4 +1,4 @@
-﻿export type Json =
+export type Json =
   | string
   | number
   | boolean
@@ -492,6 +492,196 @@ export type Database = {
           },
         ]
       }
+      klaster: {
+        Row: {
+          centroid: Json | null
+          id: string
+          karakteristik: Json
+          label: string
+          model_llm: string | null
+          penjelasan: string | null
+          run_id: string
+          urutan: number
+        }
+        Insert: {
+          centroid?: Json | null
+          id?: string
+          karakteristik?: Json
+          label: string
+          model_llm?: string | null
+          penjelasan?: string | null
+          run_id: string
+          urutan: number
+        }
+        Update: {
+          centroid?: Json | null
+          id?: string
+          karakteristik?: Json
+          label?: string
+          model_llm?: string | null
+          penjelasan?: string | null
+          run_id?: string
+          urutan?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "klaster_run_id_fkey"
+            columns: ["run_id"]
+            isOneToOne: false
+            referencedRelation: "klaster_run"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      klaster_anggota: {
+        Row: {
+          dipindah_at: string | null
+          dipindah_oleh: string | null
+          fitur: Json | null
+          is_manual: boolean
+          jarak_centroid: number | null
+          klaster_asal_id: string | null
+          klaster_id: string
+          run_id: string
+          siswa_id: string
+        }
+        Insert: {
+          dipindah_at?: string | null
+          dipindah_oleh?: string | null
+          fitur?: Json | null
+          is_manual?: boolean
+          jarak_centroid?: number | null
+          klaster_asal_id?: string | null
+          klaster_id: string
+          run_id: string
+          siswa_id: string
+        }
+        Update: {
+          dipindah_at?: string | null
+          dipindah_oleh?: string | null
+          fitur?: Json | null
+          is_manual?: boolean
+          jarak_centroid?: number | null
+          klaster_asal_id?: string | null
+          klaster_id?: string
+          run_id?: string
+          siswa_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "klaster_anggota_dipindah_oleh_fkey"
+            columns: ["dipindah_oleh"]
+            isOneToOne: false
+            referencedRelation: "profil"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "klaster_anggota_run_id_fkey"
+            columns: ["run_id"]
+            isOneToOne: false
+            referencedRelation: "klaster_run"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "klaster_anggota_run_id_klaster_asal_id_fkey"
+            columns: ["run_id", "klaster_asal_id"]
+            isOneToOne: false
+            referencedRelation: "klaster"
+            referencedColumns: ["run_id", "id"]
+          },
+          {
+            foreignKeyName: "klaster_anggota_run_id_klaster_id_fkey"
+            columns: ["run_id", "klaster_id"]
+            isOneToOne: false
+            referencedRelation: "klaster"
+            referencedColumns: ["run_id", "id"]
+          },
+          {
+            foreignKeyName: "klaster_anggota_siswa_id_fkey"
+            columns: ["siswa_id"]
+            isOneToOne: false
+            referencedRelation: "siswa"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "klaster_anggota_siswa_id_fkey"
+            columns: ["siswa_id"]
+            isOneToOne: false
+            referencedRelation: "v_fitur_siswa"
+            referencedColumns: ["siswa_id"]
+          },
+          {
+            foreignKeyName: "klaster_anggota_siswa_id_fkey"
+            columns: ["siswa_id"]
+            isOneToOne: false
+            referencedRelation: "v_status_siswa"
+            referencedColumns: ["siswa_id"]
+          },
+        ]
+      }
+      klaster_run: {
+        Row: {
+          algoritma: string
+          angkatan: number
+          basis: Database["public"]["Enums"]["basis_klaster"]
+          created_at: string
+          dibuat_oleh: string | null
+          id: string
+          jumlah_dilewati: number
+          jumlah_klaster: number
+          parameter: Json | null
+          rombel: string | null
+          sekolah_id: string
+          tingkat: number | null
+          versi_algo: string
+        }
+        Insert: {
+          algoritma?: string
+          angkatan: number
+          basis: Database["public"]["Enums"]["basis_klaster"]
+          created_at?: string
+          dibuat_oleh?: string | null
+          id?: string
+          jumlah_dilewati?: number
+          jumlah_klaster: number
+          parameter?: Json | null
+          rombel?: string | null
+          sekolah_id: string
+          tingkat?: number | null
+          versi_algo?: string
+        }
+        Update: {
+          algoritma?: string
+          angkatan?: number
+          basis?: Database["public"]["Enums"]["basis_klaster"]
+          created_at?: string
+          dibuat_oleh?: string | null
+          id?: string
+          jumlah_dilewati?: number
+          jumlah_klaster?: number
+          parameter?: Json | null
+          rombel?: string | null
+          sekolah_id?: string
+          tingkat?: number | null
+          versi_algo?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "klaster_run_dibuat_oleh_fkey"
+            columns: ["dibuat_oleh"]
+            isOneToOne: false
+            referencedRelation: "profil"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "klaster_run_sekolah_id_fkey"
+            columns: ["sekolah_id"]
+            isOneToOne: false
+            referencedRelation: "sekolah"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       kode_bk: {
         Row: {
           aktif: boolean
@@ -563,6 +753,79 @@ export type Database = {
           nomor_survei?: number | null
         }
         Relationships: []
+      }
+      modul_pembelajaran: {
+        Row: {
+          aktif: boolean
+          berkas_path: string | null
+          created_at: string
+          deskripsi: string | null
+          dibuat_oleh: string | null
+          id: string
+          judul: string
+          mapel_id: number
+          sekolah_id: string
+          tautan_url: string | null
+          tingkat: number
+          tipe_riasec: Database["public"]["Enums"]["tipe_riasec"][]
+          topik: string[]
+          updated_at: string
+        }
+        Insert: {
+          aktif?: boolean
+          berkas_path?: string | null
+          created_at?: string
+          deskripsi?: string | null
+          dibuat_oleh?: string | null
+          id?: string
+          judul: string
+          mapel_id: number
+          sekolah_id: string
+          tautan_url?: string | null
+          tingkat: number
+          tipe_riasec?: Database["public"]["Enums"]["tipe_riasec"][]
+          topik?: string[]
+          updated_at?: string
+        }
+        Update: {
+          aktif?: boolean
+          berkas_path?: string | null
+          created_at?: string
+          deskripsi?: string | null
+          dibuat_oleh?: string | null
+          id?: string
+          judul?: string
+          mapel_id?: number
+          sekolah_id?: string
+          tautan_url?: string | null
+          tingkat?: number
+          tipe_riasec?: Database["public"]["Enums"]["tipe_riasec"][]
+          topik?: string[]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "modul_pembelajaran_dibuat_oleh_fkey"
+            columns: ["dibuat_oleh"]
+            isOneToOne: false
+            referencedRelation: "profil"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "modul_pembelajaran_mapel_id_fkey"
+            columns: ["mapel_id"]
+            isOneToOne: false
+            referencedRelation: "mapel"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "modul_pembelajaran_sekolah_id_fkey"
+            columns: ["sekolah_id"]
+            isOneToOne: false
+            referencedRelation: "sekolah"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       nilai_rapor: {
         Row: {
@@ -916,6 +1179,71 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "sekolah"
             referencedColumns: ["id"]
+          },
+        ]
+      }
+      rekomendasi_modul: {
+        Row: {
+          alasan: Json
+          created_at: string
+          id: string
+          klaster_id: string | null
+          modul_id: string
+          peringkat: number
+          run_id: string
+          siswa_id: string | null
+          skor: number
+        }
+        Insert: {
+          alasan?: Json
+          created_at?: string
+          id?: string
+          klaster_id?: string | null
+          modul_id: string
+          peringkat: number
+          run_id: string
+          siswa_id?: string | null
+          skor: number
+        }
+        Update: {
+          alasan?: Json
+          created_at?: string
+          id?: string
+          klaster_id?: string | null
+          modul_id?: string
+          peringkat?: number
+          run_id?: string
+          siswa_id?: string | null
+          skor?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "rekomendasi_modul_modul_id_fkey"
+            columns: ["modul_id"]
+            isOneToOne: false
+            referencedRelation: "modul_pembelajaran"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "rekomendasi_modul_run_id_fkey"
+            columns: ["run_id"]
+            isOneToOne: false
+            referencedRelation: "klaster_run"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "rekomendasi_modul_run_id_klaster_id_fkey"
+            columns: ["run_id", "klaster_id"]
+            isOneToOne: false
+            referencedRelation: "klaster"
+            referencedColumns: ["run_id", "id"]
+          },
+          {
+            foreignKeyName: "rekomendasi_modul_run_id_siswa_id_fkey"
+            columns: ["run_id", "siswa_id"]
+            isOneToOne: false
+            referencedRelation: "klaster_anggota"
+            referencedColumns: ["run_id", "siswa_id"]
           },
         ]
       }
@@ -1858,6 +2186,7 @@ export type Database = {
       impor_katalog: { Args: { p: Json }; Returns: Json }
     }
     Enums: {
+      basis_klaster: "minat" | "akademik" | "gabungan"
       gaya_belajar: "praktik" | "teori" | "seimbang"
       jenis_pendidikan: "akademik" | "vokasi" | "kedinasan" | "kerja"
       jenis_rekomendasi: "prodi" | "mapel" | "jenis_pendidikan" | "keselarasan"
@@ -1865,7 +2194,7 @@ export type Database = {
       jenjang_pendidikan: "D3" | "D4" | "S1" | "kedinasan" | "langsung_kerja"
       keandalan_nilai: "rapor" | "catatan" | "ingatan" | "tidak_mengisi"
       peminatan_sekolah: "IPA" | "IPS" | "Bahasa" | "Merdeka" | "SMK"
-      peran_pengguna: "siswa" | "bk"
+      peran_pengguna: "siswa" | "bk" | "guru"
       riwayat_pindah: "belum" | "pernah_tidak_cocok" | "pernah_alasan_lain"
       status_pilihan_prodi:
         | "pilihan_pertama"
@@ -1874,7 +2203,7 @@ export type Database = {
         | "belum_punya_pilihan"
       status_verifikasi: "menunggu" | "terverifikasi" | "ditolak"
       sumber_data: "survei" | "sintetis"
-      sumber_nilai: "input_siswa" | "impor_bk"
+      sumber_nilai: "input_siswa" | "impor_bk" | "impor_guru"
       sumber_target:
         | "onboarding"
         | "eksplorasi_karir"
@@ -2011,6 +2340,7 @@ export const Constants = {
   },
   public: {
     Enums: {
+      basis_klaster: ["minat", "akademik", "gabungan"],
       gaya_belajar: ["praktik", "teori", "seimbang"],
       jenis_pendidikan: ["akademik", "vokasi", "kedinasan", "kerja"],
       jenis_rekomendasi: ["prodi", "mapel", "jenis_pendidikan", "keselarasan"],
@@ -2018,7 +2348,7 @@ export const Constants = {
       jenjang_pendidikan: ["D3", "D4", "S1", "kedinasan", "langsung_kerja"],
       keandalan_nilai: ["rapor", "catatan", "ingatan", "tidak_mengisi"],
       peminatan_sekolah: ["IPA", "IPS", "Bahasa", "Merdeka", "SMK"],
-      peran_pengguna: ["siswa", "bk"],
+      peran_pengguna: ["siswa", "bk", "guru"],
       riwayat_pindah: ["belum", "pernah_tidak_cocok", "pernah_alasan_lain"],
       status_pilihan_prodi: [
         "pilihan_pertama",
@@ -2028,7 +2358,7 @@ export const Constants = {
       ],
       status_verifikasi: ["menunggu", "terverifikasi", "ditolak"],
       sumber_data: ["survei", "sintetis"],
-      sumber_nilai: ["input_siswa", "impor_bk"],
+      sumber_nilai: ["input_siswa", "impor_bk", "impor_guru"],
       sumber_target: [
         "onboarding",
         "eksplorasi_karir",

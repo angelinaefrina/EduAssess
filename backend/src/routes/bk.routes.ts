@@ -7,14 +7,15 @@ import * as rek from '../controllers/rekomendasi.controller';
 import { auth } from '../middleware/auth';
 import { requireRole } from '../middleware/requireRole';
 
-// Semua query dibatasi ke sekolah_id milik BK (lihat KodeBkService).
+// Semua query dibatasi ke sekolah_id milik BK/guru (lihat aksesBk).
+// Guru Pengajar (A04) berbagi panel ini; kode sekolah & mengeluarkan siswa tetap khusus BK.
 export const bkRouter = Router();
 
-bkRouter.use(auth, requireRole('bk'));
+bkRouter.use(auth, requireRole('bk', 'guru'));
 
-bkRouter.post('/kode', kode.buatKode);
-bkRouter.get('/kode', kode.daftarKode);
-bkRouter.patch('/kode/:id', kode.ubahKode);
+bkRouter.post('/kode', requireRole('bk'), kode.buatKode);
+bkRouter.get('/kode', requireRole('bk'), kode.daftarKode);
+bkRouter.patch('/kode/:id', requireRole('bk'), kode.ubahKode);
 
 bkRouter.get('/nilai/menunggu', nilai.daftarMenunggu);
 bkRouter.get('/nilai/template', nilai.template);
@@ -31,7 +32,7 @@ bkRouter.post('/siswa/:siswaId/rekomendasi/:jenis/penjelasan', rek.penjelasan);
 // Modul 8: dashboard (UC10), detail, catatan konseling (UC11), ringkasan (UC13)
 bkRouter.get('/siswa', panel.dashboard);
 bkRouter.get('/siswa/:siswaId', panel.detail);
-bkRouter.delete('/siswa/:siswaId/sekolah', panel.keluarkan);
+bkRouter.delete('/siswa/:siswaId/sekolah', requireRole('bk'), panel.keluarkan);
 bkRouter.post('/keselarasan/segarkan', panel.segarkanKeselarasan);
 bkRouter.get('/ringkasan', panel.ringkasan);
 bkRouter.get('/siswa/:siswaId/catatan', panel.daftarCatatan);

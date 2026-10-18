@@ -9,7 +9,7 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { env } from '../config/env';
 import type { JenisRekomendasi } from '../models/rekomendasi.model';
-import { penjelasanTemplate } from './penjelasanTemplate';
+import { penjelasanTemplate, templateKlaster, type KarakteristikPenjelasan } from './penjelasanTemplate';
 
 const SISTEM = `Kamu menjelaskan hasil sebuah sistem rekomendasi jurusan kepada siswa SMA di Indonesia.
 
@@ -20,6 +20,17 @@ Aturan wajib:
 - Bila data menunjukkan kekurangan (mis. data_kurang/cakupan nilai rendah, mapel pendukung tidak diambil, katalog_draf bernilai true), sebutkan dengan jujur bahwa hasil perlu dibaca hati-hati.
 - Tegaskan bahwa ini hasil perhitungan sistem, bukan keputusan, dan sarankan siswa berdiskusi dengan guru BK.
 - Sapa siswa dengan "kamu". Bahasa Indonesia yang santun dan mudah dipahami. 2–4 paragraf pendek, tanpa judul, tanpa tabel, tanpa daftar bernomor.`;
+
+// UC15: penjelasan karakteristik klaster ditujukan ke GURU, bukan ke siswa.
+const SISTEM_KLASTER = `Kamu menjelaskan hasil pengelompokan (klaster) siswa SMA kepada guru pengajar di Indonesia.
+
+Aturan wajib:
+- Gunakan HANYA informasi di dalam <data>. Jangan menambahkan fakta, statistik, atau dugaan penyebab yang tidak ada di data.
+- Jangan mengubah atau mengarang angka. Kutip angka apa adanya bila perlu.
+- Jelaskan ciri klaster dari komponen yang tersedia: "riasec_dominan"/"rata_riasec" (minat RIASEC, skala 1–5), "mapel_menonjol" dan "mapel_lemah" (selisih rata-rata nilai rapor klaster terhadap seluruh siswa dalam cakupan), dan "jumlah_anggota".
+- Bila data minat atau nilai tidak tersedia, sampaikan dengan jujur.
+- Tegaskan bahwa ini hasil perhitungan sistem untuk membantu perencanaan pembelajaran, bukan label permanen bagi siswa.
+- Bahasa Indonesia yang santun dan ringkas, 1–2 paragraf pendek, tanpa judul, tanpa tabel, tanpa daftar bernomor.`;
 
 const PANDUAN_JENIS: Record<JenisRekomendasi, string> = {
   prodi: 'Jelaskan 3 prodi teratas dan rumpun yang paling menonjol.',
@@ -57,48 +68,54 @@ function client(): Anthropic {
   return klien;
 }
 
+async function panggilClaude(sistem: string, konten: string): Promise<string> {
+  let respons: Anthropic.Message;
+  try {
+    respons = await client().messages.create({
+      model: env.LLM_MODEL,
+      max_tokens: 4000,
+      output_config: { effort: 'low' },
+      system: sistem,
+      messages: [{ role: 'user', content: konten }],
+    });
+  } catch (err) {
+    if (err instanceof PenjelasanGagal) throw err;
+    if (err instanceof Anthropic.APIError) {
+      throw new PenjelasanGagal('LLM_GAGAL', `Claude API ${err.status ?? ''}: ${err.message}`);
+    }
+    throw new PenjelasanGagal('LLM_GAGAL', err instanceof Error ? err.message : String(err));
+  }
+
+  if (respons.stop_reason === 'refusal') {
+    throw new PenjelasanGagal('LLM_MENOLAK', `Model menolak (${respons.stop_details?.category ?? 'tanpa kategori'})`);
+  }
+  if (respons.stop_reason === 'max_tokens') {
+    throw new PenjelasanGagal('LLM_GAGAL', 'Penjelasan terpotong (max_tokens)');
+  }
+  const teks = respons.content
+    .filter((b): b is Anthropic.TextBlock => b.type === 'text')
+    .map((b) => b.text)
+    .join('\n')
+    .trim();
+  if (!teks) throw new PenjelasanGagal('LLM_GAGAL', 'Respons kosong');
+  return teks;
+}
+
+const blokData = (v: unknown) => `<data>\n${JSON.stringify(tanpaId(v), null, 2)}\n</data>`;
+
 export const PenjelasanLLMService = {
   provider: () => env.LLM_PROVIDER,
-  /** Nilai yang disimpan di hasil_rekomendasi.model_llm. */
+  /** Nilai yang disimpan di hasil_rekomendasi.model_llm / klaster.model_llm. */
   model: () => (env.LLM_PROVIDER === 'mock' ? 'mock' : env.LLM_MODEL),
 
   async jelaskan(jenis: JenisRekomendasi, hasil: unknown): Promise<string> {
     if (env.LLM_PROVIDER === 'mock') return penjelasanTemplate(jenis, hasil);
+    return panggilClaude(SISTEM, `${PANDUAN_JENIS[jenis]}\n\n${blokData(hasil)}`);
+  },
 
-    let respons: Anthropic.Message;
-    try {
-      respons = await client().messages.create({
-        model: env.LLM_MODEL,
-        max_tokens: 4000,
-        output_config: { effort: 'low' },
-        system: SISTEM,
-        messages: [
-          {
-            role: 'user',
-            content: `${PANDUAN_JENIS[jenis]}\n\n<data>\n${JSON.stringify(tanpaId(hasil), null, 2)}\n</data>`,
-          },
-        ],
-      });
-    } catch (err) {
-      if (err instanceof PenjelasanGagal) throw err;
-      if (err instanceof Anthropic.APIError) {
-        throw new PenjelasanGagal('LLM_GAGAL', `Claude API ${err.status ?? ''}: ${err.message}`);
-      }
-      throw new PenjelasanGagal('LLM_GAGAL', err instanceof Error ? err.message : String(err));
-    }
-
-    if (respons.stop_reason === 'refusal') {
-      throw new PenjelasanGagal('LLM_MENOLAK', `Model menolak (${respons.stop_details?.category ?? 'tanpa kategori'})`);
-    }
-    if (respons.stop_reason === 'max_tokens') {
-      throw new PenjelasanGagal('LLM_GAGAL', 'Penjelasan terpotong (max_tokens)');
-    }
-    const teks = respons.content
-      .filter((b): b is Anthropic.TextBlock => b.type === 'text')
-      .map((b) => b.text)
-      .join('\n')
-      .trim();
-    if (!teks) throw new PenjelasanGagal('LLM_GAGAL', 'Respons kosong');
-    return teks;
+  /** UC15 / F11: penjelasan karakteristik satu klaster untuk guru. */
+  async jelaskanKlaster(karakteristik: KarakteristikPenjelasan): Promise<string> {
+    if (env.LLM_PROVIDER === 'mock') return templateKlaster(karakteristik);
+    return panggilClaude(SISTEM_KLASTER, blokData(karakteristik));
   },
 };

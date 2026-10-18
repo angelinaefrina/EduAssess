@@ -5,6 +5,7 @@ import { corsOrigins } from './config/env';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler';
 import { asesmenRouter } from './routes/asesmen.routes';
 import { bkRouter } from './routes/bk.routes';
+import { guruRouter } from './routes/guru.routes';
 import { healthRouter } from './routes/health.routes';
 import { katalogRouter } from './routes/katalog.routes';
 import { masterRouter } from './routes/master.routes';
@@ -29,6 +30,7 @@ api.use('/asesmen', asesmenRouter);
 api.use('/katalog', katalogRouter);
 api.use('/siswa', siswaRouter);
 api.use('/bk', bkRouter);
+api.use('/guru', guruRouter);
 
 app.use('/api/v1', api);
 

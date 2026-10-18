@@ -214,7 +214,7 @@ export const NilaiRaporService = {
           mapel_id: k.mapelId,
           semester,
           nilai: angka,
-          sumber: 'impor_bk',
+          sumber: user.peran === 'guru' ? 'impor_guru' : 'impor_bk',
           status: 'terverifikasi',
           diverifikasi_oleh: user.id,
           diverifikasi_at: sekarang,

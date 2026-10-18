@@ -193,3 +193,31 @@ export function penjelasanTemplate(jenis: JenisRekomendasi, hasil: unknown): str
       return keselarasan(hasil as HasilKeselarasan);
   }
 }
+
+// ------------------------------------------------------------ klaster (UC15)
+const NAMA_RIASEC: Record<string, string> = {
+  R: 'Realistis', I: 'Investigatif', A: 'Artistik', S: 'Sosial', E: 'Enterprising', C: 'Konvensional',
+};
+
+interface SelisihMapel { kode: string; nama: string; selisih: number }
+export interface KarakteristikPenjelasan {
+  jumlah_anggota: number;
+  riasec_dominan: string[];
+  mapel_menonjol: SelisihMapel[];
+  mapel_lemah: SelisihMapel[];
+}
+
+/** Penjelasan klaster untuk guru, hanya dari karakteristik klaster. */
+export function templateKlaster(k: KarakteristikPenjelasan): string {
+  const tanda = (x: number) => (x > 0 ? `+${x}` : `${x}`);
+  const mapelStr = (m: SelisihMapel[]) => daftar(m.map((x) => `${x.nama} (${tanda(x.selisih)} poin)`));
+  const p1 = k.riasec_dominan.length
+    ? `Klaster ini berisi ${k.jumlah_anggota} siswa dengan minat paling menonjol ${daftar(k.riasec_dominan.map((t) => NAMA_RIASEC[t] ?? t))}.`
+    : `Klaster ini berisi ${k.jumlah_anggota} siswa; data tes minat anggotanya belum tersedia.`;
+  const p2: string[] = [];
+  if (k.mapel_menonjol.length) p2.push(`Dibandingkan seluruh siswa dalam cakupan, rata-rata nilainya lebih tinggi pada ${mapelStr(k.mapel_menonjol)}.`);
+  if (k.mapel_lemah.length) p2.push(`Rata-rata nilainya lebih rendah pada ${mapelStr(k.mapel_lemah)}, sehingga mapel ini dapat menjadi fokus penguatan.`);
+  if (!k.mapel_menonjol.length && !k.mapel_lemah.length) p2.push('Rata-rata nilai rapornya tidak berbeda mencolok dari seluruh siswa dalam cakupan.');
+  p2.push('Ini hasil perhitungan sistem untuk membantu perencanaan pembelajaran, bukan label permanen bagi siswa.');
+  return [p1, p2.join(' ')].join('\n\n');
+}
