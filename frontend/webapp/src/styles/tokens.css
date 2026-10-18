@@ -1,0 +1,114 @@
+/* =============================================================
+   Design Tokens — ArahMasaDepan / IvanaMager
+   Beranda Siswa SMA  |  extracted from Figma CSS spec
+   ============================================================= */
+
+:root {
+  /* ── Brand colours ── */
+  --color-brand-900: #001e30;
+  --color-brand-800: #006190;
+  --color-brand-700: #007bb5;
+  --color-brand-600: #0091d4;
+  --color-brand-100: #cbe6ff;
+  --color-brand-50: #eff4ff;
+
+  /* ── Neutral ── */
+  --color-ink-900: #0b1c30;
+  --color-ink-700: #3f4850;
+  --color-ink-500: #6f7881;
+  --color-ink-300: #bec7d2;
+  --color-ink-100: #e5eeff;
+  --color-ink-50: #f8f9ff;
+
+  /* ── Accent: amber / warning ── */
+  --color-amber-900: #281800;
+  --color-amber-700: #7c5400;
+  --color-amber-200: #ffddaf;
+  --color-amber-100: #ffba42;
+
+  /* ── Secondary blue ── */
+  --color-blue-mid: #525e7e;
+  --color-blue-light: #d3e4fe;
+  --color-blue-soft: #dce9ff;
+  --color-blue-link: #525e7f;
+
+  /* ── Background ── */
+  --color-bg-page: #f8f9ff;
+  --color-bg-card: #ffffff;
+
+  /* ── Typography ── */
+  --font-primary: "Plus Jakarta Sans", system-ui, sans-serif;
+
+  --text-xs: 11px;
+  --text-sm: 12px;
+  --text-base: 13px;
+  --text-md: 14px;
+  --text-lg: 16px;
+  --text-xl: 18px;
+  --text-2xl: 26px;
+  --text-3xl: 32px;
+
+  --lh-xs: 14px;
+  --lh-sm: 16px;
+  --lh-base: 18px;
+  --lh-md: 22px;
+  --lh-lg: 24px;
+  --lh-xl: 26px;
+  --lh-2xl: 32px;
+  --lh-3xl: 40px;
+
+  /* ── Spacing ── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  /* ── Radii ── */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-full: 9999px;
+
+  /* ── Shadows ── */
+  --shadow-card: 0px 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-nav: 0px 10px 25px -5px rgba(0, 145, 212, 0.1),
+    0px 4px 10px -2px rgba(16, 29, 58, 0.05);
+  --shadow-banner: 0px 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0px 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --shadow-footer: 0px 1px 8px rgba(0, 0, 0, 0.04);
+  --shadow-pill: 0px 1px 2px rgba(0, 0, 0, 0.05);
+
+  /* ── Max width ── */
+  --max-content: 1280px;
+
+  /* ── ArahIn Official Brand Colors ── */
+  --brand-navy: #06124D;
+  --brand-blue: #1386E8;
+}
+
+/* =============================================================
+   Official ArahIn Brand Typography & Logo Styling
+   ============================================================= */
+.brand-arahin {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-primary, 'Plus Jakarta Sans', system-ui, sans-serif);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  text-decoration: none;
+}
+
+.brand-arahin .brand-arah {
+  color: var(--brand-navy, #06124D);
+  transition: color 0.15s ease;
+}
+
+.brand-arahin .brand-in {
+  color: var(--brand-blue, #1386E8);
+  transition: color 0.15s ease;
+}
+

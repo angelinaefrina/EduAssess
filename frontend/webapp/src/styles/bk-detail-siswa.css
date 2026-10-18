@@ -1,0 +1,1737 @@
+/* =============================================================
+   ArahIn - Detail Siswa & Konseling BK (UC11, UC12)
+   Figma Specification Implementation & Fully Responsive Design
+   ============================================================= */
+
+@import "./tokens.css";
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.bks-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  background: #F8F9FF;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  color: #3F4850;
+  position: relative;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- Floating Navbar Header --- */
+.bks-navbar-wrapper {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 50;
+  padding: 12px clamp(12px, 3vw, 32px);
+  display: flex;
+  justify-content: center;
+  background: transparent;
+}
+
+.bks-navbar {
+  width: 100%;
+  max-width: 1240px;
+  height: 64px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0px 4px 20px -2px rgba(0, 97, 144, 0.08), 0px 1px 4px rgba(0, 0, 0, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 9999px;
+  padding: 6px 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid rgba(229, 238, 255, 0.8);
+}
+
+.bks-nav-brand {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.bks-brand-logo-badge {
+  width: 40px;
+  height: 40px;
+  border-radius: 9999px;
+  background: #E5EEFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  padding: 5px;
+}
+
+.bks-brand-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.bks-brand-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.bks-brand-title-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.bks-brand-name {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: 16px;
+  line-height: 20px;
+  letter-spacing: -0.3px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.bks-brand-name-arah {
+  color: #06124D;
+}
+
+.bks-brand-name-in {
+  color: #1386E8;
+}
+
+.bks-portal-badge {
+  background: #DCE9FF;
+  border-radius: 9999px;
+  padding: 2px 6px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: 9px;
+  line-height: 12px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #006190;
+}
+
+.bks-brand-school {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  line-height: 14px;
+  letter-spacing: 0.3px;
+  color: #6F7881;
+}
+
+.bks-nav-links {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 4px;
+  gap: 4px;
+  background: #EFF4FF;
+  border-radius: 9999px;
+}
+
+.bks-nav-item {
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12.5px;
+  line-height: 16px;
+  text-decoration: none;
+  font-weight: 600;
+  color: #3F4850;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.bks-nav-item.active {
+  background: #007BB5;
+  color: #FFFFFF;
+  box-shadow: 0px 2px 6px rgba(0, 123, 181, 0.3);
+  font-weight: 700;
+}
+
+.bks-nav-item.inactive:hover {
+  color: #006190;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.bks-nav-right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.bks-nav-search {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 6px 12px;
+  gap: 8px;
+  background: #EFF4FF;
+  border-radius: 9999px;
+  height: 36px;
+  width: 180px;
+  transition: width 0.2s ease;
+}
+
+.bks-nav-search:focus-within {
+  width: 220px;
+  background: #FFFFFF;
+  box-shadow: 0 0 0 2px #006190;
+}
+
+.bks-nav-search-input {
+  border: none;
+  background: transparent;
+  outline: none;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+  color: #0B1C30;
+  width: 100%;
+}
+
+.bks-nav-kbd {
+  background: #FFFFFF;
+  border: 1px solid #DCE9FF;
+  border-radius: 4px;
+  padding: 1px 5px;
+  font-size: 10px;
+  color: #6F7881;
+  font-family: inherit;
+  font-weight: 600;
+}
+
+.bks-nav-bell-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 9999px;
+  background: #EFF4FF;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  color: #3F4850;
+  transition: background 0.15s ease;
+}
+
+.bks-nav-bell-btn:hover {
+  background: #E5EEFF;
+}
+
+.bks-nav-bell-badge {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 9999px;
+  background: #9D6B00;
+  color: #FFFFFF;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #FFFFFF;
+}
+
+.bks-profile-pill {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 4px 12px 4px 6px;
+  gap: 8px;
+  background: #EFF4FF;
+  border-radius: 9999px;
+  height: 38px;
+}
+
+.bks-profile-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 9999px;
+  background: #006190;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bks-profile-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.bks-profile-name-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.bks-profile-name {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #0B1C30;
+  line-height: 14px;
+}
+
+.bks-profile-badge {
+  background: #D9E2FF;
+  border-radius: 9999px;
+  padding: 1px 6px;
+  font-size: 9px;
+  font-weight: 700;
+  color: #0D1A37;
+}
+
+.bks-profile-sub {
+  font-size: 10px;
+  color: #6F7881;
+  line-height: 12px;
+}
+
+/* --- Main Layout Container --- */
+.bks-main-container {
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 3vw, 32px) 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* --- Top Breadcrumb & Status Telemetry Bar --- */
+.bks-top-telemetry {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 4px 0;
+}
+
+.bks-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #006190;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.bks-back-link:hover {
+  color: #004568;
+  text-decoration: underline;
+}
+
+.bks-telemetry-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #6F7881;
+}
+
+.bks-status-dot-green {
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: #10B981;
+  display: inline-block;
+}
+
+.bks-telemetry-separator {
+  color: #BEC7D2;
+}
+
+/* --- Student Identity Banner Card --- */
+.bks-banner-card {
+  background: #FFFFFF;
+  border: 1px solid #E5EEFF;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.04);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.bks-banner-glow {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  right: -80px;
+  top: -80px;
+  background: rgba(0, 97, 144, 0.05);
+  filter: blur(32px);
+  border-radius: 9999px;
+  pointer-events: none;
+}
+
+.bks-student-profile {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+  z-index: 1;
+}
+
+.bks-student-avatar-box {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  flex-shrink: 0;
+}
+
+.bks-student-avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 9999px;
+  object-fit: cover;
+  background: #E5EEFF;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+.bks-student-avatar-verified {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 24px;
+  height: 24px;
+  border-radius: 9999px;
+  background: #10B981;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #FFFFFF;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.bks-student-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.bks-student-title-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.bks-student-name {
+  font-weight: 800;
+  font-size: 26px;
+  line-height: 32px;
+  color: #0B1C30;
+  letter-spacing: -0.6px;
+}
+
+.bks-nisn-badge {
+  background: #DCE9FF;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #3F4850;
+  letter-spacing: 0.4px;
+}
+
+.bks-class-badge {
+  background: #EFF4FF;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #006190;
+  letter-spacing: 0.4px;
+}
+
+.bks-student-subinfo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #475569;
+  flex-wrap: wrap;
+}
+
+.bks-student-badges-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 2px;
+}
+
+.bks-badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+
+.bks-badge-blue {
+  background: #EFF4FF;
+  color: #006190;
+}
+
+.bks-badge-purple {
+  background: #D9E2FF;
+  color: #0D1A37;
+}
+
+.bks-badge-green {
+  background: #ECFDF5;
+  color: #065F46;
+}
+
+.bks-banner-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  z-index: 1;
+  flex-shrink: 0;
+}
+
+.bks-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: #006190;
+  color: #FFFFFF;
+  padding: 8px 18px;
+  border-radius: 9999px;
+  font-size: 12.5px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.08);
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.bks-btn-primary:hover {
+  background: #004f75;
+}
+
+.bks-banner-subactions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+}
+
+.bks-btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: #EFF4FF;
+  color: #0B1C30;
+  padding: 7px 14px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  white-space: nowrap;
+}
+
+.bks-btn-secondary:hover {
+  background: #E5EEFF;
+}
+
+/* --- 2-Column Grid Workspace (8 : 4 Layout) --- */
+.bks-workspace-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.85fr) minmax(0, 1.15fr);
+  gap: 24px;
+  align-items: start;
+}
+
+/* --- LEFT COLUMN: Academic & Career Diagnostics --- */
+.bks-left-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Diagnostic Workspace Tabs */
+.bks-tabs-bar {
+  background: #FFFFFF;
+  border: 1px solid #E5EEFF;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.04);
+  border-radius: 12px;
+  padding: 6px;
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  overflow-x: auto;
+}
+
+.bks-workspace-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #3F4850;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.bks-workspace-tab.active {
+  background: #007BB5;
+  color: #FFFFFF;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.bks-workspace-tab:not(.active):hover {
+  background: #EFF4FF;
+  color: #006190;
+}
+
+/* Diagnostic Card 1: Target Utama & Keselarasan */
+.bks-card {
+  background: #FFFFFF;
+  border: 1px solid #E5EEFF;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.04);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.bks-target-header-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.bks-target-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.bks-target-tags {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.bks-tag-pilihan {
+  background: #E5EEFF;
+  color: #006190;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.bks-tag-riasec {
+  background: #EEF2FF;
+  color: #1E293B;
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-size: 10.5px;
+  font-weight: 600;
+}
+
+.bks-target-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0B1C30;
+  line-height: 26px;
+  margin: 0;
+}
+
+.bks-target-campus {
+  font-size: 13.5px;
+  line-height: 20px;
+  color: #475569;
+}
+
+/* Alignment Metric Gauge */
+.bks-gauge-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+  background: #EFF4FF;
+  border-radius: 12px;
+  padding: 14px 18px;
+  flex-shrink: 0;
+}
+
+.bks-gauge-circle-wrapper {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bks-gauge-svg {
+  width: 64px;
+  height: 64px;
+  transform: rotate(-90deg);
+}
+
+.bks-gauge-center-text {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.bks-gauge-score {
+  font-size: 18px;
+  font-weight: 800;
+  color: #0B1C30;
+  line-height: 18px;
+}
+
+.bks-gauge-max {
+  font-size: 10px;
+  font-weight: 600;
+  color: #6F7881;
+}
+
+.bks-gauge-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.bks-gauge-label {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #006190;
+}
+
+.bks-gauge-sublabel {
+  font-size: 12.5px;
+  color: #3F4850;
+}
+
+.bks-gauge-target {
+  font-size: 11px;
+  color: #6F7881;
+}
+
+/* Triple Sub-Metric Bars */
+.bks-triple-bars {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.bks-bar-card {
+  background: #E5EEFF;
+  border-radius: 8px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.bks-bar-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bks-bar-title {
+  font-size: 11px;
+  font-weight: 700;
+  color: #3F4850;
+  letter-spacing: 0.3px;
+}
+
+.bks-bar-value {
+  font-size: 12px;
+  font-weight: 700;
+  color: #006190;
+}
+
+.bks-bar-value-green {
+  color: #047857;
+}
+
+.bks-bar-track {
+  width: 100%;
+  height: 6px;
+  background: #DCE9FF;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.bks-bar-fill {
+  height: 100%;
+  border-radius: 9999px;
+  background: #006190;
+}
+
+.bks-bar-fill-green {
+  background: #059669;
+}
+
+.bks-bar-subtext {
+  font-size: 10px;
+  color: #6F7881;
+}
+
+/* Diagnostic Card 2: Subject Gap Analysis */
+.bks-subjects-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.bks-subjects-title-box {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.bks-subjects-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0B1C30;
+  margin: 0;
+}
+
+.bks-subjects-subtitle {
+  font-size: 13px;
+  color: #475569;
+  line-height: 18px;
+}
+
+.bks-badge-semesters {
+  background: #E5EEFF;
+  border-radius: 9999px;
+  padding: 4px 12px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #3F4850;
+  white-space: nowrap;
+}
+
+.bks-subjects-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.bks-subject-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: #EFF4FF;
+  gap: 16px;
+  transition: all 0.15s ease;
+}
+
+.bks-subject-item.deficit {
+  background: rgba(255, 218, 214, 0.35);
+}
+
+.bks-subject-left {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+}
+
+.bks-subject-name-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.bks-subject-name {
+  font-size: 15.5px;
+  font-weight: 700;
+  color: #0B1C30;
+}
+
+.bks-subject-weight {
+  background: #D3E4FE;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #0B1C30;
+}
+
+.bks-subject-deficit-badge {
+  background: #FFDAD6;
+  border-radius: 9999px;
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #93000A;
+}
+
+.bks-subject-desc {
+  font-size: 12.5px;
+  color: #475569;
+}
+
+.bks-subject-right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.bks-subject-scores {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.bks-subject-val-row {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.bks-subject-val {
+  font-size: 24px;
+  font-weight: 800;
+  color: #0B1C30;
+  line-height: 28px;
+}
+
+.bks-subject-val.deficit {
+  color: #BA1A1A;
+}
+
+.bks-subject-min {
+  font-size: 11.5px;
+  color: #6F7881;
+}
+
+.bks-subject-delta {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.bks-subject-delta.surplus {
+  color: #047857;
+}
+
+.bks-subject-delta.deficit {
+  color: #BA1A1A;
+}
+
+.bks-subject-status-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bks-subject-status-icon.surplus {
+  background: #D1FAE5;
+  color: #065F46;
+}
+
+.bks-subject-status-icon.deficit {
+  background: #FFDAD6;
+  color: #93000A;
+}
+
+/* Diagnostic Card 3: Inline Trend Chart */
+.bks-trend-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bks-trend-stat-box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.bks-trend-percentage {
+  font-size: 24px;
+  font-weight: 800;
+  color: #006190;
+  line-height: 28px;
+}
+
+.bks-trend-tag {
+  font-size: 11px;
+  font-weight: 700;
+  color: #047857;
+}
+
+.bks-chart-container {
+  background: #EFF4FF;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.bks-chart-svg {
+  width: 100%;
+  height: 160px;
+  overflow: visible;
+}
+
+.bks-chart-telemetry-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  color: #6F7881;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.bks-chart-note {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.bks-chart-projection {
+  font-weight: 700;
+  color: #0B1C30;
+}
+
+/* Diagnostic Card 4: Explainable AI (XAI) */
+.bks-xai-card {
+  background: #DCE9FF;
+  border-radius: 12px;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.bks-xai-badge-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 9999px;
+  background: #007BB5;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.bks-xai-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.bks-xai-title-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.bks-xai-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0B1C30;
+  margin: 0;
+}
+
+.bks-xai-version {
+  background: #D3E4FE;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 9.5px;
+  font-weight: 700;
+  color: #006190;
+  text-transform: uppercase;
+}
+
+.bks-xai-desc {
+  font-size: 13.5px;
+  line-height: 22px;
+  color: #3F4850;
+}
+
+.bks-xai-mitigation {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 12.5px;
+  line-height: 18px;
+  font-weight: 600;
+  color: #BA1A1A;
+  margin-top: 4px;
+}
+
+/* --- RIGHT COLUMN: Lembar Bimbingan & Konseling (UC11) --- */
+.bks-right-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.bks-counseling-card {
+  background: #FFFFFF;
+  border: 1px solid #E5EEFF;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.bks-counseling-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #EFF4FF;
+  padding-bottom: 12px;
+}
+
+.bks-counseling-tag {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #006190;
+}
+
+.bks-counseling-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #0B1C30;
+  margin: 2px 0 0;
+}
+
+.bks-counseling-header-badge {
+  width: 36px;
+  height: 36px;
+  border-radius: 9999px;
+  background: #EFF4FF;
+  color: #006190;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Counselor on Duty Card */
+.bks-counselor-strip {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  background: #EFF4FF;
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+
+.bks-counselor-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 9999px;
+  background: #006190;
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.bks-counselor-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.bks-counselor-name {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #0B1C30;
+}
+
+.bks-counselor-role {
+  font-size: 11px;
+  font-weight: 600;
+  color: #475569;
+}
+
+/* Form Styles */
+.bks-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.bks-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.bks-form-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #0B1C30;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bks-form-sublabel {
+  font-size: 10px;
+  font-weight: 400;
+  color: #6F7881;
+}
+
+.bks-input-date,
+.bks-select {
+  width: 100%;
+  height: 40px;
+  background: #FFFFFF;
+  border: 1px solid #DCE9FF;
+  border-radius: 8px;
+  padding: 0 12px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  color: #0B1C30;
+  outline: none;
+  transition: all 0.15s ease;
+}
+
+.bks-input-date:focus,
+.bks-select:focus,
+.bks-textarea:focus {
+  border-color: #006190;
+  box-shadow: 0 0 0 3px rgba(0, 97, 144, 0.1);
+}
+
+/* Radio Group */
+.bks-radio-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.bks-radio-card {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 10px;
+  background: #E5EEFF;
+  border-radius: 8px;
+  padding: 9px 12px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.bks-radio-card.active {
+  background: #DCE9FF;
+  box-shadow: 0 0 0 1px #007BB5;
+}
+
+.bks-radio-input {
+  margin-top: 3px;
+  accent-color: #006190;
+  cursor: pointer;
+}
+
+.bks-radio-text {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: #0B1C30;
+  line-height: 18px;
+}
+
+/* Textarea */
+.bks-textarea {
+  width: 100%;
+  min-height: 110px;
+  background: #FFFFFF;
+  border: 1px solid #DCE9FF;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12.5px;
+  line-height: 19px;
+  color: #0B1C30;
+  outline: none;
+  resize: vertical;
+  transition: all 0.15s ease;
+}
+
+/* Checkbox Checklist */
+.bks-checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.bks-check-item {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  background: #F8F9FF;
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 17px;
+  color: #0B1C30;
+}
+
+.bks-checkbox {
+  margin-top: 2px;
+  accent-color: #006190;
+  cursor: pointer;
+}
+
+/* Form Action Buttons */
+.bks-form-actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.bks-btn-save {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: #006190;
+  color: #FFFFFF;
+  padding: 10px 16px;
+  border-radius: 9999px;
+  font-size: 12.5px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.05);
+  transition: background 0.15s ease;
+}
+
+.bks-btn-save:hover {
+  background: #004d73;
+}
+
+.bks-btn-cancel {
+  background: #E5EEFF;
+  color: #3F4850;
+  padding: 10px 16px;
+  border-radius: 9999px;
+  font-size: 12.5px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.bks-btn-cancel:hover {
+  background: #d5e2f7;
+}
+
+/* Timeline Log (Riwayat Bimbingan Terkini) */
+.bks-timeline-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-top: 1px solid #EFF4FF;
+  padding-top: 14px;
+}
+
+.bks-timeline-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bks-timeline-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #0B1C30;
+  margin: 0;
+}
+
+.bks-timeline-count-badge {
+  background: #DCE9FF;
+  border-radius: 9999px;
+  padding: 2px 8px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #0B1C30;
+}
+
+.bks-timeline-items {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-left: 18px;
+}
+
+.bks-timeline-line {
+  position: absolute;
+  left: 6px;
+  top: 8px;
+  bottom: 8px;
+  width: 2px;
+  background: #D3E4FE;
+}
+
+.bks-timeline-entry {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.bks-timeline-node {
+  position: absolute;
+  left: -18px;
+  top: 4px;
+  width: 12px;
+  height: 12px;
+  border-radius: 9999px;
+  border: 2px solid #FFFFFF;
+}
+
+.bks-timeline-node.active {
+  background: #006190;
+  box-shadow: 0 0 0 2px #D3E4FE;
+}
+
+.bks-timeline-node.completed {
+  background: #D3E4FE;
+}
+
+.bks-timeline-date-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bks-timeline-date {
+  font-size: 12px;
+  font-weight: 700;
+  color: #0B1C30;
+}
+
+.bks-timeline-status-badge {
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 9.5px;
+  font-weight: 700;
+}
+
+.bks-timeline-status-badge.green {
+  background: #ECFDF5;
+  color: #065F46;
+}
+
+.bks-timeline-status-badge.blue {
+  background: #DCE9FF;
+  color: #3F4850;
+}
+
+.bks-timeline-subject {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #006190;
+  line-height: 15px;
+}
+
+.bks-timeline-box {
+  background: #EFF4FF;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 12px;
+  line-height: 17px;
+  color: #3F4850;
+}
+
+.bks-timeline-counselor {
+  font-size: 10.5px;
+  color: #6F7881;
+}
+
+/* --- Footer --- */
+.bks-footer {
+  margin-top: auto;
+  width: 100%;
+  background: #FFFFFF;
+  border-top: 1px solid #E5EEFF;
+  padding: 24px clamp(16px, 3vw, 32px);
+}
+
+.bks-footer-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+}
+
+.bks-footer-brand-side {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.bks-footer-brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.bks-footer-brand-title {
+  font-weight: 700;
+  font-size: 14.5px;
+  color: #0B1C30;
+}
+
+.bks-footer-brand-desc {
+  font-size: 12px;
+  color: #6F7881;
+}
+
+.bks-footer-right-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.bks-footer-dapodik-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #006190;
+}
+
+.bks-footer-links {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 12px;
+  color: #475569;
+}
+
+.bks-footer-link {
+  color: #475569;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-family: inherit;
+}
+
+.bks-footer-link:hover {
+  color: #006190;
+}
+
+/* =============================================================
+   RESPONSIVE DESIGN (PC / Laptop / Tablet / Smartphone)
+   ============================================================= */
+
+/* Small Laptops & Tablets (< 1080px) */
+@media (max-width: 1080px) {
+  .bks-workspace-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bks-banner-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .bks-banner-actions {
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .bks-banner-subactions {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+
+  .bks-nav-search {
+    display: none;
+  }
+}
+
+/* Tablets (< 768px) */
+@media (max-width: 768px) {
+  .bks-navbar {
+    height: auto;
+    border-radius: 16px;
+    padding: 10px 14px;
+    flex-wrap: wrap;
+  }
+
+  .bks-nav-links {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+    padding: 4px;
+  }
+
+  .bks-student-profile {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .bks-target-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .bks-gauge-card {
+    width: 100%;
+  }
+
+  .bks-triple-bars {
+    grid-template-columns: 1fr;
+  }
+
+  .bks-subject-item {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .bks-subject-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .bks-footer-container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .bks-footer-right-side {
+    align-items: flex-start;
+  }
+}
+
+/* Small Smartphone (< 480px) */
+@media (max-width: 480px) {
+  .bks-navbar-wrapper {
+    padding: 8px;
+  }
+
+  .bks-profile-sub {
+    display: none;
+  }
+
+  .bks-student-name {
+    font-size: 20px;
+    line-height: 26px;
+  }
+
+  .bks-xai-card {
+    flex-direction: column;
+  }
+}

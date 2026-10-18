@@ -1,0 +1,36 @@
+{
+  "name": "ivanamager-joints-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Backend API sistem rekomendasi prodi & karir (JOINTS)",
+  "type": "commonjs",
+  "main": "dist/src/server.js",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc",
+    "start": "node dist/src/server.js",
+    "typecheck": "tsc --noEmit",
+    "impor-survei": "tsx scripts/impor-survei.ts",
+    "generate-sintetis": "tsx scripts/generate-sintetis.ts",
+    "impor-katalog": "tsx scripts/impor-katalog.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/angelinaefrina/IvanaMager_JOINTS.git"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.135.0",
+    "@supabase/supabase-js": "^2.118.0",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.8",
+    "express": "^5.3.0",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.5",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2"
+  }
+}

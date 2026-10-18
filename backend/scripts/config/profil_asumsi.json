@@ -1,0 +1,61 @@
+{
+  "_catatan": [
+    "PROFIL ASUMSI — BUKAN DATA. Dipakai generate-sintetis.ts HANYA untuk bidang studi yang tidak punya satu pun respons survei asli.",
+    "Angka ditulis tim berdasarkan pola umum kode Holland per rumpun ilmu, belum divalidasi dengan data. Tinjau & sesuaikan sebelum dipakai.",
+    "Baris sintetis dari profil ini ditandai metode 'asumsi' di batch_impor.parameter.asal dan TIDAK boleh dipakai untuk evaluasi/klaim akurasi.",
+    "riasec & kemampuan: rata-rata skala 1–5 per tipe/dimensi; jawaban per butir diacak N(rata-rata, sd_likert).",
+    "nilai: rata-rata nilai rapor per kode mapel; mapel yang tidak tercantum memakai nilai_lain. Mapel yang tidak diambil mengikuti tidak_diambil_per_peminatan."
+  ],
+  "sd_likert": 0.8,
+  "sd_nilai": 4,
+  "nilai_lain": 83,
+  "tidak_diambil_per_peminatan": {
+    "IPA": ["EKO", "GEO", "SOS"],
+    "IPS": ["FIS", "KIM", "BIO"],
+    "Bahasa": ["FIS", "KIM", "BIO", "EKO"],
+    "Kurikulum Merdeka (tanpa peminatan IPA/IPS/Bahasa)": [],
+    "Kejuruan/SMK": ["FIS", "KIM", "BIO", "EKO", "GEO", "SOS"]
+  },
+  "bidang": {
+    "Teknik dan Teknologi": {
+      "prodi": ["Teknik Mesin", "Teknik Sipil", "Teknik Elektro", "Teknik Industri"],
+      "peminatan": { "IPA": 0.75, "Kejuruan/SMK": 0.25 },
+      "riasec": { "R": 4.2, "I": 4.0, "A": 2.7, "S": 2.4, "E": 2.8, "C": 3.3 },
+      "kemampuan": { "NUMERIK": 4.0, "LOGIKA": 4.1, "LITERASI": 3.0, "KOMUNIKASI": 3.0, "KREATIF": 3.4, "DIGITAL": 3.9, "SAINS": 3.8, "KEPEMIMPINAN": 3.2, "KETELITIAN": 3.7 },
+      "nilai": { "MAT": 87, "FIS": 87, "KIM": 84, "INF": 86 },
+      "mapel_favorit": ["Matematika", "Fisika", "Informatika", "Kimia"],
+      "bidang_karir": ["Teknik dan Rekayasa", "Teknologi Informasi dan Komputer", "Sains dan Penelitian"],
+      "fit": 3.8
+    },
+    "Pendidikan": {
+      "prodi": ["Pendidikan Guru Sekolah Dasar", "Pendidikan Matematika", "Pendidikan Bahasa Inggris", "Bimbingan dan Konseling"],
+      "peminatan": { "IPA": 0.35, "IPS": 0.4, "Bahasa": 0.25 },
+      "riasec": { "R": 2.4, "I": 3.0, "A": 3.4, "S": 4.3, "E": 3.3, "C": 3.2 },
+      "kemampuan": { "NUMERIK": 3.2, "LOGIKA": 3.5, "LITERASI": 3.9, "KOMUNIKASI": 4.1, "KREATIF": 3.6, "DIGITAL": 3.3, "SAINS": 3.0, "KEPEMIMPINAN": 3.8, "KETELITIAN": 3.6 },
+      "nilai": { "BIND": 88, "BING": 86, "SOS": 85, "SEJ": 85 },
+      "mapel_favorit": ["Bahasa Indonesia", "Bahasa Inggris", "Sejarah", "Matematika"],
+      "bidang_karir": ["Pendidikan dan Pengajaran", "Sosial dan Pelayanan Masyarakat", "Komunikasi, Media, dan Jurnalistik"],
+      "fit": 3.8
+    },
+    "Sains dan Matematika": {
+      "prodi": ["Matematika", "Fisika", "Kimia", "Biologi", "Statistika"],
+      "peminatan": { "IPA": 0.9, "Kurikulum Merdeka (tanpa peminatan IPA/IPS/Bahasa)": 0.1 },
+      "riasec": { "R": 3.2, "I": 4.4, "A": 2.7, "S": 2.6, "E": 2.4, "C": 3.6 },
+      "kemampuan": { "NUMERIK": 4.2, "LOGIKA": 4.3, "LITERASI": 3.3, "KOMUNIKASI": 3.0, "KREATIF": 3.3, "DIGITAL": 3.6, "SAINS": 4.3, "KEPEMIMPINAN": 3.0, "KETELITIAN": 4.0 },
+      "nilai": { "MAT": 89, "FIS": 87, "KIM": 87, "BIO": 87 },
+      "mapel_favorit": ["Matematika", "Kimia", "Biologi", "Fisika"],
+      "bidang_karir": ["Sains dan Penelitian", "Pendidikan dan Pengajaran", "Teknologi Informasi dan Komputer"],
+      "fit": 3.7
+    },
+    "Pertanian, Pangan, dan Lingkungan": {
+      "prodi": ["Agroteknologi", "Teknologi Pangan", "Ilmu Lingkungan", "Peternakan"],
+      "peminatan": { "IPA": 0.7, "Kejuruan/SMK": 0.2, "IPS": 0.1 },
+      "riasec": { "R": 3.9, "I": 3.8, "A": 2.6, "S": 3.2, "E": 2.9, "C": 3.1 },
+      "kemampuan": { "NUMERIK": 3.4, "LOGIKA": 3.6, "LITERASI": 3.2, "KOMUNIKASI": 3.3, "KREATIF": 3.2, "DIGITAL": 3.2, "SAINS": 3.9, "KEPEMIMPINAN": 3.4, "KETELITIAN": 3.6 },
+      "nilai": { "BIO": 87, "KIM": 85, "GEO": 85 },
+      "mapel_favorit": ["Biologi", "Kimia", "Geografi"],
+      "bidang_karir": ["Pertanian, Peternakan, dan Perikanan", "Lingkungan dan Konservasi", "Sains dan Penelitian"],
+      "fit": 3.7
+    }
+  }
+}

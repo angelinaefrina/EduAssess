@@ -1,0 +1,1188 @@
+openapi: 3.0.3
+info:
+  title: API Sistem Rekomendasi Prodi & Karir (JOINTS)
+  version: 1.0.0
+  description: |
+    Backend Express + Supabase. Semua endpoint di bawah prefix `/api/v1`.
+
+    **Format respons**
+    - Sukses: `{ "data": ... }`
+    - Gagal: `{ "error": { "code": "...", "message": "...", "details"?: ... } }`
+    - Status: 400 validasi · 401 tanpa/invalid token · 403 peran/kepemilikan salah · 404 · 409 konflik · 500
+
+    **Autentikasi** — semua endpoint (kecuali `/health`) butuh header
+    `Authorization: Bearer <access_token>` dari Supabase Auth. Peran (`siswa`/`bk`) dibaca dari
+    tabel `profil`, bukan dari token. Cara mendapat token untuk pengujian:
+
+    1. Buat user di dashboard Supabase (Authentication → Users → Add user, centang *Auto Confirm*).
+    2. Panggil `POST https://<project-ref>.supabase.co/auth/v1/token?grant_type=password`
+       dengan header `apikey: <ANON_KEY>` dan body `{"email": "...", "password": "..."}`
+       (lihat operasi **Login Supabase** di tag *0. Autentikasi*).
+    3. Salin `access_token` ke variabel `bearerToken` / Authorization di Postman.
+    4. Untuk akun BK: `update profil set peran='bk', sekolah_id='<id sekolah>' where id='<user id>';`
+
+    **Alur uji siswa yang disarankan**: BK `POST /bk/kode` → siswa `POST /siswa/me/kode-bk` →
+    `POST /siswa/me/onboarding` → `POST /siswa/me/asesmen` → `PUT /siswa/me/nilai/semester/{n}` →
+    `GET /siswa/me/rekomendasi/prodi` → `POST /siswa/me/target-prodi` → `GET /siswa/me/keselarasan`.
+
+    **Penjelasan LLM**: env `LLM_PROVIDER=mock` (default bila `ANTHROPIC_API_KEY` kosong) membuat
+    penjelasan dari template; `anthropic` memanggil Claude (`LLM_MODEL`, default `claude-haiku-5-5`).
+servers:
+  - url: http://localhost:4000/api/v1
+    description: Lokal (npm run dev)
+  - url: '{baseUrl}/api/v1'
+    description: Server lain
+    variables:
+      baseUrl:
+        default: http://localhost:4000
+
+security:
+  - bearerAuth: []
+
+tags:
+  - name: 0. Autentikasi
+    description: Login lewat Supabase Auth (bukan bagian backend ini) untuk mendapatkan access token.
+  - name: 1. Umum
+  - name: 2. Siswa - Profil & Onboarding
+    description: UC01. Hanya peran siswa; selalu memakai data milik pemanggil.
+  - name: 3. Siswa - Asesmen
+    description: UC01 Alternatif 3 (tes minat RIASEC + kemampuan diri).
+  - name: 4. Siswa - Nilai Rapor
+    description: UC02 sisi siswa.
+  - name: 5. Katalog & Master
+    description: UC05, UC09. Semua peran yang login.
+  - name: 6. Siswa - Target
+    description: target_karir = input rekomendasi; target_prodi = pilihan siswa (UC08).
+  - name: 7. Siswa - Rekomendasi
+    description: UC04, UC06, UC07, UC08, UC14. Hasil di-cache per input.
+  - name: 8. Siswa - Perkembangan
+    description: UC12.
+  - name: 9. BK - Kode Sekolah
+    description: Kode yang dibagikan BK agar siswa terdaftar ke sekolahnya.
+  - name: 10. BK - Nilai Rapor
+    description: UC02 sisi BK (verifikasi & impor).
+  - name: 11. BK - Panel Siswa
+    description: UC10, UC13, serta rekomendasi/perkembangan siswa di sekolah BK.
+  - name: 12. BK - Catatan Konseling
+    description: UC11. Internal BK; hanya penulis yang bisa mengubah/menghapus.
+
+paths:
+  # ===================================================================== AUTH
+  /auth/v1/token:
+    servers:
+      - url: https://{projectRef}.supabase.co
+        variables:
+          projectRef:
+            default: your-project-ref
+            description: Project ref Supabase (lihat SUPABASE_URL)
+    post:
+      tags: [0. Autentikasi]
+      summary: Login Supabase (dapatkan access token)
+      description: Endpoint Supabase Auth, bukan backend ini. Pakai ANON key, bukan service role key.
+      security: []
+      parameters:
+        - name: grant_type
+          in: query
+          required: true
+          schema: { type: string, enum: [password] }
+        - name: apikey
+          in: header
+          required: true
+          schema: { type: string }
+          description: Supabase ANON key
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [email, password]
+              properties:
+                email: { type: string, format: email, example: siswa1@test.local }
+                password: { type: string, example: Rahasia123! }
+      responses:
+        '200':
+          description: Token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token: { type: string }
+                  token_type: { type: string, example: bearer }
+                  expires_in: { type: integer, example: 3600 }
+                  refresh_token: { type: string }
+
+  # ==================================================================== UMUM
+  /health:
+    get:
+      tags: [1. Umum]
+      summary: Healthcheck (server & koneksi DB)
+      security: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              example: { data: { status: ok, db: ok, waktu: '2026-10-16T10:00:00.000Z' } }
+
+  /openapi.yaml:
+    get:
+      tags: [1. Umum]
+      summary: Spesifikasi OpenAPI ini (untuk impor Postman lewat URL)
+      security: []
+      responses:
+        '200':
+          description: File YAML
+          content:
+            application/yaml:
+              schema: { type: string }
+
+  /me:
+    get:
+      tags: [1. Umum]
+      summary: Profil pengguna yang login (siswa atau BK)
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              example:
+                data: { id: 50137703-97b7-47e2-bee6-91c0d7dbdaf9, peran: siswa, nama: Citra, sekolah_id: null, sekolah: null }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+
+  # ========================================================= SISWA: PROFIL
+  /siswa/me:
+    get:
+      tags: [2. Siswa - Profil & Onboarding]
+      summary: Data lengkap siswa + status kelengkapan
+      description: '`siswa: null` berarti belum pernah menyimpan profil (login pertama → tampilkan onboarding).'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              example:
+                data:
+                  profil: { id: '...', nama: Citra, sekolah: { id: '...', nama: SMA Contoh, kota: null } }
+                  siswa: { tingkat: 11, rombel: XI-2, peminatan: IPA, angkatan: 2027, onboarding_selesai: true }
+                  preferensi: { gaya_belajar: praktik, ingin_cepat_kerja: true, pertimbangan_biaya: 4, jenjang_diminati: [D4] }
+                  mapel: [{ id: 12, kode: INF, nama: Informatika }]
+                  mapel_favorit: []
+                  bidang_karir: [{ id: 1, kode: TI, nama: Teknologi Informasi dan Komputer }]
+                  target_karir: [{ id: '...', teks_bebas: null, sumber: onboarding, karir: { id: '...', nama: Software Engineer } }]
+                  kelengkapan: { lengkap: true, kurang: [] }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+
+  /siswa/me/kode-bk:
+    post:
+      tags: [2. Siswa - Profil & Onboarding]
+      summary: Bergabung ke sekolah dengan kode dari BK
+      description: Mengisi profil.sekolah_id dari kode. Kode baru = pindah sekolah. Huruf kecil, spasi, dan strip diabaikan.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [kode]
+              properties:
+                kode: { type: string, maxLength: 20, example: 7KQP4M }
+      responses:
+        '200':
+          description: Berhasil bergabung
+          content:
+            application/json:
+              example: { data: { sekolah: { id: '...', nama: SMA Contoh, kota: Yogyakarta } } }
+        '400': { $ref: '#/components/responses/BadRequest' }
+
+  /siswa/me/onboarding:
+    post:
+      tags: [2. Siswa - Profil & Onboarding]
+      summary: Simpan seluruh stepper onboarding (UC01)
+      description: |
+        Wajib: profil (nama, tingkat, peminatan) dan sudah bergabung lewat kode BK
+        (bila belum → 400 BELUM_TERDAFTAR_SEKOLAH). Bagian lain opsional (bisa dilewati).
+        Field yang tidak dikirim tidak diubah; array kosong = dikosongkan.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/OnboardingInput' }
+            example:
+              profil: { nama: Citra Lestari, tingkat: 11, peminatan: IPA, rombel: XI-2, angkatan: 2027 }
+              preferensi: { gaya_belajar: praktik, ingin_cepat_kerja: true, pertimbangan_biaya: 4, jenjang_diminati: [D4] }
+              mapel_ids: [12, 4]
+              mapel_favorit_ids: [1, 12]
+              bidang_karir_ids: [1]
+              target_karir: [{ teks_bebas: Game Developer }]
+      responses:
+        '200': { description: Data lengkap siswa (sama dengan GET /siswa/me) }
+        '400': { $ref: '#/components/responses/BadRequest' }
+
+  /siswa/me/profil:
+    put:
+      tags: [2. Siswa - Profil & Onboarding]
+      summary: Ubah profil
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ProfilInput' }
+      responses:
+        '200': { description: Data lengkap siswa }
+        '400': { $ref: '#/components/responses/BadRequest' }
+
+  /siswa/me/preferensi:
+    put:
+      tags: [2. Siswa - Profil & Onboarding]
+      summary: Ganti utuh preferensi pendidikan
+      description: Field yang tidak dikirim menjadi null / [] (PUT = ganti utuh).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/PreferensiInput' }
+      responses:
+        '200': { description: Preferensi tersimpan }
+        '400': { $ref: '#/components/responses/BadRequest' }
+
+  /siswa/me/mapel:
+    put:
+      tags: [2. Siswa - Profil & Onboarding]
+      summary: Ganti daftar mapel yang diambil
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [mapel_ids]
+              properties:
+                mapel_ids: { type: array, items: { type: integer }, uniqueItems: true, example: [1, 4, 12] }
+      responses:
+        '200': { description: Daftar mapel }
+        '400': { $ref: '#/components/responses/BadRequest' }
+
+  /siswa/me/mapel-favorit:
+    put:
+      tags: [2. Siswa - Profil & Onboarding]
+      summary: Ganti mapel favorit (maks 3)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [mapel_ids]
+              properties:
+                mapel_ids: { type: array, items: { type: integer }, maxItems: 3, uniqueItems: true, example: [1, 12] }
+      responses:
+        '200': { description: Daftar mapel favorit }
+        '400': { $ref: '#/components/responses/BadRequest' }
+
+  /siswa/me/bidang-karir:
+    put:
+      tags: [2. Siswa - Profil & Onboarding]
+      summary: Ganti bidang karir yang diminati (maks 3)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [bidang_karir_ids]
+              properties:
+                bidang_karir_ids: { type: array, items: { type: integer }, maxItems: 3, uniqueItems: true, example: [1, 11] }
+      responses:
+        '200': { description: Daftar bidang karir }
+        '400': { $ref: '#/components/responses/BadRequest' }
+
+  /siswa/me/target-karir:
+    put:
+      tags: [2. Siswa - Profil & Onboarding]
+      summary: Ganti target karir yang diisi sendiri (sumber onboarding)
+      description: Target dari eksplorasi karir tidak disentuh.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [target_karir]
+              properties:
+                target_karir: { $ref: '#/components/schemas/TargetKarirList' }
+      responses:
+        '200': { description: Daftar target karir }
+        '400': { $ref: '#/components/responses/BadRequest' }
+    post:
+      tags: [6. Siswa - Target]
+      summary: Simpan sebagai Karir Impian (UC05)
+      description: Idempoten — 201 bila baru, 200 bila sudah tersimpan.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [karir_id]
+              properties:
+                karir_id: { type: string, format: uuid }
+      responses:
+        '200': { description: Sudah tersimpan sebelumnya }
+        '201': { description: Tersimpan }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  /siswa/me/target-karir/{id}:
+    delete:
+      tags: [6. Siswa - Target]
+      summary: Hapus target karir
+      parameters: [{ $ref: '#/components/parameters/Id' }]
+      responses:
+        '204': { description: Terhapus }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  # ========================================================= SISWA: ASESMEN
+  /asesmen/instrumen:
+    get:
+      tags: [3. Siswa - Asesmen]
+      summary: Butir tes minat RIASEC & dimensi kemampuan
+      description: Tipe RIASEC sengaja tidak dikirim agar tidak memengaruhi jawaban.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              example:
+                data:
+                  riasec: [{ id: 1, pernyataan: 'Merakit, memperbaiki, atau mencoba cara kerja suatu alat.', urutan: 1 }]
+                  kemampuan: [{ id: 1, pernyataan: 'Kemampuan melakukan perhitungan matematika.', urutan: 1 }]
+                  skala: { min: 1, maks: 5 }
+
+  /siswa/me/asesmen:
+    post:
+      tags: [3. Siswa - Asesmen]
+      summary: Kirim jawaban tes (semua butir & dimensi wajib)
+      description: Semester dihitung otomatis dari tingkat + bulan (WIB). Boleh diulang; yang dipakai adalah yang terakhir.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/JawabanAsesmen' }
+      responses:
+        '201':
+          description: Hasil (skor dari view v_profil_asesmen)
+          content:
+            application/json:
+              example:
+                data: { asesmen_id: '...', semester: 3, kode_holland: IRC, riasec: { R: 4, I: 5, A: 2, S: 2, E: 1, C: 3 }, kemampuan: { NUMERIK: 4 } }
+        '400': { $ref: '#/components/responses/BadRequest' }
+    get:
+      tags: [3. Siswa - Asesmen]
+      summary: Riwayat asesmen (terbaru dulu)
+      responses:
+        '200': { description: Daftar asesmen }
+
+  /siswa/me/asesmen/terakhir:
+    get:
+      tags: [3. Siswa - Asesmen]
+      summary: Hasil asesmen terakhir (null bila belum pernah)
+      responses:
+        '200': { description: Hasil atau null }
+
+  # =========================================================== SISWA: NILAI
+  /siswa/me/nilai:
+    get:
+      tags: [4. Siswa - Nilai Rapor]
+      summary: Semua nilai + semester_maks
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              example:
+                data:
+                  semester_maks: 4
+                  nilai: [{ id: '...', semester: 3, nilai: 90, sumber: input_siswa, status: menunggu, mapel: { id: 1, kode: MAT, nama: Matematika } }]
+
+  /siswa/me/nilai/semester/{semester}:
+    put:
+      tags: [4. Siswa - Nilai Rapor]
+      summary: Simpan nilai satu semester (ganti utuh)
+      description: |
+        Semester maks = akhir tingkat (kelas 10→2, 11→4, 12→6). Nilai > 0 s.d. 100 (mapel tidak diambil: jangan dikirim).
+        Nilai terverifikasi dikunci (409 NILAI_TERKUNCI) dan tidak ikut terhapus.
+      parameters:
+        - name: semester
+          in: path
+          required: true
+          schema: { type: integer, minimum: 1, maximum: 6 }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [nilai]
+              properties:
+                nilai:
+                  type: array
+                  maxItems: 50
+                  items:
+                    type: object
+                    required: [mapel_id, nilai]
+                    properties:
+                      mapel_id: { type: integer }
+                      nilai: { type: number, minimum: 0.01, maximum: 100, description: '> 0 s.d. 100 (0 = tidak diambil, jangan dikirim)' }
+            example: { nilai: [{ mapel_id: 1, nilai: 90 }, { mapel_id: 12, nilai: 95 }] }
+      responses:
+        '200': { description: Semua nilai siswa }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '409': { $ref: '#/components/responses/Conflict' }
+
+  /siswa/me/nilai/{id}:
+    delete:
+      tags: [4. Siswa - Nilai Rapor]
+      summary: Hapus nilai (yang belum terverifikasi)
+      parameters: [{ $ref: '#/components/parameters/Id' }]
+      responses:
+        '204': { description: Terhapus }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409': { $ref: '#/components/responses/Conflict' }
+
+  # ========================================================= KATALOG/MASTER
+  /master/mapel:
+    get:
+      tags: [5. Katalog & Master]
+      summary: Daftar mapel
+      responses:
+        '200': { description: OK }
+  /master/bidang-karir:
+    get:
+      tags: [5. Katalog & Master]
+      summary: Daftar bidang karir
+      responses:
+        '200': { description: OK }
+  /master/karir:
+    get:
+      tags: [5. Katalog & Master]
+      summary: Picker karir ringan (onboarding)
+      parameters:
+        - { name: q, in: query, schema: { type: string, maxLength: 50 } }
+        - { name: limit, in: query, schema: { type: integer, minimum: 1, maximum: 50, default: 20 } }
+      responses:
+        '200': { description: OK }
+
+  /katalog/bidang-studi:
+    get:
+      tags: [5. Katalog & Master]
+      summary: Daftar bidang studi (rumpun)
+      responses:
+        '200': { description: OK }
+  /katalog/prodi:
+    get:
+      tags: [5. Katalog & Master]
+      summary: Daftar prodi (UC09)
+      parameters:
+        - { name: q, in: query, schema: { type: string, maxLength: 100 } }
+        - { name: bidang_studi, in: query, description: 'Kode bidang, mis. KOMP', schema: { type: string } }
+        - { name: jenis, in: query, schema: { type: string, enum: [akademik, vokasi, kedinasan, kerja] } }
+        - { $ref: '#/components/parameters/Limit100' }
+        - { $ref: '#/components/parameters/Offset' }
+      responses:
+        '200':
+          description: '`{ items, total, limit, offset }`'
+          content:
+            application/json:
+              example:
+                data:
+                  items: [{ id: '...', nama: Teknik Informatika, kode_riasec: IRC, jenis_pendidikan: [akademik, vokasi], sumber_url: null, catatan_sumber: DRAF ..., bidang_studi: { id: 2, kode: KOMP, nama: Komputer dan Informatika } }]
+                  total: 29
+                  limit: 20
+                  offset: 0
+  /katalog/prodi/{id}:
+    get:
+      tags: [5. Katalog & Master]
+      summary: Detail prodi (mapel pendukung, contoh karir, PT)
+      description: Untuk siswa, menyertakan `nilai_terakhir_siswa` per mapel dan `status_target`.
+      parameters: [{ $ref: '#/components/parameters/Id' }]
+      responses:
+        '200': { description: OK }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /katalog/karir:
+    get:
+      tags: [5. Katalog & Master]
+      summary: Daftar karir (trending di atas) (UC05)
+      parameters:
+        - { name: q, in: query, schema: { type: string, maxLength: 100 } }
+        - { name: bidang_karir, in: query, description: 'Kode, mis. TI', schema: { type: string } }
+        - { name: trending, in: query, schema: { type: string, enum: ['true', 'false'] } }
+        - { $ref: '#/components/parameters/Limit100' }
+        - { $ref: '#/components/parameters/Offset' }
+      responses:
+        '200': { description: '`{ items, total, limit, offset }`' }
+  /katalog/karir/{id}:
+    get:
+      tags: [5. Katalog & Master]
+      summary: Detail karir (prodi relevan, mapel pendukung)
+      parameters: [{ $ref: '#/components/parameters/Id' }]
+      responses:
+        '200': { description: OK }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  # ========================================================== SISWA: TARGET
+  /siswa/me/target:
+    get:
+      tags: [6. Siswa - Target]
+      summary: Target karir & target prodi
+      responses:
+        '200': { description: '`{ karir: [...], prodi: [...] }`' }
+  /siswa/me/target-prodi:
+    post:
+      tags: [6. Siswa - Target]
+      summary: Jadikan Target (UC04/05/09)
+      description: Target prodi pertama otomatis menjadi utama. Idempoten (201 baru / 200 sudah ada).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [prodi_id]
+              properties:
+                prodi_id: { type: string, format: uuid }
+                sumber: { type: string, enum: [rekomendasi, katalog, eksplorasi_karir], default: katalog }
+      responses:
+        '200': { description: Sudah tersimpan sebelumnya }
+        '201': { description: Tersimpan }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /siswa/me/target-prodi/{id}:
+    patch:
+      tags: [6. Siswa - Target]
+      summary: Jadikan target prodi utama
+      parameters: [{ $ref: '#/components/parameters/Id' }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [is_utama]
+              properties:
+                is_utama: { type: boolean, enum: [true] }
+      responses:
+        '200': { description: Daftar target prodi }
+        '404': { $ref: '#/components/responses/NotFound' }
+    delete:
+      tags: [6. Siswa - Target]
+      summary: Hapus target prodi (utama digantikan target tertua)
+      parameters: [{ $ref: '#/components/parameters/Id' }]
+      responses:
+        '200': { description: Daftar target prodi tersisa }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  # ===================================================== SISWA: REKOMENDASI
+  /siswa/me/rekomendasi/prodi:
+    get:
+      tags: [7. Siswa - Rekomendasi]
+      summary: Rekomendasi prodi + rumpun (UC04)
+      description: Skor = bobot per tingkat × (minat, akademik, karir). Akademik = rata-rata tertimbang mapel diambil × cakupan.
+      responses:
+        '200':
+          description: Tersedia atau belum (data kurang)
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/HasilRekomendasi' }
+              examples:
+                tersedia:
+                  value:
+                    data:
+                      tersedia: true
+                      dari_cache: false
+                      penjelasan: null
+                      model_llm: null
+                      dibuat_at: '2026-10-16T10:00:00Z'
+                      hasil:
+                        bobot: { minat: 0.5, akademik: 0.4, karir: 0.1 }
+                        tingkat: 11
+                        kode_holland: IRC
+                        katalog_draf: true
+                        jumlah_prodi_dinilai: 29
+                        prodi:
+                          - peringkat: 1
+                            prodi: { id: '...', nama: Teknik Informatika, kode_riasec: IRC, jenis_pendidikan: [akademik, vokasi] }
+                            skor: { total: 0.867, minat: 0.833, akademik: 0.876, karir: 1 }
+                            akademik: { cakupan: 1, rata_rata_mapel_diambil: 0.876, data_kurang: false, mapel: [{ kode: MAT, nama: Matematika, bobot: 1, nilai: 90 }] }
+                            karir: { alasan: target_karir, cocok: [Software Engineer] }
+                            contoh_karir: [{ id: '...', nama: Software Engineer }]
+                            sesuai_preferensi_jenjang: true
+                        rumpun: [{ bidang_studi: { kode: KOMP, nama: Komputer dan Informatika }, skor: 0.867, prodi_terbaik: Teknik Informatika }]
+                belum_tersedia:
+                  value: { data: { tersedia: false, kurang: [tes_minat, nilai_rapor] } }
+  /siswa/me/rekomendasi/mapel:
+    get:
+      tags: [7. Siswa - Rekomendasi]
+      summary: Rekomendasi mapel pilihan (UC06, kelas 10–11)
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/HasilRekomendasi' }
+  /siswa/me/rekomendasi/jenjang:
+    get:
+      tags: [7. Siswa - Rekomendasi]
+      summary: Rekomendasi jenjang S1/D3/D4/kedinasan dari preferensi profil (UC07)
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/HasilRekomendasi' }
+              example:
+                data:
+                  tersedia: true
+                  hasil:
+                    jenjang:
+                      - { jenjang: D4, jalur: vokasi, poin: 5, alasan: [dipilih sendiri di profil (+3), ingin cepat bekerja (+1), gaya belajar praktik (+1)] }
+                      - { jenjang: D3, jalur: vokasi, poin: 4, alasan: [ingin cepat bekerja (+2), gaya belajar praktik (+1), pertimbangan biaya tinggi (4/5) (+1)] }
+                    catatan: null
+  /siswa/me/keselarasan:
+    get:
+      tags: [7. Siswa - Rekomendasi]
+      summary: Analisis keselarasan target prodi utama (UC08)
+      description: hasil.status = selaras | tidak_selaras | berisiko (dibaca dashboard BK).
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/HasilRekomendasi' }
+              examples:
+                belum_ada_target:
+                  value: { data: { tersedia: false, kurang: [target_prodi_utama] } }
+  /siswa/me/rekomendasi/{jenis}/penjelasan:
+    post:
+      tags: [7. Siswa - Rekomendasi]
+      summary: Buat/ambil penjelasan bahasa alami (UC14)
+      description: |
+        Dibuat sekali per hasil (di-cache). Mode mock → model "mock". Bila API Claude gagal,
+        tetap 200 dengan `penjelasan: null` dan `alasan` (LLM_GAGAL / LLM_MENOLAK).
+      parameters: [{ $ref: '#/components/parameters/JenisRekomendasi' }]
+      responses:
+        '200': { $ref: '#/components/responses/Penjelasan' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+
+  # ==================================================== SISWA: PERKEMBANGAN
+  /siswa/me/perkembangan:
+    get:
+      tags: [8. Siswa - Perkembangan]
+      summary: Perubahan minat & nilai antar asesmen/semester (UC12)
+      responses:
+        '200': { $ref: '#/components/responses/Perkembangan' }
+
+  # ============================================================= BK: KODE
+  /bk/kode:
+    post:
+      tags: [9. BK - Kode Sekolah]
+      summary: Buat kode untuk dibagikan ke siswa
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                berlaku_sampai: { type: string, format: date-time, nullable: true, example: '2026-12-31T23:59:59+07:00' }
+      responses:
+        '201':
+          description: Kode baru
+          content:
+            application/json:
+              example: { data: { id: '...', kode: 7KQP4M, sekolah_id: '...', aktif: true, berlaku_sampai: null } }
+        '403': { $ref: '#/components/responses/Forbidden' }
+    get:
+      tags: [9. BK - Kode Sekolah]
+      summary: Daftar kode sekolah BK
+      responses:
+        '200': { description: OK }
+  /bk/kode/{id}:
+    patch:
+      tags: [9. BK - Kode Sekolah]
+      summary: Nonaktifkan / ubah masa berlaku kode
+      parameters: [{ $ref: '#/components/parameters/Id' }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                aktif: { type: boolean }
+                berlaku_sampai: { type: string, format: date-time, nullable: true }
+            example: { aktif: false }
+      responses:
+        '200': { description: Kode setelah diubah }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  # ============================================================ BK: NILAI
+  /bk/nilai/menunggu:
+    get:
+      tags: [10. BK - Nilai Rapor]
+      summary: Siswa dengan nilai menunggu verifikasi
+      responses:
+        '200': { description: Daftar siswa + jumlah_menunggu }
+  /bk/nilai/template:
+    get:
+      tags: [10. BK - Nilai Rapor]
+      summary: Unduh template CSV impor nilai
+      description: Pemisah `;`, UTF-8 dengan BOM (cocok untuk Excel berbahasa Indonesia).
+      parameters:
+        - { name: semester, in: query, required: true, schema: { type: integer, minimum: 1, maximum: 6 } }
+        - { name: tingkat, in: query, schema: { type: integer, minimum: 10, maximum: 12 } }
+      responses:
+        '200':
+          description: File CSV
+          content:
+            text/csv:
+              schema: { type: string }
+              example: "siswa_id;nama;rombel;tingkat;MAT;BIND;BING;FIS;KIM;BIO;EKO;GEO;SOS;SEJ;SBD;INF\r\n"
+  /bk/nilai/impor:
+    post:
+      tags: [10. BK - Nilai Rapor]
+      summary: Impor nilai dari template (hasil langsung terverifikasi)
+      description: Semua-atau-tidak-sama-sekali; bila ada baris salah → 400 IMPOR_GAGAL dengan `details.errors`.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [semester, csv]
+              properties:
+                semester: { type: integer, minimum: 1, maximum: 6 }
+                csv: { type: string, description: Isi file CSV sebagai teks }
+      responses:
+        '200': { description: '`{ semester, jumlah_siswa, jumlah_nilai, sel_kosong_dilewati, kolom_diabaikan }`' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+  /bk/siswa/{siswaId}/nilai:
+    get:
+      tags: [10. BK - Nilai Rapor]
+      summary: Nilai rapor seorang siswa
+      parameters: [{ $ref: '#/components/parameters/SiswaId' }]
+      responses:
+        '200': { description: OK }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /bk/siswa/{siswaId}/nilai/verifikasi:
+    post:
+      tags: [10. BK - Nilai Rapor]
+      summary: Verifikasi / tolak nilai yang menunggu
+      parameters: [{ $ref: '#/components/parameters/SiswaId' }]
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                status: { type: string, enum: [terverifikasi, ditolak], default: terverifikasi }
+                ids: { type: array, items: { type: string, format: uuid }, description: Kosong = semua yang menunggu }
+      responses:
+        '200': { description: '`{ status, jumlah, ids }`' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  # ============================================================ BK: PANEL
+  /bk/siswa:
+    get:
+      tags: [11. BK - Panel Siswa]
+      summary: Dashboard siswa dengan penanda (UC10)
+      parameters:
+        - { name: q, in: query, description: Cari nama atau kelas (rombel), schema: { type: string, maxLength: 100 } }
+        - { name: tingkat, in: query, schema: { type: integer, minimum: 10, maximum: 12 } }
+        - { name: rombel, in: query, schema: { type: string } }
+        - { $ref: '#/components/parameters/Angkatan' }
+        - name: penanda
+          in: query
+          schema:
+            type: string
+            enum: [profil_belum_lengkap, belum_asesmen, belum_isi_nilai, nilai_menunggu, selaras, tidak_selaras, berisiko, belum_dianalisis, perlu_dianalisis_ulang, tanpa_target]
+        - { name: limit, in: query, schema: { type: integer, minimum: 1, maximum: 200, default: 50 } }
+        - { $ref: '#/components/parameters/Offset' }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              example:
+                data:
+                  items:
+                    - siswa_id: '...'
+                      nama: Citra Lestari
+                      tingkat: 11
+                      rombel: XI-2
+                      angkatan: 2027
+                      kode_holland: IRC
+                      keselarasan: { status: perlu_dianalisis_ulang, status_terakhir: selaras, dihitung_at: '2026-10-16T10:00:00Z' }
+                      penanda: [nilai_menunggu, perlu_dianalisis_ulang]
+                  total: 1
+                  limit: 50
+                  offset: 0
+                  jumlah_per_penanda: { profil_belum_lengkap: 0, belum_asesmen: 0, belum_isi_nilai: 0, nilai_menunggu: 1, selaras: 0, tidak_selaras: 0, berisiko: 0, belum_dianalisis: 0, perlu_dianalisis_ulang: 1, tanpa_target: 0 }
+  /bk/siswa/{siswaId}:
+    get:
+      tags: [11. BK - Panel Siswa]
+      summary: Detail siswa (read-only) + catatan terbaru
+      parameters: [{ $ref: '#/components/parameters/SiswaId' }]
+      responses:
+        '200': { description: OK }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /bk/siswa/{siswaId}/sekolah:
+    delete:
+      tags: [11. BK - Panel Siswa]
+      summary: Keluarkan siswa dari sekolah
+      description: Data siswa tetap; siswa bisa bergabung lagi dengan kode BK.
+      parameters: [{ $ref: '#/components/parameters/SiswaId' }]
+      responses:
+        '204': { description: Dikeluarkan }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /bk/keselarasan/segarkan:
+    post:
+      tags: [11. BK - Panel Siswa]
+      summary: Hitung ulang keselarasan semua siswa bertarget utama
+      responses:
+        '200':
+          description: Ringkasan
+          content:
+            application/json:
+              example: { data: { diperiksa: 12, dihitung_baru: 3, dari_cache: 9, data_belum_lengkap: 0 } }
+  /bk/ringkasan:
+    get:
+      tags: [11. BK - Panel Siswa]
+      summary: Ringkasan angkatan (UC13)
+      parameters: [{ $ref: '#/components/parameters/Angkatan' }]
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              example:
+                data:
+                  filter_angkatan: semua
+                  angkatan_tersedia: [{ angkatan: 2027, jumlah_siswa: 30 }, { angkatan: null, jumlah_siswa: 2 }]
+                  jumlah_siswa: 32
+                  jumlah_sudah_asesmen: 25
+                  minat_dominan: [{ nama: I, jumlah: 10 }]
+                  rumpun_target: [{ nama: Komputer dan Informatika, jumlah: 8 }]
+                  bidang_karir_target: [{ nama: Teknologi Informasi dan Komputer, jumlah: 9 }]
+                  mapel_pilihan: [{ nama: Informatika, jumlah: 14 }]
+  /bk/siswa/{siswaId}/rekomendasi/prodi:
+    get:
+      tags: [11. BK - Panel Siswa]
+      summary: Rekomendasi prodi siswa
+      parameters: [{ $ref: '#/components/parameters/SiswaId' }]
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { $ref: '#/components/schemas/HasilRekomendasi' } } } }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /bk/siswa/{siswaId}/rekomendasi/mapel:
+    get:
+      tags: [11. BK - Panel Siswa]
+      summary: Rekomendasi mapel siswa
+      parameters: [{ $ref: '#/components/parameters/SiswaId' }]
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { $ref: '#/components/schemas/HasilRekomendasi' } } } }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /bk/siswa/{siswaId}/rekomendasi/jenjang:
+    get:
+      tags: [11. BK - Panel Siswa]
+      summary: Rekomendasi jenjang siswa
+      parameters: [{ $ref: '#/components/parameters/SiswaId' }]
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { $ref: '#/components/schemas/HasilRekomendasi' } } } }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /bk/siswa/{siswaId}/keselarasan:
+    get:
+      tags: [11. BK - Panel Siswa]
+      summary: Analisis keselarasan siswa
+      parameters: [{ $ref: '#/components/parameters/SiswaId' }]
+      responses:
+        '200': { description: OK, content: { application/json: { schema: { $ref: '#/components/schemas/HasilRekomendasi' } } } }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /bk/siswa/{siswaId}/rekomendasi/{jenis}/penjelasan:
+    post:
+      tags: [11. BK - Panel Siswa]
+      summary: Penjelasan rekomendasi siswa
+      parameters:
+        - { $ref: '#/components/parameters/SiswaId' }
+        - { $ref: '#/components/parameters/JenisRekomendasi' }
+      responses:
+        '200': { $ref: '#/components/responses/Penjelasan' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /bk/siswa/{siswaId}/perkembangan:
+    get:
+      tags: [11. BK - Panel Siswa]
+      summary: Perkembangan siswa (UC12)
+      parameters: [{ $ref: '#/components/parameters/SiswaId' }]
+      responses:
+        '200': { $ref: '#/components/responses/Perkembangan' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  # ========================================================== BK: CATATAN
+  /bk/siswa/{siswaId}/catatan:
+    get:
+      tags: [12. BK - Catatan Konseling]
+      summary: Daftar catatan konseling siswa
+      parameters: [{ $ref: '#/components/parameters/SiswaId' }]
+      responses:
+        '200': { description: OK }
+        '404': { $ref: '#/components/responses/NotFound' }
+    post:
+      tags: [12. BK - Catatan Konseling]
+      summary: Tambah catatan
+      parameters: [{ $ref: '#/components/parameters/SiswaId' }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [isi]
+              properties:
+                isi: { type: string, minLength: 1, maxLength: 5000 }
+                tindak_lanjut: { type: string, maxLength: 2000, nullable: true }
+            example: { isi: Diskusi pilihan Kedokteran vs TI., tindak_lanjut: Perkuat Biologi }
+      responses:
+        '201':
+          description: Catatan baru
+          content:
+            application/json:
+              example: { data: { id: '...', siswa_id: '...', bk_id: '...', isi: Diskusi pilihan Kedokteran vs TI., tindak_lanjut: Perkuat Biologi, bk: { nama: Bu Ani } } }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '404': { $ref: '#/components/responses/NotFound' }
+  /bk/catatan/{id}:
+    patch:
+      tags: [12. BK - Catatan Konseling]
+      summary: Ubah catatan (hanya penulis)
+      parameters: [{ $ref: '#/components/parameters/Id' }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                isi: { type: string, minLength: 1, maxLength: 5000 }
+                tindak_lanjut: { type: string, maxLength: 2000, nullable: true }
+      responses:
+        '200': { description: Catatan setelah diubah }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+    delete:
+      tags: [12. BK - Catatan Konseling]
+      summary: Hapus catatan (hanya penulis)
+      parameters: [{ $ref: '#/components/parameters/Id' }]
+      responses:
+        '204': { description: Terhapus }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: access_token dari Supabase Auth
+
+  parameters:
+    Id:
+      name: id
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+    SiswaId:
+      name: siswaId
+      in: path
+      required: true
+      description: id siswa (= id user/profil) di sekolah yang sama dengan BK
+      schema: { type: string, format: uuid }
+    JenisRekomendasi:
+      name: jenis
+      in: path
+      required: true
+      schema: { type: string, enum: [prodi, mapel, jenjang, keselarasan] }
+    Angkatan:
+      name: angkatan
+      in: query
+      description: Tahun lulus, mis. 2027; atau `kosong` untuk siswa yang belum mengisi
+      schema: { type: string, example: '2027' }
+    Limit100:
+      name: limit
+      in: query
+      schema: { type: integer, minimum: 1, maximum: 100, default: 20 }
+    Offset:
+      name: offset
+      in: query
+      schema: { type: integer, minimum: 0, default: 0 }
+
+  responses:
+    BadRequest:
+      description: Validasi gagal / data belum memenuhi syarat
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+          example: { error: { code: VALIDATION_ERROR, message: 'profil.tingkat: Too small: expected number to be >=10' } }
+    Unauthorized:
+      description: Token tidak ada atau tidak valid
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+          example: { error: { code: UNAUTHORIZED, message: Header Authorization Bearer tidak ada } }
+    Forbidden:
+      description: Peran atau kepemilikan salah
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+          example: { error: { code: FORBIDDEN, message: 'Hanya untuk peran: bk' } }
+    NotFound:
+      description: Tidak ditemukan (termasuk data sekolah lain)
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+          example: { error: { code: NOT_FOUND, message: Siswa tidak ditemukan } }
+    Conflict:
+      description: Konflik, mis. nilai terverifikasi dikunci
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+          example: { error: { code: NILAI_TERKUNCI, message: Nilai yang sudah terverifikasi tidak bisa diubah; hubungi guru BK, details: { mapel_id: [1] } } }
+    Penjelasan:
+      description: Penjelasan (atau null bila LLM gagal)
+      content:
+        application/json:
+          examples:
+            mock:
+              value: { data: { penjelasan: 'Berdasarkan data yang kamu isi, prodi dengan skor tertinggi adalah Teknik Informatika (87%), ...', model: mock, dari_cache: false } }
+            gagal:
+              value: { data: { penjelasan: null, model: claude-haiku-5-5, alasan: LLM_GAGAL } }
+    Perkembangan:
+      description: Riwayat minat & nilai
+      content:
+        application/json:
+          example:
+            data:
+              minat:
+                riwayat: [{ semester: 3, kode_holland: IAC }, { semester: 3, kode_holland: IRC }]
+                perubahan: { kode_holland_berubah: true, selisih_per_tipe: { R: 2, I: 1, A: -1, S: 0, E: 0, C: 0 } }
+              nilai:
+                semester: [1, 2]
+                per_mapel: [{ mapel: { id: 1, kode: MAT, nama: Matematika }, nilai: { '1': { nilai: 80, status: menunggu }, '2': { nilai: 85, status: menunggu } } }]
+                rata_rata_per_semester: [{ semester: 1, rata_rata: 75, jumlah_mapel: 3 }, { semester: 2, rata_rata: 83, jumlah_mapel: 3 }]
+                perubahan: { dari_semester: 1, ke_semester: 2, rata_rata_mapel_sama: { dari: 77.5, ke: 79.5 }, mapel: [{ mapel: { kode: MAT }, dari: 80, ke: 85, selisih: 5 }] }
+
+  schemas:
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, message]
+          properties:
+            code: { type: string }
+            message: { type: string }
+            details: { description: Rincian opsional (mis. daftar error impor) }
+
+    ProfilInput:
+      type: object
+      required: [nama, tingkat, peminatan]
+      properties:
+        nama: { type: string, minLength: 1, maxLength: 100 }
+        tingkat: { type: integer, minimum: 10, maximum: 12 }
+        peminatan: { type: string, enum: [IPA, IPS, Bahasa, Merdeka, SMK] }
+        rombel: { type: string, maxLength: 30, nullable: true }
+        angkatan: { type: integer, minimum: 2000, maximum: 2100, nullable: true, description: Tahun lulus SMA }
+
+    PreferensiInput:
+      type: object
+      properties:
+        gaya_belajar: { type: string, enum: [praktik, teori, seimbang], nullable: true }
+        ingin_cepat_kerja: { type: boolean, nullable: true }
+        pertimbangan_biaya: { type: integer, minimum: 1, maximum: 5, nullable: true }
+        jenjang_diminati:
+          type: array
+          uniqueItems: true
+          items: { type: string, enum: [D3, D4, S1, kedinasan, langsung_kerja] }
+
+    TargetKarirList:
+      type: array
+      maxItems: 10
+      items:
+        oneOf:
+          - type: object
+            required: [karir_id]
+            additionalProperties: false
+            properties:
+              karir_id: { type: string, format: uuid }
+          - type: object
+            required: [teks_bebas]
+            additionalProperties: false
+            properties:
+              teks_bebas: { type: string, minLength: 1, maxLength: 100 }
+
+    OnboardingInput:
+      type: object
+      required: [profil]
+      properties:
+        profil: { $ref: '#/components/schemas/ProfilInput' }
+        preferensi: { $ref: '#/components/schemas/PreferensiInput' }
+        mapel_ids: { type: array, items: { type: integer }, uniqueItems: true }
+        mapel_favorit_ids: { type: array, items: { type: integer }, maxItems: 3, uniqueItems: true }
+        bidang_karir_ids: { type: array, items: { type: integer }, maxItems: 3, uniqueItems: true }
+        target_karir: { $ref: '#/components/schemas/TargetKarirList' }
+
+    JawabanAsesmen:
+      type: object
+      required: [riasec, kemampuan]
+      properties:
+        riasec:
+          type: array
+          description: Semua butir aktif (18) tepat sekali
+          items:
+            type: object
+            required: [butir_id, skor]
+            properties:
+              butir_id: { type: integer }
+              skor: { type: integer, minimum: 1, maximum: 5 }
+        kemampuan:
+          type: array
+          description: Semua dimensi (9) tepat sekali
+          items:
+            type: object
+            required: [dimensi_id, skor]
+            properties:
+              dimensi_id: { type: integer }
+              skor: { type: integer, minimum: 1, maximum: 5 }
+
+    HasilRekomendasi:
+      type: object
+      properties:
+        data:
+          oneOf:
+            - type: object
+              description: Data belum cukup ("Belum ada rekomendasi...")
+              required: [tersedia, kurang]
+              properties:
+                tersedia: { type: boolean, enum: [false] }
+                kurang:
+                  type: array
+                  items: { type: string, enum: [profil, tes_minat, nilai_rapor, preferensi_pendidikan, target_prodi_utama, katalog] }
+            - type: object
+              required: [tersedia, hasil]
+              properties:
+                tersedia: { type: boolean, enum: [true] }
+                hasil: { type: object, description: Bentuk bergantung jenis rekomendasi }
+                penjelasan: { type: string, nullable: true }
+                model_llm: { type: string, nullable: true, description: '"mock" atau nama model Claude' }
+                dari_cache: { type: boolean }
+                dibuat_at: { type: string, format: date-time }

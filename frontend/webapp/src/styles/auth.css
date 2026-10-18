@@ -1,0 +1,929 @@
+/* =============================================================
+   ArahIn - Auth (Login & Registrasi Siswa / Guru BK)
+   Pixel-Perfect Implementation matching media_1792161572380.png
+   Fully Responsive (PC, Laptop, Tablet, Smartphone)
+   ============================================================= */
+
+@import "./tokens.css";
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap");
+
+/* --- Base Reset & Page Wrapper --- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.auth-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  background: #F8FAFC;
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #334155;
+  position: relative;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- Header --- */
+.auth-header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 64px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-header-container {
+  width: 100%;
+  max-width: 1280px;
+  height: 100%;
+  padding: 0 clamp(16px, 3vw, 32px);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.auth-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-decoration: none;
+  gap: 1px;
+}
+
+.auth-brand-top {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+.auth-brand-logo-img {
+  width: auto;
+  height: 28px;
+  display: block;
+}
+
+.auth-brand-name {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.4px;
+  color: #0F172A;
+}
+
+.auth-brand-name-in {
+  color: #0284C7;
+}
+
+.auth-brand-slogan {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  line-height: 14px;
+  letter-spacing: 0.3px;
+  color: #64748B;
+}
+
+.auth-header-nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: clamp(8px, 2vw, 20px);
+}
+
+.auth-nav-link {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 18px;
+  color: #334155;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.auth-nav-link:hover {
+  color: #0284C7;
+  background: rgba(2, 132, 199, 0.06);
+}
+
+/* --- Main Layout --- */
+.auth-main {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 0 40px;
+}
+
+.auth-content-container {
+  width: 100%;
+  max-width: 1280px;
+  padding: 0 clamp(16px, 3vw, 32px);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Breadcrumb & Status Bar */
+.auth-topbar {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 12px;
+}
+
+.auth-breadcrumb {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  flex-wrap: wrap;
+}
+
+.auth-breadcrumb-primary {
+  font-weight: 700;
+  color: #006190;
+  cursor: pointer;
+}
+
+.auth-breadcrumb-separator {
+  color: #64748B;
+  display: flex;
+  align-items: center;
+}
+
+.auth-breadcrumb-secondary {
+  font-weight: 500;
+  color: #475569;
+}
+
+.auth-status-pill {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 6px 14px;
+  gap: 8px;
+  background: #EBF3FE;
+  border-radius: 9999px;
+  border: 1px solid rgba(0, 97, 144, 0.08);
+}
+
+.auth-status-dot {
+  width: 8px;
+  height: 8px;
+  background: #10B981;
+  border-radius: 9999px;
+  box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2);
+  flex-shrink: 0;
+  animation: pulseGreen 2.5s infinite;
+}
+
+@keyframes pulseGreen {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+
+.auth-status-text {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+  color: #334155;
+  white-space: nowrap;
+}
+
+/* Dual Column Layout Grid */
+.auth-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(360px, 460px);
+  gap: clamp(24px, 4vw, 48px);
+  align-items: center;
+  width: 100%;
+  margin-top: 8px;
+}
+
+/* --- Left Column: Hero Showcase --- */
+.auth-hero-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+}
+
+.auth-hero-card {
+  width: 100%;
+  max-width: 480px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0px 10px 30px -5px rgba(0, 0, 0, 0.07), 0px 1px 3px rgba(0, 0, 0, 0.04);
+  background: #FFFFFF;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #E2E8F0;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.auth-hero-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 16px 36px -6px rgba(0, 97, 144, 0.12);
+}
+
+.auth-hero-image {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  border-radius: 19px;
+}
+
+.auth-hero-badge {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  background: #E0F2FE;
+  border-radius: 9999px;
+  color: #0284C7;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 16px;
+  letter-spacing: 0.2px;
+  margin-bottom: 14px;
+}
+
+.auth-hero-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: clamp(28px, 3.5vw, 36px);
+  line-height: 1.25;
+  color: #0F172A;
+  margin: 0 0 12px 0;
+  letter-spacing: -0.6px;
+}
+
+.auth-hero-title-in {
+  color: #0077D7;
+}
+
+.auth-hero-subtitle {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 400;
+  font-size: clamp(13px, 1.8vw, 14.5px);
+  line-height: 1.65;
+  color: #475569;
+  max-width: 440px;
+  margin: 0;
+}
+
+/* --- Right Column: Interactive Auth Card --- */
+.auth-card-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 460px;
+  background: #FFFFFF;
+  box-shadow: 0px 20px 40px -10px rgba(0, 0, 0, 0.08), 0px 1px 3px rgba(0, 0, 0, 0.04);
+  border-radius: 18px;
+  padding: clamp(20px, 3vw, 32px);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  border: 1px solid #E2E8F0;
+}
+
+/* Mode Tabs: Masuk (Login) vs Daftar Akun Baru */
+.auth-tabs {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 4px;
+  background: #F1F5F9;
+  border-radius: 10px;
+  width: 100%;
+  height: 48px;
+}
+
+.auth-tab-btn {
+  flex: 1;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border-radius: 8px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14.5px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  background: transparent;
+  color: #475569;
+  font-weight: 600;
+}
+
+.auth-tab-btn.active {
+  background: #FFFFFF;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.06);
+  color: #006190;
+  font-weight: 700;
+}
+
+.auth-tab-btn.inactive:hover {
+  color: #006190;
+}
+
+/* Role Switcher ("Pilih Peran Akun:") */
+.auth-role-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.auth-role-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 16px;
+  color: #475569;
+}
+
+.auth-role-control {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 4px;
+  gap: 8px;
+  background: #F1F5F9;
+  border-radius: 8px;
+  width: 100%;
+  height: 42px;
+}
+
+.auth-role-btn {
+  flex: 1;
+  height: 34px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border-radius: 6px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 18px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  background: transparent;
+  color: #475569;
+}
+
+.auth-role-btn.active {
+  background: #006190;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+  color: #FFFFFF;
+  font-weight: 700;
+}
+
+.auth-role-btn.inactive:hover {
+  color: #006190;
+}
+
+/* Form Styles */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.auth-field-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.auth-field-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 18px;
+  color: #1E293B;
+}
+
+.auth-field-hint {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 600;
+  font-size: 11.5px;
+  line-height: 16px;
+  color: #64748B;
+}
+
+.auth-field-link {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 16px;
+  color: #006190;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+
+.auth-field-link:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
+.auth-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 46px;
+  background: #F0F4F8;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.auth-input-container:focus-within {
+  background: #FFFFFF;
+  border-color: #006190;
+  box-shadow: 0 0 0 3px rgba(0, 97, 144, 0.12);
+}
+
+.auth-input-icon {
+  position: absolute;
+  left: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748B;
+  pointer-events: none;
+}
+
+.auth-input {
+  width: 100%;
+  height: 100%;
+  padding: 0 42px 0 42px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 500;
+  font-size: 13.5px;
+  line-height: 18px;
+  color: #0F172A;
+}
+
+.auth-input::placeholder {
+  color: #94A3B8;
+  font-weight: 400;
+}
+
+.auth-input-toggle {
+  position: absolute;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  padding: 6px;
+  cursor: pointer;
+  color: #64748B;
+  border-radius: 4px;
+  transition: color 0.15s ease;
+}
+
+.auth-input-toggle:hover {
+  color: #006190;
+}
+
+/* Remember me & Security */
+.auth-remember-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding-top: 2px;
+}
+
+.auth-checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 500;
+  font-size: 12.5px;
+  line-height: 18px;
+  color: #475569;
+  user-select: none;
+}
+
+.auth-checkbox {
+  width: 16px;
+  height: 16px;
+  accent-color: #006190;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.auth-security-indicator {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+  color: #475569;
+}
+
+/* CTA Submit Button */
+.auth-submit-btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  height: 48px;
+  background: #006190;
+  border: none;
+  border-radius: 8px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  line-height: 24px;
+  color: #FFFFFF;
+  cursor: pointer;
+  box-shadow: 0px 4px 8px -2px rgba(0, 97, 144, 0.25);
+  transition: all 0.2s ease;
+}
+
+.auth-submit-btn:hover:not(:disabled) {
+  background: #004e75;
+  transform: translateY(-1px);
+  box-shadow: 0px 6px 12px -2px rgba(0, 97, 144, 0.35);
+}
+
+.auth-submit-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+/* Alert Notification */
+.auth-alert-error {
+  background: #FEF2F2;
+  border: 1px solid #FCA5A5;
+  color: #B91C1C;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  line-height: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.auth-alert-success {
+  background: #F0FDF4;
+  border: 1px solid #86EFAC;
+  color: #15803D;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  line-height: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Notice Box (Dapodik Notice) */
+.auth-notice-box {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 14px 16px;
+  gap: 12px;
+  width: 100%;
+  background: #E0EEFF;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 97, 144, 0.08);
+}
+
+.auth-notice-icon {
+  color: #006190;
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+.auth-notice-text {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12px;
+  line-height: 17px;
+  color: #1E293B;
+}
+
+.auth-notice-bold {
+  font-weight: 700;
+  color: #0F172A;
+}
+
+/* Switch Helper */
+.auth-switch-helper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+  padding-top: 4px;
+  flex-wrap: wrap;
+}
+
+.auth-switch-label {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 18px;
+  color: #475569;
+}
+
+.auth-switch-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: 13.5px;
+  line-height: 20px;
+  color: #006190;
+  text-decoration: none;
+  transition: opacity 0.15s ease;
+}
+
+.auth-switch-btn:hover {
+  text-decoration: underline;
+  opacity: 0.85;
+}
+
+/* Card Bottom Badge */
+.auth-card-footer-badge {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding-top: 14px;
+  gap: 6px;
+  width: 100%;
+  border-top: 1px solid #F1F5F9;
+  text-align: center;
+}
+
+.auth-card-footer-icon {
+  color: #006190;
+  flex-shrink: 0;
+}
+
+.auth-card-footer-text {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 600;
+  font-size: 11.5px;
+  line-height: 16px;
+  color: #475569;
+}
+
+/* --- Footer --- */
+.auth-footer {
+  width: 100%;
+  background: #EEF4FE;
+  border-top: 1px solid rgba(0, 97, 144, 0.06);
+  padding: 20px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: auto;
+}
+
+.auth-footer-container {
+  width: 100%;
+  max-width: 1280px;
+  padding: 0 clamp(16px, 3vw, 32px);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.auth-footer-copy {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 18px;
+  color: #475569;
+}
+
+.auth-footer-links {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: clamp(12px, 2.5vw, 24px);
+  flex-wrap: wrap;
+}
+
+.auth-footer-link {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 18px;
+  color: #475569;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+
+.auth-footer-link:hover {
+  color: #006190;
+}
+
+/* Modal Popup Helper */
+.auth-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.auth-modal-card {
+  background: #FFFFFF;
+  border-radius: 16px;
+  max-width: 460px;
+  width: 100%;
+  padding: 24px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* =============================================================
+   RESPONSIVE BREAKPOINTS (Tablet, Mobile, Ultra-Wide)
+   ============================================================= */
+
+/* Tablet & Smaller Screens (< 1024px) */
+@media (max-width: 1024px) {
+  .auth-grid {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .auth-hero-column {
+    order: 1;
+  }
+
+  .auth-card-wrapper {
+    order: 2;
+  }
+
+  .auth-hero-card {
+    max-width: 440px;
+  }
+}
+
+/* Smartphone / Mobile Devices (< 640px) */
+@media (max-width: 640px) {
+  .auth-header {
+    height: 56px;
+  }
+
+  .auth-brand-name {
+    font-size: 18px;
+  }
+
+  .auth-brand-slogan {
+    display: none; /* Hide long slogan on small phone screens for clean header */
+  }
+
+  .auth-topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .auth-breadcrumb {
+    font-size: 12px;
+  }
+
+  .auth-status-pill {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .auth-card {
+    padding: 20px 16px;
+    border-radius: 14px;
+  }
+
+  .auth-hero-title {
+    font-size: 26px;
+  }
+
+  .auth-hero-subtitle {
+    font-size: 13px;
+  }
+
+  .auth-footer-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .auth-footer-links {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+/* Very Small Mobile (< 380px) */
+@media (max-width: 380px) {
+  .auth-header-nav span {
+    display: none; /* Show icon only for compact header */
+  }
+
+  .auth-tabs {
+    font-size: 13px;
+  }
+}

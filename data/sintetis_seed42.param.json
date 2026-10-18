@@ -1,0 +1,2506 @@
+{
+  "metode": "resampling_noise+profil_asumsi",
+  "seed": 42,
+  "per_bidang": 55,
+  "noise": {
+    "likert_peluang_geser": 0.3,
+    "likert_geser": 1,
+    "nilai_rentang": 3,
+    "ipk_rentang": 0.1
+  },
+  "sumber_file": "hasilsurvei_1.csv",
+  "sumber_jumlah_responden": 13,
+  "bidang_resampling": {
+    "Ekonomi, Bisnis, dan Manajemen": 2,
+    "Komputer dan Informatika": 6,
+    "Sosial, Politik, dan Hukum": 3,
+    "Kesehatan dan Kedokteran": 1,
+    "Seni, Desain, dan Humaniora": 1
+  },
+  "bidang_asumsi": [
+    "Teknik dan Teknologi",
+    "Pendidikan",
+    "Sains dan Matematika",
+    "Pertanian, Pangan, dan Lingkungan"
+  ],
+  "profil_file": "scripts/config/profil_asumsi.json",
+  "profil_sha256": "dc74eee6d522d5cbdd9f694b765ac3a8a5a964514cc995d2ea7ee09c3c33536f",
+  "catatan": "Data sintetis untuk demo. Baris \"asumsi\" berasal dari profil tulisan tim, bukan data. Jangan dipakai untuk evaluasi/klaim akurasi; baris \"resampling\" adalah kembaran responden asli (risiko kebocoran).",
+  "asal": [
+    {
+      "baris": 2,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 3,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 4,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 5,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 6,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 7,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 8,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 9,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 10,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 11,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 3:36:17 PM GMT+7"
+    },
+    {
+      "baris": 12,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 13,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 14,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 15,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 11:05:25 AM GMT+7"
+    },
+    {
+      "baris": 16,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 11:05:25 AM GMT+7"
+    },
+    {
+      "baris": 17,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 9:11:47 PM GMT+7"
+    },
+    {
+      "baris": 18,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 19,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 20,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 21,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 12:38:51 PM GMT+7"
+    },
+    {
+      "baris": 22,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 9:11:47 PM GMT+7"
+    },
+    {
+      "baris": 23,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 3:16:45 PM GMT+7"
+    },
+    {
+      "baris": 24,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 25,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 9:11:47 PM GMT+7"
+    },
+    {
+      "baris": 26,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 27,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 28,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 29,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 30,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 2:14:15 PM GMT+7"
+    },
+    {
+      "baris": 31,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 32,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:37:03 PM GMT+7"
+    },
+    {
+      "baris": 33,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 34,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 11:28:48 AM GMT+7"
+    },
+    {
+      "baris": 35,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 36,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 3:16:45 PM GMT+7"
+    },
+    {
+      "baris": 37,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 2:14:15 PM GMT+7"
+    },
+    {
+      "baris": 38,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:37:03 PM GMT+7"
+    },
+    {
+      "baris": 39,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 40,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 41,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 42,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 43,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 44,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 2:14:15 PM GMT+7"
+    },
+    {
+      "baris": 45,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 46,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 47,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 11:28:48 AM GMT+7"
+    },
+    {
+      "baris": 48,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 49,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 50,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 51,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 3:16:45 PM GMT+7"
+    },
+    {
+      "baris": 52,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 11:05:25 AM GMT+7"
+    },
+    {
+      "baris": 53,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 54,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 55,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 11:28:48 AM GMT+7"
+    },
+    {
+      "baris": 56,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 57,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 58,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 59,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 60,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 61,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:37:03 PM GMT+7"
+    },
+    {
+      "baris": 62,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 63,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 11:05:25 AM GMT+7"
+    },
+    {
+      "baris": 64,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 65,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 66,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 11:28:48 AM GMT+7"
+    },
+    {
+      "baris": 67,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 68,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 4:08:47 PM GMT+7"
+    },
+    {
+      "baris": 69,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 70,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 3:16:45 PM GMT+7"
+    },
+    {
+      "baris": 71,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 72,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 73,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 74,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 75,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 76,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 77,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 78,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 79,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 9:11:47 PM GMT+7"
+    },
+    {
+      "baris": 80,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 81,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 82,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 83,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 84,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 85,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 86,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 87,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 12:38:51 PM GMT+7"
+    },
+    {
+      "baris": 88,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 89,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 12:38:51 PM GMT+7"
+    },
+    {
+      "baris": 90,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 11:05:25 AM GMT+7"
+    },
+    {
+      "baris": 91,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 92,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 93,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 94,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 3:16:45 PM GMT+7"
+    },
+    {
+      "baris": 95,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 3:36:17 PM GMT+7"
+    },
+    {
+      "baris": 96,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 97,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 98,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 99,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 11:28:48 AM GMT+7"
+    },
+    {
+      "baris": 100,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 101,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 2:14:15 PM GMT+7"
+    },
+    {
+      "baris": 102,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 3:36:17 PM GMT+7"
+    },
+    {
+      "baris": 103,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 104,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 105,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 106,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 2:14:15 PM GMT+7"
+    },
+    {
+      "baris": 107,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 108,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 109,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 11:05:25 AM GMT+7"
+    },
+    {
+      "baris": 110,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 111,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 112,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 113,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 114,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 115,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 116,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/16 12:03:47 AM GMT+7"
+    },
+    {
+      "baris": 117,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 12:38:51 PM GMT+7"
+    },
+    {
+      "baris": 118,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 119,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 120,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 121,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 122,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 123,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 2:14:15 PM GMT+7"
+    },
+    {
+      "baris": 124,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 125,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 126,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 127,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 2:14:15 PM GMT+7"
+    },
+    {
+      "baris": 128,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 129,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 2:14:15 PM GMT+7"
+    },
+    {
+      "baris": 130,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 131,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:37:03 PM GMT+7"
+    },
+    {
+      "baris": 132,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 133,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 134,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 135,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 136,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 137,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/16 12:03:47 AM GMT+7"
+    },
+    {
+      "baris": 138,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 139,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 11:05:25 AM GMT+7"
+    },
+    {
+      "baris": 140,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 141,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 142,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 11:28:48 AM GMT+7"
+    },
+    {
+      "baris": 143,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 144,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 145,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 146,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 3:16:45 PM GMT+7"
+    },
+    {
+      "baris": 147,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 148,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 149,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 3:16:45 PM GMT+7"
+    },
+    {
+      "baris": 150,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 12:38:51 PM GMT+7"
+    },
+    {
+      "baris": 151,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 152,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 153,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 154,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 155,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 156,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 157,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 158,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 12:38:51 PM GMT+7"
+    },
+    {
+      "baris": 159,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 160,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 3:36:17 PM GMT+7"
+    },
+    {
+      "baris": 161,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:37:03 PM GMT+7"
+    },
+    {
+      "baris": 162,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 163,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 164,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 4:39:09 PM GMT+7"
+    },
+    {
+      "baris": 165,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 166,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 167,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 168,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:37:03 PM GMT+7"
+    },
+    {
+      "baris": 169,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 11:05:25 AM GMT+7"
+    },
+    {
+      "baris": 170,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 171,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 172,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 173,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 174,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 175,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 176,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 177,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 178,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:37:03 PM GMT+7"
+    },
+    {
+      "baris": 179,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 180,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 181,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 12:38:51 PM GMT+7"
+    },
+    {
+      "baris": 182,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 183,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:37:03 PM GMT+7"
+    },
+    {
+      "baris": 184,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 12:38:51 PM GMT+7"
+    },
+    {
+      "baris": 185,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 186,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 187,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 188,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 189,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 4:39:09 PM GMT+7"
+    },
+    {
+      "baris": 190,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 11:05:25 AM GMT+7"
+    },
+    {
+      "baris": 191,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 192,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 193,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 4:08:47 PM GMT+7"
+    },
+    {
+      "baris": 194,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 195,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 196,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 197,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 11:05:25 AM GMT+7"
+    },
+    {
+      "baris": 198,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 199,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 200,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 201,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 202,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 203,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 204,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 11:05:25 AM GMT+7"
+    },
+    {
+      "baris": 205,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:37:03 PM GMT+7"
+    },
+    {
+      "baris": 206,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 11:05:25 AM GMT+7"
+    },
+    {
+      "baris": 207,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 208,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 209,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 210,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 211,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 212,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 2:14:15 PM GMT+7"
+    },
+    {
+      "baris": 213,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/16 12:03:47 AM GMT+7"
+    },
+    {
+      "baris": 214,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 215,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 216,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 217,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 218,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 219,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 11:05:25 AM GMT+7"
+    },
+    {
+      "baris": 220,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 221,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 222,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 223,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 224,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 225,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 226,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 227,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 228,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 2:14:15 PM GMT+7"
+    },
+    {
+      "baris": 229,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 230,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 231,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 232,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 233,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 2:14:15 PM GMT+7"
+    },
+    {
+      "baris": 234,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 2:14:15 PM GMT+7"
+    },
+    {
+      "baris": 235,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 3:16:45 PM GMT+7"
+    },
+    {
+      "baris": 236,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 237,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 238,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 239,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 240,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:37:03 PM GMT+7"
+    },
+    {
+      "baris": 241,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 242,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 243,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 244,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 245,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 246,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 9:11:47 PM GMT+7"
+    },
+    {
+      "baris": 247,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 12:38:51 PM GMT+7"
+    },
+    {
+      "baris": 248,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 249,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 250,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 12:38:51 PM GMT+7"
+    },
+    {
+      "baris": 251,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 252,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 253,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 11:28:48 AM GMT+7"
+    },
+    {
+      "baris": 254,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 255,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 256,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 257,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 3:36:17 PM GMT+7"
+    },
+    {
+      "baris": 258,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 11:05:25 AM GMT+7"
+    },
+    {
+      "baris": 259,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 9:11:47 PM GMT+7"
+    },
+    {
+      "baris": 260,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 11:05:25 AM GMT+7"
+    },
+    {
+      "baris": 261,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 262,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 263,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 264,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 265,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:37:03 PM GMT+7"
+    },
+    {
+      "baris": 266,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 4:08:47 PM GMT+7"
+    },
+    {
+      "baris": 267,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 11:05:25 AM GMT+7"
+    },
+    {
+      "baris": 268,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 269,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 270,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 271,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 3:16:45 PM GMT+7"
+    },
+    {
+      "baris": 272,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 273,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 274,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 4:39:09 PM GMT+7"
+    },
+    {
+      "baris": 275,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 276,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 277,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 4:08:47 PM GMT+7"
+    },
+    {
+      "baris": 278,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 3:16:45 PM GMT+7"
+    },
+    {
+      "baris": 279,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 2:14:15 PM GMT+7"
+    },
+    {
+      "baris": 280,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/16 12:03:47 AM GMT+7"
+    },
+    {
+      "baris": 281,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 282,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 283,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 11:05:25 AM GMT+7"
+    },
+    {
+      "baris": 284,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 285,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 4:08:47 PM GMT+7"
+    },
+    {
+      "baris": 286,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/16 12:03:47 AM GMT+7"
+    },
+    {
+      "baris": 287,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 288,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 289,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 11:05:25 AM GMT+7"
+    },
+    {
+      "baris": 290,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 291,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:37:03 PM GMT+7"
+    },
+    {
+      "baris": 292,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 293,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 294,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 4:08:47 PM GMT+7"
+    },
+    {
+      "baris": 295,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 3:16:45 PM GMT+7"
+    },
+    {
+      "baris": 296,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 297,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 298,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 299,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 300,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 301,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 302,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 303,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 11:05:25 AM GMT+7"
+    },
+    {
+      "baris": 304,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 12:38:51 PM GMT+7"
+    },
+    {
+      "baris": 305,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 306,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 4:08:47 PM GMT+7"
+    },
+    {
+      "baris": 307,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 308,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 309,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 2:14:15 PM GMT+7"
+    },
+    {
+      "baris": 310,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 3:36:17 PM GMT+7"
+    },
+    {
+      "baris": 311,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 312,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 313,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 4:39:09 PM GMT+7"
+    },
+    {
+      "baris": 314,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 315,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 2:14:15 PM GMT+7"
+    },
+    {
+      "baris": 316,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 317,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 3:36:17 PM GMT+7"
+    },
+    {
+      "baris": 318,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 319,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 320,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 321,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 322,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 323,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 324,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 325,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 326,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:37:03 PM GMT+7"
+    },
+    {
+      "baris": 327,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 328,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:37:03 PM GMT+7"
+    },
+    {
+      "baris": 329,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 330,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 331,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 332,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 333,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 334,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 335,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 2:14:15 PM GMT+7"
+    },
+    {
+      "baris": 336,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 337,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 11:05:25 AM GMT+7"
+    },
+    {
+      "baris": 338,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 9:11:47 PM GMT+7"
+    },
+    {
+      "baris": 339,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 11:05:25 AM GMT+7"
+    },
+    {
+      "baris": 340,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/16 12:03:47 AM GMT+7"
+    },
+    {
+      "baris": 341,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 3:16:45 PM GMT+7"
+    },
+    {
+      "baris": 342,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 12:38:51 PM GMT+7"
+    },
+    {
+      "baris": 343,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 344,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 345,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 11:05:25 AM GMT+7"
+    },
+    {
+      "baris": 346,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 347,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 2:14:15 PM GMT+7"
+    },
+    {
+      "baris": 348,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 4:39:09 PM GMT+7"
+    },
+    {
+      "baris": 349,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 2:14:15 PM GMT+7"
+    },
+    {
+      "baris": 350,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 351,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 352,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 353,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 2:14:15 PM GMT+7"
+    },
+    {
+      "baris": 354,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 355,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 356,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:37:03 PM GMT+7"
+    },
+    {
+      "baris": 357,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 358,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 359,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 360,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/16 12:03:47 AM GMT+7"
+    },
+    {
+      "baris": 361,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 362,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 363,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 364,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 365,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:37:03 PM GMT+7"
+    },
+    {
+      "baris": 366,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:37:03 PM GMT+7"
+    },
+    {
+      "baris": 367,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 368,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 369,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 370,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 3:16:45 PM GMT+7"
+    },
+    {
+      "baris": 371,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 372,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 373,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 374,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 375,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 376,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 377,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/16 12:03:47 AM GMT+7"
+    },
+    {
+      "baris": 378,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 379,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 380,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 381,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 382,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 383,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 384,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 11:05:25 AM GMT+7"
+    },
+    {
+      "baris": 385,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 386,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 387,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 388,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 389,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 390,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 391,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 392,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 2:14:15 PM GMT+7"
+    },
+    {
+      "baris": 393,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 394,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 395,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/16 12:03:47 AM GMT+7"
+    },
+    {
+      "baris": 396,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 397,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 11:05:25 AM GMT+7"
+    },
+    {
+      "baris": 398,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 399,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 11:05:25 AM GMT+7"
+    },
+    {
+      "baris": 400,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 401,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 402,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 403,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 404,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 4:08:47 PM GMT+7"
+    },
+    {
+      "baris": 405,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 406,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 407,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 408,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 409,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 410,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 3:16:45 PM GMT+7"
+    },
+    {
+      "baris": 411,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 3:16:45 PM GMT+7"
+    },
+    {
+      "baris": 412,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 12:38:51 PM GMT+7"
+    },
+    {
+      "baris": 413,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 414,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 415,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 9:11:47 PM GMT+7"
+    },
+    {
+      "baris": 416,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 417,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 2:14:15 PM GMT+7"
+    },
+    {
+      "baris": 418,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 419,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 420,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 421,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 422,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 12:38:51 PM GMT+7"
+    },
+    {
+      "baris": 423,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 424,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 11:05:25 AM GMT+7"
+    },
+    {
+      "baris": 425,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 426,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 427,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 428,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 429,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 430,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 431,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 432,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 433,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 4:39:09 PM GMT+7"
+    },
+    {
+      "baris": 434,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 435,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 436,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 437,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 438,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 439,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 440,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 441,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 12:38:51 PM GMT+7"
+    },
+    {
+      "baris": 442,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 443,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 444,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 445,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 2:14:15 PM GMT+7"
+    },
+    {
+      "baris": 446,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 12:38:51 PM GMT+7"
+    },
+    {
+      "baris": 447,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 2:14:15 PM GMT+7"
+    },
+    {
+      "baris": 448,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 3:16:45 PM GMT+7"
+    },
+    {
+      "baris": 449,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 450,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 4:39:09 PM GMT+7"
+    },
+    {
+      "baris": 451,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 3:16:45 PM GMT+7"
+    },
+    {
+      "baris": 452,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 3:36:17 PM GMT+7"
+    },
+    {
+      "baris": 453,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 9:11:47 PM GMT+7"
+    },
+    {
+      "baris": 454,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 455,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 2:14:15 PM GMT+7"
+    },
+    {
+      "baris": 456,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 11:05:25 AM GMT+7"
+    },
+    {
+      "baris": 457,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 12:38:51 PM GMT+7"
+    },
+    {
+      "baris": 458,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 11:28:48 AM GMT+7"
+    },
+    {
+      "baris": 459,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 460,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 461,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 462,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 2:14:15 PM GMT+7"
+    },
+    {
+      "baris": 463,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 4:39:09 PM GMT+7"
+    },
+    {
+      "baris": 464,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 465,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 3:16:45 PM GMT+7"
+    },
+    {
+      "baris": 466,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 4:08:47 PM GMT+7"
+    },
+    {
+      "baris": 467,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 468,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 11:28:48 AM GMT+7"
+    },
+    {
+      "baris": 469,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 2:14:15 PM GMT+7"
+    },
+    {
+      "baris": 470,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 471,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 472,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 473,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 474,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 475,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 476,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 477,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:26:36 PM GMT+7"
+    },
+    {
+      "baris": 478,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 479,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 480,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 481,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 11:05:25 AM GMT+7"
+    },
+    {
+      "baris": 482,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 12:38:51 PM GMT+7"
+    },
+    {
+      "baris": 483,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 3:36:17 PM GMT+7"
+    },
+    {
+      "baris": 484,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 485,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 2:14:15 PM GMT+7"
+    },
+    {
+      "baris": 486,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 10:37:03 PM GMT+7"
+    },
+    {
+      "baris": 487,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 7:01:04 PM GMT+7"
+    },
+    {
+      "baris": 488,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 489,
+      "metode": "asumsi",
+      "bidang": "Pertanian, Pangan, dan Lingkungan"
+    },
+    {
+      "baris": 490,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 11:28:48 AM GMT+7"
+    },
+    {
+      "baris": 491,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 4:39:09 PM GMT+7"
+    },
+    {
+      "baris": 492,
+      "metode": "resampling",
+      "timestamp_asli": "2026/10/15 12:38:51 PM GMT+7"
+    },
+    {
+      "baris": 493,
+      "metode": "asumsi",
+      "bidang": "Sains dan Matematika"
+    },
+    {
+      "baris": 494,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    },
+    {
+      "baris": 495,
+      "metode": "asumsi",
+      "bidang": "Pendidikan"
+    },
+    {
+      "baris": 496,
+      "metode": "asumsi",
+      "bidang": "Teknik dan Teknologi"
+    }
+  ]
+}
