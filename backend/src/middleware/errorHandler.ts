@@ -28,6 +28,9 @@ export class AppError extends Error {
   static conflict(message = 'Konflik dengan data yang ada', code = 'CONFLICT') {
     return new AppError(409, code, message);
   }
+  static serviceUnavailable(message = 'Layanan sedang tidak tersedia', code = 'SERVICE_UNAVAILABLE') {
+    return new AppError(503, code, message);
+  }
 }
 
 /** Ubah `error` dari supabase-js menjadi exception agar ditangani errorHandler. */
@@ -61,6 +64,12 @@ export const errorHandler: ErrorRequestHandler = (err, _req, res, _next) => {
   if (err instanceof AppError && err.status < 500) {
     const details = err.details === undefined ? {} : { details: err.details };
     res.status(err.status).json({ error: { code: err.code, message: err.message, ...details } });
+    return;
+  }
+
+  // 503: pesan aman untuk klien, tidak perlu stack trace di log tiap request.
+  if (err instanceof AppError && err.status === 503) {
+    res.status(503).json({ error: { code: err.code, message: err.message } });
     return;
   }
 
