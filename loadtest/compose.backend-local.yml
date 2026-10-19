@@ -1,0 +1,17 @@
+# Override untuk docker-compose.yml di root: arahkan 2 node backend ke Supabase LOKAL.
+# Dari root repo:
+#   docker compose -f docker-compose.yml -f loadtest/compose.backend-local.yml \
+#     --env-file loadtest/.env up -d --build backend-node-1 backend-node-2 load-balancer
+x-backend-loadtest: &backend-loadtest
+  environment:
+    SUPABASE_URL: ${LT_BACKEND_SUPABASE_URL:-http://host.docker.internal:54321}
+    SUPABASE_SERVICE_ROLE_KEY: ${SUPABASE_SERVICE_ROLE_KEY:?isi SUPABASE_SERVICE_ROLE_KEY di loadtest/.env}
+    NODE_ENV: production
+    # Jangan memanggil Claude API saat load test
+    LLM_PROVIDER: mock
+  extra_hosts:
+    - "host.docker.internal:host-gateway"
+
+services:
+  backend-node-1: *backend-loadtest
+  backend-node-2: *backend-loadtest
