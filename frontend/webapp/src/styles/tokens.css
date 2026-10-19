@@ -33,8 +33,10 @@
   --color-blue-link: #525e7f;
 
   /* ── Background ── */
-  --color-bg-page: #f8f9ff;
-  --color-bg-card: #ffffff;
+  --color-bg-page: #F8FAFC;
+  --color-bg-card: #FFFFFF;
+  --color-border: #E2E8F0;
+  --color-border-subtle: #F1F5F9;
 
   /* ── Typography ── */
   --font-primary: "Plus Jakarta Sans", system-ui, sans-serif;

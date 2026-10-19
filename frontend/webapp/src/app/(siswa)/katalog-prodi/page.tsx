@@ -227,10 +227,6 @@ export default function KatalogProdiPage() {
 
   return (
     <div className="kp-page">
-      {/* ── Ambient Background Glows ── */}
-      <div className="kp-ambient-glow-1" aria-hidden="true" />
-      <div className="kp-ambient-glow-2" aria-hidden="true" />
-
       <UnifiedNavbar peran="siswa" customUser={{ nama: namaSiswa, kelas: infoKelas(me) }} />
 
       {/* ═════════════════════════════════════════════════════════════════════
@@ -238,30 +234,13 @@ export default function KatalogProdiPage() {
       ═════════════════════════════════════════════════════════════════════ */}
       <main className="kp-main">
         {/* ── SECTION 1: HERO HEADER & STATS ROW ── */}
-        <section className="kp-hero-section" aria-label="Hero Katalog Kampus">
+        <section className="kp-hero-section" aria-label="Hero Katalog Program Studi">
           <div className="kp-hero-top">
             <div className="kp-hero-content">
-
-              {/* Title & Description */}
               <h1 className="kp-hero-title">Katalog Program Studi</h1>
               <p className="kp-hero-desc">
-                Telusuri program studi berdasarkan bidang studi dan jenis pendidikan,
-                lihat kecocokannya dengan minat RIASEC-mu, lalu simpan prodi yang ingin
-                kamu jadikan target.
+                Telusuri program studi berdasarkan bidang studi dan jenis pendidikan, lihat kecocokan minat RIASEC, dan simpan prodi yang ingin kamu jadikan target.
               </p>
-            </div>
-
-            {/* Right Action Buttons */}
-            <div className="kp-hero-actions">
-              <div className="kp-sync-pill">
-                <div className="kp-sync-icon-box">
-                  <IconShieldSync size={20} color="#006190" />
-                </div>
-                <div className="kp-sync-meta">
-                  <span className="kp-sync-title">Sumber Data</span>
-                  <span className="kp-sync-status">Database Katalog</span>
-                </div>
-              </div>
             </div>
           </div>
 

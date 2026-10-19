@@ -203,19 +203,13 @@ export default function EksplorasiKarirPage() {
 
       <main className="ek-main">
         {/* ── HERO & FILTER EKSPLORASI ── */}
-        <section className="ek-hero" aria-label="Eksplorasi Karir Impian">
-          <div className="ek-hero-sphere" aria-hidden="true" />
-          <div className="ek-hero-sphere-2" aria-hidden="true" />
-
+        <section className="ek-hero" aria-label="Eksplorasi Karir">
           <div className="ek-hero-inner">
-
             <div className="ek-headline-row">
               <div className="ek-headline">
-                <h1 className="ek-title">Eksplorasi Karir Impian Masa Depan</h1>
+                <h1 className="ek-title">Eksplorasi Karir</h1>
                 <p className="ek-desc">
-                  Temukan profesi yang selaras dengan minat RIASEC dan nilai rapormu.
-                  Lihat program studi yang menjadi jalur menuju karir tersebut serta
-                  kesiapan mapel pendukungmu.
+                  Temukan profesi yang selaras dengan minat RIASEC dan nilai rapormu, serta pelajari jalur prodi pendukungnya.
                 </p>
               </div>
 

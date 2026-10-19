@@ -133,7 +133,6 @@ export default function TesMinatPage() {
     <AppShell peran="siswa">
       <div className="app-head">
         <div>
-          <span className="app-eyebrow">Tes Minat • Holland RIASEC</span>
           <h1 className="app-title">Tes Minat & Kemampuan Diri</h1>
           <p className="app-sub">
             Jawab sesuai dirimu, bukan jawaban yang menurutmu &quot;benar&quot;. Tidak ada jawaban salah.

@@ -88,7 +88,6 @@ export default function NilaiRaporPage() {
     <AppShell peran="siswa">
       <div className="app-head">
         <div>
-          <span className="app-eyebrow">Nilai Rapor</span>
           <h1 className="app-title">Input Nilai Rapor</h1>
           <p className="app-sub">
             Nilai yang kamu input akan diverifikasi Guru BK. Nilai terverifikasi terkunci dan hanya bisa diubah oleh BK.

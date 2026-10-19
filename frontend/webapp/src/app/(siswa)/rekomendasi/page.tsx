@@ -255,13 +255,11 @@ function HeroCard({
 
       <div className="rk-hero__inner">
         <div className="rk-hero__text">
-          <span className="rk-hero__eyebrow">Dashboard Analisis Multi-Kriteria</span>
           <h1 className="rk-hero__title" id="rk-hero-title">
-            Pusat Rekomendasi &amp; Penyelarasan Masa Depan
+            Rekomendasi Program Studi
           </h1>
           <p className="rk-hero__desc">
-            Menggabungkan hasil tes minat RIASEC Holland, nilai rapor pada mapel pendukung,
-            dan karir impianmu untuk menyusun urutan prodi yang paling selaras denganmu.
+            Penyelarasan multi-kriteria berbasis hasil asesmen minat RIASEC Holland, rata-rata nilai rapor pada mapel pendukung, dan karir impianmu.
           </p>
         </div>
 
@@ -943,7 +941,6 @@ export default function RekomendasiPage() {
 
       <main className="rk-main" id="main-content">
         <div className="rk-container">
-          <TopInfoRow me={me} nilai={nilai} />
           <HeroCard
             tab={tab}
             onTabChange={setTab}

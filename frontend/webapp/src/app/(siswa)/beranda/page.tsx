@@ -159,49 +159,50 @@ function HeroSection({ data }: { data: BerandaData }) {
     <section className="hero-card" aria-labelledby="hero-greeting">
       {/* Left: bio */}
       <div className="hero-bio">
-        {/* Academic year badge */}
-        <div className="hero-academic-badge">
-          <span className="hero-academic-badge__dot" aria-hidden="true" />
-          <span className="hero-academic-badge__text">
-            {me.siswa?.angkatan ? `Angkatan ${me.siswa.angkatan}` : "Angkatan belum diisi"}
-            {data.asesmen?.kode_holland ? <> &bull; Tipe {data.asesmen.kode_holland}</> : null}
-          </span>
-        </div>
-
-        {/* Greeting */}
+        {/* Greeting: Direct clean H1 title without awkward overhead text */}
         <h1 className="hero-greeting" id="hero-greeting">
-          Selamat Datang Kembali,{" "}
-          <span>{me.profil.nama ?? "Siswa"}</span>
+          Selamat Datang, <span>{me.profil.nama ?? "Siswa"}</span>
         </h1>
 
         {/* School info */}
-        <div className="hero-school-info">
-          <IconSchool size={17} color="#006190" />
+        <p className="hero-school-info">
+          <IconSchool size={16} color="#0284C7" />
           <span>
             {infoKelas(me)} &bull; {sekolah ?? "Belum terdaftar ke sekolah"}
           </span>
-        </div>
+        </p>
 
-        {/* Target / career tags */}
-        <div className="hero-tags">
-          <span className="hero-tag hero-tag--blue">
-            <IconBuilding size={14} color="#006190" />
-            Target Prodi: {prodiUtama?.nama ?? "Belum dipilih"}
-          </span>
-          <span className="hero-tag hero-tag--amber">
-            <IconTarget size={14} color="#7C5400" />
-            Karir Impian: {karirImpian ? namaKarir(karirImpian) : "Belum dipilih"}
-          </span>
+        {/* Target summary row */}
+        <div className="hero-summary-row">
+          <div className="hero-summary-item">
+            <span className="hero-summary-label">Target Prodi</span>
+            <span className="hero-summary-val">{prodiUtama?.nama ?? "Belum dipilih"}</span>
+          </div>
+          <div className="hero-summary-divider" aria-hidden="true" />
+          <div className="hero-summary-item">
+            <span className="hero-summary-label">Karir Impian</span>
+            <span className="hero-summary-val">{karirImpian ? namaKarir(karirImpian) : "Belum dipilih"}</span>
+          </div>
+          {data.asesmen?.kode_holland && (
+            <>
+              <div className="hero-summary-divider" aria-hidden="true" />
+              <div className="hero-summary-item">
+                <span className="hero-summary-label">Tipe RIASEC</span>
+                <span className="hero-summary-val">{data.asesmen.kode_holland}</span>
+              </div>
+            </>
+          )}
         </div>
       </div>
 
       {/* Right: diagnostic progress tracker */}
-      <aside className="hero-progress-box" aria-label="Kesiapan Diagnostik SNBP">
-        {/* Header */}
+      <aside className="hero-progress-box" aria-label="Kesiapan Portofolio">
         <div className="hero-progress-header">
-          <div className="hero-progress-title">
-            <span className="hero-progress-label">Kesiapan Diagnostik</span>
-            <span className="hero-progress-value">Data {progressPct}% Lengkap</span>
+          <div>
+            <span className="hero-progress-label">Kelengkapan Data</span>
+            <span className="hero-progress-step-label">
+              {sisa === 0 ? "Semua data lengkap" : `${doneCount} dari ${items.length} selesai (${progressPct}%)`}
+            </span>
           </div>
           <span className="hero-progress-circle" aria-label={`${progressPct} persen`}>
             {progressPct}%
@@ -213,32 +214,11 @@ function HeroSection({ data }: { data: BerandaData }) {
           <div className="progress-bar__fill" style={{ width: `${progressPct}%` }} />
         </div>
 
-        {/* Checklist pills */}
-        <div className="checklist-pills" role="list" aria-label="Item kelengkapan">
-          {items.map((item) => (
-            <span
-              key={item.label}
-              className={`checklist-pill ${item.done ? "checklist-pill--done" : "checklist-pill--pending"}`}
-              role="listitem"
-            >
-              {item.done ? (
-                <IconCheckCircle size={12} color="#006190" className="checklist-pill__icon" />
-              ) : (
-                <IconCheckMuted size={10} color="#6F7881" className="checklist-pill__icon" />
-              )}
-              {item.label}
-            </span>
-          ))}
-        </div>
-
-        {/* Footer */}
+        {/* Action Link */}
         <div className="hero-progress-footer">
-          <span className="hero-progress-step-label">
-            {sisa === 0 ? "Semua data sudah lengkap" : `Tinggal ${sisa} langkah lagi`}
-          </span>
           <Link href={me.kelengkapan.lengkap ? "/profil" : "/onboarding"} className="link-inline">
             {me.kelengkapan.lengkap ? "Perbarui Profil" : "Lengkapi Profil"}
-            <IconArrowRight size={9} color="#006190" />
+            <IconArrowRight size={12} color="#0284C7" />
           </Link>
         </div>
       </aside>
@@ -289,22 +269,16 @@ function KolomRIASEC({ asesmen }: { asesmen: HasilAsesmen | null }) {
           </span>
           <div className="card-header__title-group">
             <h2 className="card-header__title" id="riasec-title">Minat RIASEC</h2>
-            <span className="card-header__subtitle">Hasil Asesmen Holland</span>
+            <span className="card-header__subtitle">Tipe {asesmen.kode_holland ?? "-"} &bull; Asesmen Holland</span>
           </div>
         </div>
-        <span className="badge-pill badge-pill--blue">TIPE {asesmen.kode_holland ?? "-"}</span>
       </div>
 
       {/* Archetype banner */}
       <div className="archetype-banner">
-        <div className="archetype-banner__label">
-          <IconStar size={16} color="#006190" />
-          Kode Holland {asesmen.kode_holland ?? "-"}
-        </div>
-        <p className="archetype-banner__body">
+        <p className="archetype-banner__body" style={{ margin: 0 }}>
           Kombinasi dominan <strong>{utama.label.split(" ")[0]} ({utama.pct}%)</strong> dan{" "}
-          <strong>{kedua.label.split(" ")[0]} ({kedua.pct}%)</strong> menandakan kamu{" "}
-          {utama.ciri}, serta {kedua.ciri}.
+          <strong>{kedua.label.split(" ")[0]} ({kedua.pct}%)</strong>: {utama.ciri}, serta {kedua.ciri}.
         </p>
       </div>
 
@@ -349,7 +323,7 @@ function KolomRIASEC({ asesmen }: { asesmen: HasilAsesmen | null }) {
       <div className="card-footer-action">
         <Link className="btn-ghost-pill" href="/tes-minat">
           Ulangi Tes Minat
-          <IconChevronRight size={5} color="#006190" />
+          <IconChevronRight size={10} color="#006190" />
         </Link>
       </div>
     </article>
@@ -376,12 +350,11 @@ function KolomRapor({ nilai, sekolah }: { nilai: DaftarNilai; sekolah: string | 
             <h2 className="card-header__title" id="rapor-title">Kekuatan Rapor</h2>
             <span className="card-header__subtitle">
               {semester.length
-                ? `Semester ${semester[0]}-${semester[semester.length - 1]} • Mapel unggulan`
+                ? `Semester ${semester[0]}–${semester[semester.length - 1]} &bull; Mapel Unggulan`
                 : "Belum ada nilai"}
             </span>
           </div>
         </div>
-        <span className="badge-pill badge-pill--ink">{semester.length} Semester</span>
       </div>
 
       {/* Subject performance cards */}
@@ -426,7 +399,7 @@ function KolomRapor({ nilai, sekolah }: { nilai: DaftarNilai; sekolah: string | 
             <IconCheck size={10} color="#006190" />
             {menunggu > 0
               ? `${menunggu} nilai menunggu verifikasi BK${sekolah ? ` ${sekolah}` : ""}`
-              : `Verifikasi oleh Guru BK${sekolah ? ` ${sekolah}` : ""}`}
+              : `Terverifikasi oleh Guru BK${sekolah ? ` ${sekolah}` : ""}`}
           </span>
         </div>
       </div>
@@ -434,7 +407,7 @@ function KolomRapor({ nilai, sekolah }: { nilai: DaftarNilai; sekolah: string | 
       {/* CTA */}
       <Link className="btn-primary-pill" href="/nilai-rapor">
         <IconLayers size={12} color="#FFFFFF" />
-        Kelola &amp; Input Nilai Semester
+        Kelola &amp; Input Nilai Rapor
       </Link>
     </article>
   );
@@ -468,7 +441,6 @@ function KolomRekomendasi({
             </span>
           </div>
         </div>
-        <span className="badge-dot" aria-label="Status aktif" />
       </div>
 
       {prodi ? (
@@ -563,12 +535,6 @@ function BannerCTA({ data }: { data: BerandaData }) {
   return (
     <section className="banner-cta" aria-labelledby="banner-title">
       <div className="banner-cta__left">
-        <span className="banner-cta__countdown">
-          <IconClock size={12} color="#FFFFFF" />
-          {belum.length > 0
-            ? `${daftar.length - belum.length} dari ${daftar.length} langkah selesai`
-            : "Semua langkah selesai"}
-        </span>
         <h2 className="banner-cta__title" id="banner-title">
           {langkah ? `Langkah Selanjutnya: ${langkah.judul}` : "Data kamu sudah lengkap"}
         </h2>
@@ -580,8 +546,8 @@ function BannerCTA({ data }: { data: BerandaData }) {
       </div>
       <div className="banner-cta__right">
         <Link className="btn-white-pill" href={langkah?.href ?? "/analitik"}>
+          <span>{langkah?.cta ?? "Lihat Analisis Keselarasan"}</span>
           <IconArrowRight size={14} color="#006190" />
-          {langkah?.cta ?? "Lihat Analisis Keselarasan"}
         </Link>
         <Link className="btn-ghost-blue" href="/rekomendasi">
           Lihat Rekomendasi Prodi
@@ -590,8 +556,6 @@ function BannerCTA({ data }: { data: BerandaData }) {
     </section>
   );
 }
-
-
 
 // ─── Page ─────────────────────────────────────────────────────────────────
 
@@ -634,10 +598,6 @@ export default function BerandaSiswaPage() {
 
   return (
     <div className="page-beranda">
-      {/* Ambient decorative blobs */}
-      <div className="ambient-blob ambient-blob--top-right" aria-hidden="true" />
-      <div className="ambient-blob ambient-blob--mid-left" aria-hidden="true" />
-
       {/* Header */}
       <UnifiedNavbar peran="siswa" customUser={{ nama: data.me.profil.nama, kelas: infoKelas(data.me) }} />
 

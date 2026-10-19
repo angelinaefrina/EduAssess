@@ -151,61 +151,30 @@ function TargetHeroCard({ data }: { data: AnalitikData }) {
 
   return (
     <section className="target-hero" aria-labelledby="target-hero-title">
-      {/* Decorative blobs */}
-      <div className="target-hero__blob1" aria-hidden="true" />
-      <div className="target-hero__blob2" aria-hidden="true" />
-
-      {/* Breadcrumb / label row */}
-      <div className="target-hero__breadcrumb">
-        <span className="target-hero__badge">
-          <span className="target-hero__badge-dot" aria-hidden="true" />
-          Laporan Analisis Keselarasan
-        </span>
-        <span className="target-hero__badge2">{prodi?.bidang_studi?.nama ?? "Bidang studi -"}</span>
-      </div>
-
-      {/* Inner: left + right */}
       <div className="target-hero__inner">
         {/* Left: program info */}
         <div className="target-hero__left">
-          <div className="target-hero__program-row">
-            <span className="target-hero__program-label">
-              TARGET PRODI UTAMA &bull; {labelJenis(prodi?.jenis_pendidikan).toUpperCase()}
-            </span>
-            <IconGraduationCap size={16} color="#006190" />
-          </div>
-
           <h1 className="target-hero__title" id="target-hero-title">
             {prodi?.nama ?? "-"}
           </h1>
+          <p className="target-hero__subtitle">
+            {prodi?.bidang_studi?.nama ?? "Program Studi"} &bull; {labelJenis(prodi?.jenis_pendidikan)} &bull; Target Prodi Utama
+          </p>
 
-          <div className="target-hero__tags">
-            <span className="target-hero__tag">
-              <IconBuilding size={15} color="#006190" />
-              Karir Impian: {karirImpian}
-            </span>
-            <span className="target-hero__tag" style={{ background: "#EFF4FF" }}>
-              <IconSchool size={17} color="#525E7E" />
-              {me.profil.nama ?? "Siswa"}
-              {me.profil.sekolah ? ` • ${me.profil.sekolah.nama}` : ""}
-            </span>
+          <div className="target-hero__meta-row">
+            <span>Karir Impian: <strong>{karirImpian}</strong></span>
+            <span aria-hidden="true">&bull;</span>
+            <span>{me.profil.nama ?? "Siswa"}{me.profil.sekolah ? ` (${me.profil.sekolah.nama})` : ""}</span>
           </div>
         </div>
 
         {/* Right: student & match */}
         <aside className="target-hero__right" aria-label="Kecocokan minat">
-          <div className="target-hero__avatar" aria-hidden="true">
-            <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <circle cx="22" cy="18" r="10" fill="#CBE6FF" />
-              <ellipse cx="22" cy="38" rx="16" ry="10" fill="#CBE6FF" />
-              <circle cx="22" cy="18" r="7" fill="#006190" opacity="0.3" />
-            </svg>
-          </div>
           <div className="target-hero__student-info">
-            <span className="target-hero__cluster-label">Kecocokan Minat</span>
+            <span className="target-hero__cluster-label">Kecocokan Minat RIASEC</span>
             <span className="target-hero__cluster-value">{cocok !== null ? `${cocok}%` : "–"}</span>
             <span className="target-hero__cluster-sub">
-              {kodeSiswa ? `Prodi ${prodi?.kode_riasec ?? "-"} vs kamu ${kodeSiswa}` : "Belum tes minat"}
+              {kodeSiswa ? `Prodi ${prodi?.kode_riasec ?? "-"} &bull; Siswa ${kodeSiswa}` : "Belum tes minat"}
             </span>
           </div>
         </aside>
