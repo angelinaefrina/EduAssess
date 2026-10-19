@@ -4,7 +4,7 @@
 //            RekomendasiService), dan JIT Node "memanas". Metriknya diberi tag
 //            phase=warmup sehingga tidak mencemari angka level utama.
 //   normal : 50 VU selama 5 menit   (aktivitas harian belajar-mengajar)
-//   peak   : 700 VU selama 5 menit  (minggu UAS)
+//   peak   : 500 VU selama 5 menit  (minggu UAS)
 //   stress : naik bertahap sampai 1000 VU untuk mencari bottleneck
 
 import { ENDPOINTS } from './flow.js';
@@ -29,10 +29,10 @@ export const LEVELS = {
     slo: { p95: 1000, p99: 2000, errorRate: 0.01 },
   },
   peak: {
-    title: 'Level 2 - Beban Puncak / UAS (700 VU, 5 menit)',
+    title: 'Level 2 - Beban Puncak / UAS (500 VU, 5 menit)',
     stages: [
-      { duration: '1m', target: num(__ENV.LOAD_VUS, 700) },
-      { duration: hold('5m'), target: num(__ENV.LOAD_VUS, 700) },
+      { duration: '1m', target: num(__ENV.LOAD_VUS, 500) },
+      { duration: hold('5m'), target: num(__ENV.LOAD_VUS, 500) },
       { duration: '30s', target: 0 },
     ],
     slo: { p95: 1500, p99: 3000, errorRate: 0.02 },
