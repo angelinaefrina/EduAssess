@@ -17,20 +17,27 @@ import {
   writeJson,
 } from './lib.mjs';
 
+// Rate limit login berupa kuota per 5 menit per IP yang terisi ulang perlahan, jadi
+// saat 429 tunggu cukup lama (maks. ~4 menit per akun) sebelum menyerah.
+const MAKS_PERCOBAAN_429 = 10;
+
 async function signIn(email) {
-  for (let attempt = 1; attempt <= 3; attempt++) {
+  for (let attempt = 1; attempt <= MAKS_PERCOBAAN_429; attempt++) {
     const r = await sb('POST', '/auth/v1/token?grant_type=password', { email, password: cfg.password });
     if (r.ok) return r.json;
     if (r.status === 429) {
-      if (attempt === 3) {
+      if (attempt === MAKS_PERCOBAAN_429) {
         die(
           'Kena rate limit login Supabase (429).\n' +
-            'Untuk Supabase lokal, naikkan batas di supabase/config.toml:\n' +
+            'Supabase lokal: naikkan batas di supabase/config.toml:\n' +
             '  [auth.rate_limit]\n  sign_in_sign_ups = 5000\n' +
-            'lalu `supabase stop && supabase start`, dan jalankan ulang `npm run tokens`.',
+            'lalu `supabase stop && supabase start`.\n' +
+            'Supabase cloud: Dashboard -> Authentication -> Rate Limits -> "sign-ups and sign-ins",\n' +
+            'atau tunggu ~5 menit sampai kuota pulih. Lalu jalankan ulang `npm run tokens`.',
         );
       }
-      await sleep(2000 * attempt);
+      if (attempt === 1) log(`  429 untuk ${email}, menunggu kuota login pulih...`);
+      await sleep(Math.min(5000 * attempt, 30_000));
       continue;
     }
     die(`Login ${email} gagal (${r.status}): ${JSON.stringify(r.json)}`);

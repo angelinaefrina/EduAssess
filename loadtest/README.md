@@ -10,7 +10,7 @@ k6 (docker) ──remote write──▶ Prometheus ──▶ Grafana ──▶ g
 |---|---|---|---|
 | Warm-up | setiap run, tag `phase=warmup` | 10 | 2 menit |
 | 1. Normal | aktivitas harian belajar-mengajar | 50 | 5 menit tahan |
-| 2. Peak | minggu UAS | 250 | 5 menit tahan |
+| 2. Peak | minggu UAS | 700 | 5 menit tahan |
 | 3. Stress | 250 → 500 → 750 → 1000, lalu tahan | 1000 | ±14 menit, berhenti otomatis jika error > 50% |
 
 Satu iterasi VU meniru satu sesi siswa: beranda (`/me`, `/siswa/me`, asesmen terakhir) → tes minat
