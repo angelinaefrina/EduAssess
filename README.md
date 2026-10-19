@@ -82,9 +82,29 @@ data/               hasil survei, data sintetis, katalog.xlsx
 docs/               dokumen use case, kebutuhan fungsional, instrumen survei
 ```
 
+## Menjalankan dengan Docker Compose (Rekomendasi untuk Tim)
+
+Seluruh sistem (Frontend Next.js, Klaster Backend 2-Node Express dengan High Availability, dan Nginx Load Balancer) dapat dijalankan cukup dengan **satu perintah**:
+
+```bash
+# 1. Salin template konfigurasi environment (bila belum ada)
+cp .env.example .env
+
+# 2. Jalankan seluruh container di background
+docker compose up -d
+
+# 3. Periksa status layanan
+docker compose ps
+```
+
+- **Frontend Web App:** [http://localhost](http://localhost) (Port 80) atau [http://localhost:3000](http://localhost:3000)
+- **Backend API (Load Balanced):** [http://localhost/api/v1/health](http://localhost/api/v1/health) atau [http://localhost:4000/api/v1/health](http://localhost:4000/api/v1/health)
+- **Monitoring Nginx:** [http://localhost/stub_status](http://localhost/stub_status)
+- **Uji Klaster 2-Node:** `./scripts/test-cluster.sh http://localhost/api/v1/health 10`
+
 ---
 
-## Menjalankan secara lokal
+## Menjalankan secara manual (Tanpa Docker)
 
 ### 1. Database (Supabase)
 ```bash

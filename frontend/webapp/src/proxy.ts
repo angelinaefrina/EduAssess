@@ -2,7 +2,9 @@ import { createServerClient } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
 
 const API_URL =
-  process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000/api/v1";
+  process.env.INTERNAL_API_URL ??
+  process.env.NEXT_PUBLIC_API_URL ??
+  "http://localhost:4000/api/v1";
 
 /** Cache peran: "<user_id>:<peran>". Hanya untuk UX redirect; otorisasi tetap di backend. */
 const COOKIE_PERAN = "peran";

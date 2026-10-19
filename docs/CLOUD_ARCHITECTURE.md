@@ -8,39 +8,46 @@ Dokumen ini disusun untuk memenuhi spesifikasi **Tugas Cloud Service**:
 
 ---
 
-## 1. Arsitektur Teknis (2-Node High Availability)
+## 1. Arsitektur Teknis (Full-Stack 2-Node High Availability)
 
 ### Diagram Topologi
 
 ```
-                          [ Internet / Load Tester ]
-                                      │
-                                      ▼
-                      ┌──────────────────────────────┐
-                      │    Nginx Load Balancer       │
-                      │    Port 80 / 4000 (HTTP)     │
-                      │    Algoritma: least_conn     │
-                      └───────┬──────────────┬───────┘
-                              │              │
-           Failover & Balance │              │ Failover & Balance
-                              ▼              ▼
-                    ┌─────────────────┐ ┌─────────────────┐
-                    │ Backend Node 1  │ │ Backend Node 2  │
-                    │ Express API     │ │ Express API     │
-                    │ Container:      │ │ Container:      │
-                    │ arahin-node-1   │ │ arahin-node-2   │
-                    │ Port: 4000      │ │ Port: 4000      │
-                    │ Header: node-1  │ │ Header: node-2  │
-                    └────────┬────────┘ └────────┬────────┘
-                             │                   │
-                             └─────────┬─────────┘
-                                       │ HTTPS / TLS (Port 5432 / 443)
-                                       ▼
-                    ┌─────────────────────────────────────┐
-                    │       Supabase Managed Cloud        │
-                    │  - PostgreSQL Database (Auth & RLS) │
-                    │  - Storage (Katalog & Data)         │
-                    └─────────────────────────────────────┘
+                          [ Pengguna / Browser / Load Tester ]
+                                           │
+                                           ▼
+                       ┌───────────────────────────────────────┐
+                       │      Nginx Reverse Proxy & LB         │
+                       │   - Port 80: HTTP Gateway             │
+                       │     • /     -> Frontend App           │
+                       │     • /api/ -> Backend Cluster        │
+                       │   - Port 4000: Direct Backend API     │
+                       │   - Algoritma: least_conn             │
+                       └───────────────┬───────────────────────┘
+                                       │
+                ┌──────────────────────┴──────────────────────┐
+                │                                             │
+      Traffic Web (Port 3000)                       Traffic API (Port 4000)
+                ▼                                             ▼
+  ┌───────────────────────────┐             ┌───────────────────────────────────┐
+  │   Frontend (Next.js 16)   │             │      Backend Cluster (2 Nodes)    │
+  │   - Container:            │             │                                   │
+  │     arahin-frontend       │             │  ┌───────────────┐ ┌───────────────┐
+  │   - Port: 3000 (Internal) │             │  │ Backend Node 1│ │ Backend Node 2│
+  │   - Mode: Standalone      │             │  │ Express API   │ │ Express API   │
+  │   - Direct Port: 3000     │             │  │ Node: node-1  │ │ Node: node-2  │
+  └─────────────┬─────────────┘             │  │ Port: 4000    │ │ Port: 4000    │
+                │                           │  └───────┬───────┘ └───────┬───────┘
+                │ SSR API Calls (Internal)  └──────────┼─────────────────┼──────┘
+                └──────────────────────────────────────┴────────┬────────┘
+                                                                │
+                                                                │ HTTPS / TLS (Port 5432 / 443)
+                                                                ▼
+                                            ┌─────────────────────────────────────┐
+                                            │       Supabase Managed Cloud        │
+                                            │  - PostgreSQL Database (Auth & RLS) │
+                                            │  - Storage (Katalog & Data)         │
+                                            └─────────────────────────────────────┘
 ```
 
 ### Mengapa Desain Ini Memenuhi Syarat High Availability (HA)?
@@ -57,24 +64,29 @@ Dokumen ini disusun untuk memenuhi spesifikasi **Tugas Cloud Service**:
 
 ---
 
-## 2. Cara Menjalankan & Memverifikasi Klaster 2 Node
+## 2. Cara Menjalankan & Memverifikasi Full Stack (Docker Compose)
 
-### Menjalankan Klaster (Docker Compose)
-Pastikan file `backend/.env` sudah terisi dengan kredensial Supabase.
+### Menjalankan Seluruh Sistem (Frontend + 2-Node Backend + Nginx)
+Cukup jalankan satu perintah dari root direktori proyek:
 ```bash
-# Build dan jalankan seluruh container (Node 1, Node 2, Nginx)
-docker compose up -d --build
+# Build dan jalankan seluruh container di background
+docker compose up -d
 
-# Periksa status container
+# Periksa status seluruh container (pastikan semua berstatus healthy)
 docker compose ps
 ```
+
+Setelah berjalan:
+- **Aplikasi Web (Frontend):** Akses [http://localhost](http://localhost) (Port 80) atau [http://localhost:3000](http://localhost:3000)
+- **API Backend (Load Balanced):** [http://localhost/api/v1/health](http://localhost/api/v1/health) atau [http://localhost:4000/api/v1/health](http://localhost:4000/api/v1/health)
+- **Monitoring Nginx:** [http://localhost/stub_status](http://localhost/stub_status)
 
 ### Menguji Distribusi Beban (Round-Robin / Least-Conn)
 Jalankan skrip pengujian bawaan:
 ```bash
 ./scripts/test-cluster.sh http://localhost/api/v1/health 10
 ```
-*Output yang diharapkan:* Request bergantian dilayani oleh `node-1` dan `node-2`.
+*Output yang diharapkan:* Request bergantian dilayani secara seimbang oleh `node-1` dan `node-2`.
 
 ### Menguji Failover (Simulasi Server Down)
 1. Matikan Node 1 secara paksa:

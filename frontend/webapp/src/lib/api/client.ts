@@ -16,7 +16,9 @@ export class ApiError extends Error {
 }
 
 const BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000/api/v1";
+  (typeof window === "undefined" ? process.env.INTERNAL_API_URL : undefined) ??
+  process.env.NEXT_PUBLIC_API_URL ??
+  "http://localhost:4000/api/v1";
 
 /** Ambil access_token Supabase dari cookie browser (client-side). */
 async function getBearerToken(): Promise<string | null> {
