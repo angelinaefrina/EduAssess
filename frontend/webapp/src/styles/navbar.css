@@ -1,0 +1,306 @@
+/* =============================================================
+   EduAssess - Unified Global Navigation Bar
+   Konsisten di seluruh halaman Siswa & Guru BK
+   Responsive (Desktop, Laptop, Tablet, Mobile)
+   ============================================================= */
+
+@import "./tokens.css";
+
+.unified-navbar-wrapper {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid #E2E8F0;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
+  width: 100%;
+}
+
+.unified-navbar-container {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* ── Brand Logo & Text ── */
+.unified-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.unified-brand-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #0284C7 0%, #0369A1 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(2, 132, 199, 0.3);
+  flex-shrink: 0;
+}
+
+.unified-brand-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.unified-brand-title {
+  font-family: var(--font-primary, 'Plus Jakarta Sans', system-ui, sans-serif);
+  font-weight: 800;
+  font-size: 19px;
+  line-height: 22px;
+  letter-spacing: -0.03em;
+  color: #06124D;
+}
+
+.unified-brand-title-accent {
+  color: #0284C7;
+}
+
+.unified-brand-badge {
+  font-size: 10px;
+  line-height: 12px;
+  font-weight: 700;
+  color: #64748B;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+
+/* ── Center Navigation Links ── */
+.unified-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.unified-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 12px;
+  border-radius: 9999px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.15s ease;
+}
+
+.unified-link:hover {
+  color: #0284C7;
+  background: #F1F5F9;
+}
+
+.unified-link.active {
+  color: #FFFFFF;
+  background: #0284C7;
+  font-weight: 700;
+  box-shadow: 0 2px 6px rgba(2, 132, 199, 0.25);
+}
+
+/* ── Right Actions: Profile & Logout ── */
+.unified-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.unified-user-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  padding: 4px 12px 4px 4px;
+  border-radius: 9999px;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  transition: all 0.15s ease;
+}
+
+.unified-user-pill:hover {
+  background: #F1F5F9;
+  border-color: #CBD5E1;
+}
+
+.unified-user-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #0284C7;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.unified-user-meta {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.unified-user-name {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #1E293B;
+  max-width: 140px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.unified-user-sub {
+  font-size: 10.5px;
+  color: #64748B;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.unified-logout-btn {
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 12.5px;
+  font-weight: 600;
+  background: #FEF2F2;
+  color: #DC2626;
+  border: 1px solid #FEE2E2;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+
+.unified-logout-btn:hover {
+  background: #FEE2E2;
+  border-color: #FECACA;
+}
+
+/* ── Mobile Hamburger Toggle ── */
+.unified-mobile-btn {
+  display: none;
+  background: #F1F5F9;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 7px;
+  cursor: pointer;
+  color: #334155;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Mobile Drawer / Overlay ── */
+.unified-drawer-backdrop {
+  display: none;
+}
+
+@media (max-width: 1100px) {
+  .unified-links {
+    display: none;
+  }
+
+  .unified-mobile-btn {
+    display: flex;
+  }
+
+  .unified-drawer-backdrop {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 23, 42, 0.45);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
+  .unified-drawer-backdrop.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .unified-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 280px;
+    height: 100%;
+    background: #FFFFFF;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    gap: 16px;
+    transform: translateX(100%);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .unified-drawer-backdrop.open .unified-drawer {
+    transform: translateX(0);
+  }
+
+  .unified-drawer-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #E2E8F0;
+  }
+
+  .unified-drawer-links {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    overflow-y: auto;
+    flex: 1;
+  }
+
+  .unified-drawer-link {
+    display: block;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #334155;
+    text-decoration: none;
+    transition: all 0.15s ease;
+  }
+
+  .unified-drawer-link:hover {
+    background: #F1F5F9;
+    color: #0284C7;
+  }
+
+  .unified-drawer-link.active {
+    background: #0284C7;
+    color: #FFFFFF;
+    font-weight: 700;
+  }
+
+  .unified-drawer-footer {
+    padding-top: 12px;
+    border-top: 1px solid #E2E8F0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+}

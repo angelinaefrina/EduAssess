@@ -3,6 +3,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import "../../../styles/analitik.css";
+import { UnifiedNavbar } from "../../../components/shared/UnifiedNavbar";
 
 import {
   IconCompass,
@@ -14,7 +15,6 @@ import {
   IconBuilding,
   IconSchool,
   IconBell,
-  IconSearch,
   IconUser,
   IconDownload,
   IconBarChart,
@@ -84,14 +84,6 @@ const IconAlertTriangle = ({ size = 14, color = "#7C5400", className }: { size?:
 
 // ─── Data ─────────────────────────────────────────────────────────────────────
 
-const NAV_LINKS = [
-  { label: "Beranda", href: "/beranda" },
-  { label: "Rekomendasi", href: "/rekomendasi" },
-  { label: "Eksplorasi Karir", href: "/eksplorasi-karir" },
-  { label: "Analisis Keselarasan", href: "/analitik", active: true },
-  { label: "Katalog Kampus", href: "/katalog-prodi" },
-];
-
 /** Selisih (poin) dari rata-rata rapor yang dianggap kekuatan / kelemahan. */
 const AMBANG_SELISIH = 3;
 
@@ -147,67 +139,7 @@ function barisMapel(prodi: DetailProdi | null, me: SiswaSaya, rapor: number | nu
   });
 }
 
-// ─── Sub-components ──────────────────────────────────────────────────────────
 
-function SiteHeader({ nama, kelas }: { nama: string; kelas: string }) {
-  return (
-    <header className="ak-header" role="banner">
-      <nav className="ak-nav" aria-label="Navigasi utama">
-        {/* Brand */}
-        <a className="ak-brand" href="/beranda" aria-label="ArahMasaDepan - Beranda">
-          <span className="ak-brand__icon" aria-hidden="true">
-            <IconCompass size={18} color="#FFFFFF" />
-          </span>
-          <span className="ak-brand__text">
-            <span className="ak-brand__name">ArahMasaDepan</span>
-            <span className="ak-brand__badge">Siswa SMA &bull; Kurikulum Merdeka</span>
-          </span>
-        </a>
-
-        {/* Nav links */}
-        <ul className="ak-nav-links" role="list" style={{ listStyle: "none" }}>
-          {NAV_LINKS.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                className={`ak-nav-link${link.active ? " ak-nav-link--active" : ""}`}
-                aria-current={link.active ? "page" : undefined}
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-
-        {/* Actions */}
-        <div className="ak-nav-actions">
-          <button className="ak-nav-search" type="button" aria-label="Cari jurusan atau karir">
-            <IconSearch size={14} color="#3F4850" />
-            <span className="ak-nav-search__label">Cari Prodi / Karir</span>
-            <span className="ak-nav-search__kbd" aria-label="Pintasan keyboard Command K">&#8984;K</span>
-          </button>
-
-          <button className="ak-nav-notif" type="button" aria-label="Notifikasi, ada pesan baru">
-            <IconBell size={14} color="#3F4850" />
-            <span className="ak-nav-notif__dot" aria-hidden="true" />
-          </button>
-
-          <span className="ak-nav-divider" aria-hidden="true" />
-
-          <Link className="ak-nav-user" href="/profil" aria-label={`Menu akun ${nama}`}>
-            <span className="ak-nav-user__avatar" aria-hidden="true">
-              <IconUser size={12} color="#FFFFFF" />
-            </span>
-            <span className="ak-nav-user__info">
-              <span className="ak-nav-user__name">{nama}</span>
-              <span className="ak-nav-user__role">{kelas}</span>
-            </span>
-          </Link>
-        </div>
-      </nav>
-    </header>
-  );
-}
 
 // ── Target Hero Card ──────────────────────────────────────────────────────────
 
@@ -846,78 +778,7 @@ function BKValidationSection({ sekolah }: { sekolah: string | null }) {
   );
 }
 
-// ── Site Footer ───────────────────────────────────────────────────────────────
 
-function SiteFooter() {
-  return (
-    <footer className="ak-footer" role="contentinfo">
-      <div className="ak-footer__inner">
-        <div className="ak-footer__cols">
-          {/* Brand */}
-          <div>
-            <div className="ak-footer__brand-logo">
-              <span className="ak-footer__brand-icon" aria-hidden="true">
-                <IconCompass size={15} color="#FFFFFF" />
-              </span>
-              <span className="ak-footer__brand-name">ArahMasaDepan</span>
-            </div>
-            <p className="ak-footer__brand-desc">
-              Platform diagnostik minat bakat dan panduan pilihan program studi
-              SNBP, SNBT, dan Jalur Mandiri berstandar Kurikulum Merdeka.
-            </p>
-          </div>
-
-          {/* Fitur Unggulan */}
-          <div>
-            <h3 className="ak-footer__col-heading">Fitur Unggulan</h3>
-            <ul className="ak-footer__col-list">
-              {["Tes RIASEC Holland", "Matriks Keselarasan Mapel", "Simulasi Rasionalisasi SNBP"].map((item) => (
-                <li key={item} className="ak-footer__col-item">{item}</li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Eksplorasi */}
-          <div>
-            <h3 className="ak-footer__col-heading">Eksplorasi</h3>
-            <ul className="ak-footer__col-list">
-              {["Peta Karir Vokasi & Akademik", "Direktori PTN & PTS", "Panduan Portofolio Seni & Olahraga"].map((item) => (
-                <li key={item} className="ak-footer__col-item">{item}</li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Pusat Bantuan */}
-          <div>
-            <h3 className="ak-footer__col-heading">Pusat Bantuan</h3>
-            <p className="ak-footer__col-help">
-              Konsultasi BK Sekolah &amp; Layanan Panduan Siswa
-            </p>
-            <button className="ak-footer__help-btn" type="button">
-              <IconMessage size={13} color="#006190" />
-              Bantuan Konselor BK
-            </button>
-          </div>
-        </div>
-
-        {/* Bottom bar */}
-        <div className="ak-footer__bottom">
-          <span className="ak-footer__copyright">
-            &copy; 2026 ArahMasaDepan &bull; Inisiatif Pendampingan Karir Siswa Indonesia
-          </span>
-          <nav className="ak-footer__legal" aria-label="Tautan legal">
-            <a href="/kebijakan-privasi" className="ak-footer__legal-link">
-              Kebijakan Privasi Data Siswa
-            </a>
-            <a href="/ketentuan-layanan" className="ak-footer__legal-link">
-              Ketentuan Layanan
-            </a>
-          </nav>
-        </div>
-      </div>
-    </footer>
-  );
-}
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
@@ -952,7 +813,7 @@ export default function AnalitikPage() {
 
   return (
     <div className="page-analitik">
-      <SiteHeader nama={data?.me.profil.nama ?? "Siswa"} kelas={infoKelas(data?.me ?? null)} />
+      <UnifiedNavbar peran="siswa" customUser={{ nama: data?.me.profil.nama, kelas: infoKelas(data?.me ?? null) }} />
 
       <main className="ak-main" id="main-content">
         <div className="ak-container">
@@ -1004,8 +865,6 @@ export default function AnalitikPage() {
           )}
         </div>
       </main>
-
-      <SiteFooter />
     </div>
   );
 }

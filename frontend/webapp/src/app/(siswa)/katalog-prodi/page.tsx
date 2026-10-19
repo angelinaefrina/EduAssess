@@ -3,6 +3,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import "../../../styles/katalog-prodi.css";
+import { UnifiedNavbar } from "../../../components/shared/UnifiedNavbar";
 
 import {
   IconCompass,
@@ -92,7 +93,6 @@ export default function KatalogProdiPage() {
   const [riasecEnabled, setRiasecEnabled] = useState(true);
   const [sortBy, setSortBy] = useState<"cocok" | "nama">("cocok");
   const [activePage, setActivePage] = useState(1);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [compareModalOpen, setCompareModalOpen] = useState(false);
   const [compareList, setCompareList] = useState<ProdiRingkas[]>([]);
   const [jenis, setJenis] = useState<"" | JenisPendidikan>("");
@@ -231,91 +231,7 @@ export default function KatalogProdiPage() {
       <div className="kp-ambient-glow-1" aria-hidden="true" />
       <div className="kp-ambient-glow-2" aria-hidden="true" />
 
-      {/* ═════════════════════════════════════════════════════════════════════
-          HEADER: FLOATING PILL NAVBAR
-      ═════════════════════════════════════════════════════════════════════ */}
-      <header className="kp-header-wrap">
-        <nav className="kp-navbar" aria-label="Main Navigation">
-          {/* Logo & Brand */}
-          <Link href="/beranda" className="kp-brand">
-            <div className="kp-brand-logo">
-              <IconCompass size={22} color="#FFFFFF" />
-            </div>
-            <div className="kp-brand-text">
-              <span className="kp-brand-name">ArahMasaDepan</span>
-              <span className="kp-brand-badge">Siswa SMA • Kurikulum Merdeka</span>
-            </div>
-          </Link>
-
-          {/* Desktop Navigation Links */}
-          <div className="kp-nav-menu">
-            <Link href="/beranda" className="kp-nav-link">
-              Beranda
-            </Link>
-            <Link href="/rekomendasi" className="kp-nav-link">
-              Rekomendasi
-            </Link>
-            <Link href="/eksplorasi-karir" className="kp-nav-link">
-              Eksplorasi Karir
-            </Link>
-            <Link href="/analitik" className="kp-nav-link">
-              Analisis Keselarasan
-            </Link>
-            <Link href="/katalog-prodi" className="kp-nav-link active">
-              Katalog Kampus
-            </Link>
-          </div>
-
-          {/* Right Action Icons & User Meta */}
-          <div className="kp-nav-actions">
-            <button
-              type="button"
-              className="kp-quick-search-btn"
-              onClick={() => {
-                const el = document.getElementById("search-input");
-                el?.focus();
-              }}
-              title="Cari Prodi / Karir"
-            >
-              <IconSearch size={14} color="#6F7881" />
-              <span>Cari Prodi / Karir</span>
-              <span className="kp-kbd-badge">⌘K</span>
-            </button>
-
-            <button
-              type="button"
-              className="kp-icon-btn"
-              title="Notifikasi Seleksi"
-              aria-label="Notifikasi Seleksi"
-            >
-              <IconBell size={18} color="#3F4850" />
-              <span className="kp-dot-badge" />
-            </button>
-
-            <div className="kp-nav-divider" />
-
-            <Link href="/profil" className="kp-user-pill" title="Profil Siswa">
-              <div className="kp-user-avatar">
-                <IconUser size={16} color="#FFFFFF" />
-              </div>
-              <div className="kp-user-meta">
-                <span className="kp-user-name">{namaSiswa}</span>
-                <span className="kp-user-class">{infoKelas(me)}</span>
-              </div>
-            </Link>
-
-            {/* Mobile Menu Hamburger */}
-            <button
-              type="button"
-              className="kp-mobile-toggle"
-              onClick={() => setMobileMenuOpen(true)}
-              aria-label="Buka Menu"
-            >
-              <IconMenu size={20} color="#0B1C30" />
-            </button>
-          </div>
-        </nav>
-      </header>
+      <UnifiedNavbar peran="siswa" customUser={{ nama: namaSiswa, kelas: infoKelas(me) }} />
 
       {/* ═════════════════════════════════════════════════════════════════════
           MAIN CONTENT AREA
@@ -325,13 +241,6 @@ export default function KatalogProdiPage() {
         <section className="kp-hero-section" aria-label="Hero Katalog Kampus">
           <div className="kp-hero-top">
             <div className="kp-hero-content">
-              {/* Overline Badge */}
-              <div className="kp-hero-badge">
-                <span className="kp-hero-badge-dot" />
-                <span className="kp-hero-badge-text">
-                  KATALOG PROGRAM STUDI • UC09 / F16
-                </span>
-              </div>
 
               {/* Title & Description */}
               <h1 className="kp-hero-title">Katalog Program Studi</h1>
@@ -819,158 +728,7 @@ export default function KatalogProdiPage() {
         </aside>
       )}
 
-      {/* ═════════════════════════════════════════════════════════════════════
-          FOOTER (4-COLUMN RESPONSIVE LAYOUT)
-      ═════════════════════════════════════════════════════════════════════ */}
-      <footer className="kp-footer">
-        <div className="kp-footer-inner">
-          <div className="kp-footer-grid">
-            {/* Col 1: Brand Info */}
-            <div className="kp-footer-col">
-              <div className="kp-brand">
-                <div className="kp-brand-logo">
-                  <IconCompass size={18} color="#FFFFFF" />
-                </div>
-                <div className="kp-brand-text">
-                  <span className="kp-brand-name">ArahMasaDepan</span>
-                </div>
-              </div>
-              <p className="kp-footer-desc">
-                Platform diagnostik minat bakat dan panduan pilihan program studi
-                SNBP, SNBT, dan Jalur Mandiri berstandar Kurikulum Merdeka.
-              </p>
-            </div>
 
-            {/* Col 2: Fitur Unggulan */}
-            <div className="kp-footer-col">
-              <h4 className="kp-footer-title">Fitur Unggulan</h4>
-              <ul className="kp-footer-list">
-                <li>
-                  <Link href="/tes-minat" className="kp-footer-link">
-                    Tes RIASEC Holland
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/analitik" className="kp-footer-link">
-                    Matriks Keselarasan Mapel
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/rekomendasi" className="kp-footer-link">
-                    Simulasi Rasionalisasi SNBP
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            {/* Col 3: Eksplorasi */}
-            <div className="kp-footer-col">
-              <h4 className="kp-footer-title">Eksplorasi</h4>
-              <ul className="kp-footer-list">
-                <li>
-                  <Link href="/eksplorasi-karir" className="kp-footer-link">
-                    Peta Karir Vokasi & Akademik
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/katalog-prodi" className="kp-footer-link">
-                    Direktori PTN & PTS
-                  </Link>
-                </li>
-                <li>
-                  <Link href="/perkembangan" className="kp-footer-link">
-                    Panduan Portofolio Seni & Olahraga
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            {/* Col 4: Pusat Bantuan */}
-            <div className="kp-footer-col">
-              <h4 className="kp-footer-title">Pusat Bantuan</h4>
-              <p className="kp-footer-desc">
-                Konsultasi BK Sekolah & Layanan Panduan Siswa
-              </p>
-              <button
-                type="button"
-                className="kp-footer-help-btn"
-                onClick={() => alert("Menghubungi konselor BK sekolah Anda...")}
-              >
-                <IconCounselor size={13} color="#006190" />
-                <span>Bantuan Konselor BK</span>
-              </button>
-            </div>
-          </div>
-
-          {/* Bottom Legal & Copyright */}
-          <div className="kp-footer-bottom">
-            <span className="kp-footer-copy">
-              © 2025 ArahMasaDepan • Inisiatif Pendampingan Karir Siswa Indonesia
-            </span>
-            <div className="kp-footer-legal">
-              <Link href="#" className="kp-legal-link">
-                Kebijakan Privasi Data Siswa
-              </Link>
-              <span>•</span>
-              <Link href="#" className="kp-legal-link">
-                Ketentuan Layanan
-              </Link>
-            </div>
-          </div>
-        </div>
-      </footer>
-
-      {/* ═════════════════════════════════════════════════════════════════════
-          MOBILE NAVIGATION DRAWER
-      ═════════════════════════════════════════════════════════════════════ */}
-      <div
-        className={`kp-mobile-drawer ${mobileMenuOpen ? "open" : ""}`}
-        onClick={() => setMobileMenuOpen(false)}
-        role="dialog"
-        aria-modal="true"
-      >
-        <div
-          className="kp-mobile-drawer-sheet"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <div className="kp-drawer-header">
-            <div className="kp-brand">
-              <div className="kp-brand-logo">
-                <IconCompass size={18} color="#FFFFFF" />
-              </div>
-              <span className="kp-brand-name">ArahMasaDepan</span>
-            </div>
-            <button
-              type="button"
-              className="kp-clear-btn"
-              onClick={() => setMobileMenuOpen(false)}
-              aria-label="Tutup menu"
-            >
-              <IconClose size={14} color="#0B1C30" />
-            </button>
-          </div>
-
-          <div className="kp-drawer-links">
-            {[
-              ["/beranda", "Beranda"],
-              ["/rekomendasi", "Rekomendasi"],
-              ["/eksplorasi-karir", "Eksplorasi Karir"],
-              ["/analitik", "Analisis Keselarasan"],
-              ["/katalog-prodi", "Katalog Kampus"],
-              ["/profil", `Profil Siswa (${namaSiswa})`],
-            ].map(([href, label]) => (
-              <Link
-                key={href}
-                href={href}
-                className={`kp-drawer-link ${href === "/katalog-prodi" ? "active" : ""}`}
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                {label}
-              </Link>
-            ))}
-          </div>
-        </div>
-      </div>
 
       {/* ═════════════════════════════════════════════════════════════════════
           COMPARISON MODAL DIALOG

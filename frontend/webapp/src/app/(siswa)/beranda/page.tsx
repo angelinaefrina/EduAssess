@@ -3,6 +3,7 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import "../../../styles/beranda.css";
+import { UnifiedNavbar } from "../../../components/shared/UnifiedNavbar";
 import { ApiError } from "../../../lib/api/client";
 import { daftarNilai } from "../../../lib/api/nilai";
 import { getTarget, terakhirAsesmen } from "../../../lib/api/rekomendasi";
@@ -30,7 +31,6 @@ import {
   IconBuilding,
   IconSchool,
   IconBell,
-  IconSearch,
   IconUser,
   IconStar,
   IconBarChart,
@@ -141,82 +141,6 @@ const namaKarir = (t: DaftarTarget["karir"][number]) => t.karir?.nama ?? t.teks_
 function kecocokanKode(kodeSiswa: string | null, kodeProdi: string | null) {
   if (!kodeSiswa || !kodeProdi) return null;
   return [...kodeProdi].filter((h) => kodeSiswa.includes(h)).length;
-}
-
-const NAV_LINKS = [
-  { label: "Beranda", href: "/beranda", active: true },
-  { label: "Rekomendasi", href: "/rekomendasi" },
-  { label: "Eksplorasi Karir", href: "/eksplorasi-karir", multiline: true },
-  { label: "Analisis Keselarasan", href: "/analitik", multiline: true },
-  { label: "Katalog Kampus", href: "/katalog-prodi", multiline: true },
-];
-
-// ─── Sub-components ───────────────────────────────────────────────────────────
-
-function SiteHeader({ nama, kelas }: { nama: string; kelas: string }) {
-  return (
-    <header className="site-header" role="banner">
-      <nav className="nav-bar" aria-label="Navigasi utama">
-        {/* Brand */}
-        <a className="nav-brand" href="/beranda" aria-label="ArahMasaDepan - Beranda">
-          <span className="nav-brand__icon" aria-hidden="true">
-            <IconCompass size={18} color="#FFFFFF" />
-          </span>
-          <span className="nav-brand__text">
-            <span className="nav-brand__name">ArahMasaDepan</span>
-            <span className="nav-brand__badge">Siswa SMA &bull; Kurikulum Merdeka</span>
-          </span>
-        </a>
-
-        {/* Nav Links */}
-        <ul className="nav-links" role="list" style={{ listStyle: "none", margin: 0, padding: 0, display: "flex" }}>
-          {NAV_LINKS.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                className={`nav-link${link.active ? " nav-link--active" : ""}`}
-                aria-current={link.active ? "page" : undefined}
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-
-        {/* Actions */}
-        <div className="nav-actions">
-          {/* Search */}
-          <button className="nav-search" aria-label="Cari Prodi atau Karir">
-            <IconSearch size={14} color="#3F4850" />
-            <span className="nav-search__label">Cari Prodi / Karir</span>
-            <span className="nav-search__kbd" aria-label="Pintasan keyboard Command K">
-              &#8984;K
-            </span>
-          </button>
-
-          {/* Notification */}
-          <button className="nav-notif" aria-label="Notifikasi seleksi, ada pesan baru">
-            <IconBell size={14} color="#3F4850" />
-            <span className="nav-notif__dot" aria-hidden="true" />
-          </button>
-
-          {/* Divider */}
-          <span className="nav-divider" aria-hidden="true" />
-
-          {/* User */}
-          <Link className="nav-user" href="/profil" aria-label={`Menu akun ${nama}`}>
-            <span className="nav-user__avatar" aria-hidden="true">
-              <IconUser size={12} color="#FFFFFF" />
-            </span>
-            <span className="nav-user__info">
-              <span className="nav-user__name">{nama}</span>
-              <span className="nav-user__role">{kelas}</span>
-            </span>
-          </Link>
-        </div>
-      </nav>
-    </header>
-  );
 }
 
 // ─── Section 1: Hero Header ────────────────────────────────────────────────
@@ -667,78 +591,7 @@ function BannerCTA({ data }: { data: BerandaData }) {
   );
 }
 
-// ─── Footer ───────────────────────────────────────────────────────────────
 
-function SiteFooter() {
-  return (
-    <footer className="site-footer" role="contentinfo">
-      <div className="footer-inner">
-        <div className="footer-cols">
-          {/* Brand col */}
-          <div className="footer-brand">
-            <div className="footer-brand__logo">
-              <span className="footer-brand__icon" aria-hidden="true">
-                <IconCompass size={15} color="#FFFFFF" />
-              </span>
-              <span className="footer-brand__name">ArahMasaDepan</span>
-            </div>
-            <p className="footer-brand__desc">
-              Platform diagnostik minat bakat dan panduan pilihan program studi
-              SNBP, SNBT, dan Jalur Mandiri berstandar Kurikulum Merdeka.
-            </p>
-          </div>
-
-          {/* Fitur Unggulan */}
-          <div>
-            <h3 className="footer-col__heading">Fitur Unggulan</h3>
-            <ul className="footer-col__list">
-              {["Tes RIASEC Holland", "Matriks Keselarasan Mapel", "Simulasi Rasionalisasi SNBP"].map((item) => (
-                <li key={item} className="footer-col__item">{item}</li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Eksplorasi */}
-          <div>
-            <h3 className="footer-col__heading">Eksplorasi</h3>
-            <ul className="footer-col__list">
-              {["Peta Karir Vokasi & Akademik", "Direktori PTN & PTS", "Panduan Portofolio Seni & Olahraga"].map((item) => (
-                <li key={item} className="footer-col__item">{item}</li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Pusat Bantuan */}
-          <div>
-            <h3 className="footer-col__heading">Pusat Bantuan</h3>
-            <p className="footer-col__help-text">
-              Konsultasi BK Sekolah &amp; Layanan Panduan Siswa
-            </p>
-            <button className="footer-help-btn" type="button">
-              <IconMessage size={13} color="#006190" />
-              Bantuan Konselor BK
-            </button>
-          </div>
-        </div>
-
-        {/* Bottom bar */}
-        <div className="footer-bottom">
-          <span className="footer-copyright">
-            &copy; 2026 ArahMasaDepan &bull; Inisiatif Pendampingan Karir Siswa Indonesia
-          </span>
-          <nav className="footer-legal" aria-label="Tautan legal">
-            <a href="/kebijakan-privasi" className="footer-legal__link">
-              Kebijakan Privasi Data Siswa
-            </a>
-            <a href="/ketentuan-layanan" className="footer-legal__link">
-              Ketentuan Layanan
-            </a>
-          </nav>
-        </div>
-      </div>
-    </footer>
-  );
-}
 
 // ─── Page ─────────────────────────────────────────────────────────────────
 
@@ -786,7 +639,7 @@ export default function BerandaSiswaPage() {
       <div className="ambient-blob ambient-blob--mid-left" aria-hidden="true" />
 
       {/* Header */}
-      <SiteHeader nama={data.me.profil.nama ?? "Siswa"} kelas={infoKelas(data.me)} />
+      <UnifiedNavbar peran="siswa" customUser={{ nama: data.me.profil.nama, kelas: infoKelas(data.me) }} />
 
       {/* Main content */}
       <main className="beranda-main" id="main-content">
@@ -807,9 +660,6 @@ export default function BerandaSiswaPage() {
           <BannerCTA data={data} />
         </div>
       </main>
-
-      {/* Footer */}
-      <SiteFooter />
     </div>
   );
 }

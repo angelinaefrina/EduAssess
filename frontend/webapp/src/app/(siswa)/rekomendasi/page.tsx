@@ -3,11 +3,11 @@
 import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import "../../../styles/rekomendasi.css";
+import { UnifiedNavbar } from "../../../components/shared/UnifiedNavbar";
 
 import {
   IconCompass,
   IconBell,
-  IconSearch,
   IconUser,
   IconMessage,
   IconCheckCircle,
@@ -187,65 +187,6 @@ function rataRapor(nilai: DaftarNilai | null) {
   const valid = (nilai?.nilai ?? []).filter((n) => n.status !== "ditolak");
   if (!valid.length) return null;
   return valid.reduce((t, n) => t + Number(n.nilai), 0) / valid.length;
-}
-
-// ─── Sub-components ──────────────────────────────────────────────────────────
-
-function SiteHeader({ nama, kelas }: { nama: string; kelas: string }) {
-  return (
-    <header className="rk-header" role="banner">
-      <nav className="rk-nav" aria-label="Navigasi utama">
-        <a className="rk-brand" href="/beranda" aria-label="ArahMasaDepan - Beranda">
-          <span className="rk-brand__icon" aria-hidden="true">
-            <IconCompass size={18} color="#FFFFFF" />
-          </span>
-          <span className="rk-brand__text">
-            <span className="rk-brand__name">ArahMasaDepan</span>
-            <span className="rk-brand__badge">Siswa SMA &bull; Kurikulum Merdeka</span>
-          </span>
-        </a>
-
-        <ul className="rk-nav-links" role="list">
-          {NAV_LINKS.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                className={`rk-nav-link${link.active ? " rk-nav-link--active" : ""}`}
-                aria-current={link.active ? "page" : undefined}
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
-        </ul>
-
-        <div className="rk-nav-actions">
-          <button className="rk-nav-search" type="button" aria-label="Cari jurusan atau karir">
-            <IconSearch size={14} color="#3F4850" />
-            <span className="rk-nav-search__label">Cari Prodi / Karir</span>
-            <span className="rk-nav-search__kbd" aria-label="Pintasan keyboard Command K">&#8984;K</span>
-          </button>
-
-          <button className="rk-nav-notif" type="button" aria-label="Notifikasi, ada pesan baru">
-            <IconBell size={14} color="#3F4850" />
-            <span className="rk-nav-notif__dot" aria-hidden="true" />
-          </button>
-
-          <span className="rk-nav-divider" aria-hidden="true" />
-
-          <Link className="rk-nav-user" href="/profil" aria-label={`Menu akun ${nama}`}>
-            <span className="rk-nav-user__avatar" aria-hidden="true">
-              <IconUser size={12} color="#FFFFFF" />
-            </span>
-            <span className="rk-nav-user__info">
-              <span className="rk-nav-user__name">{nama}</span>
-              <span className="rk-nav-user__role">{kelas}</span>
-            </span>
-          </Link>
-        </div>
-      </nav>
-    </header>
-  );
 }
 
 // ── Top badge row ─────────────────────────────────────────────────────────────
@@ -898,67 +839,7 @@ function JalurSeleksiCard() {
   );
 }
 
-// ── Site Footer ───────────────────────────────────────────────────────────────
 
-function SiteFooter() {
-  return (
-    <footer className="rk-footer" role="contentinfo">
-      <div className="rk-footer__inner">
-        <div className="rk-footer__cols">
-          <div>
-            <div className="rk-footer__brand-logo">
-              <span className="rk-footer__brand-icon" aria-hidden="true">
-                <IconCompass size={15} color="#FFFFFF" />
-              </span>
-              <span className="rk-footer__brand-name">ArahMasaDepan</span>
-            </div>
-            <p className="rk-footer__brand-desc">
-              Platform diagnostik minat bakat dan panduan pilihan program studi
-              SNBP, SNBT, dan Jalur Mandiri berstandar Kurikulum Merdeka.
-            </p>
-          </div>
-
-          <div>
-            <h3 className="rk-footer__col-heading">Fitur Unggulan</h3>
-            <ul className="rk-footer__col-list">
-              {["Tes RIASEC Holland", "Matriks Keselarasan Mapel", "Simulasi Rasionalisasi SNBP"].map((item) => (
-                <li key={item} className="rk-footer__col-item">{item}</li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="rk-footer__col-heading">Eksplorasi</h3>
-            <ul className="rk-footer__col-list">
-              {["Peta Karir Vokasi & Akademik", "Direktori PTN & PTS", "Panduan Portofolio Seni & Olahraga"].map((item) => (
-                <li key={item} className="rk-footer__col-item">{item}</li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="rk-footer__col-heading">Pusat Bantuan</h3>
-            <p className="rk-footer__col-help">Konsultasi BK Sekolah &amp; Layanan Panduan Siswa</p>
-            <button className="rk-footer__help-btn" type="button">
-              <IconMessage size={13} color="#006190" />
-              Bantuan Konselor BK
-            </button>
-          </div>
-        </div>
-
-        <div className="rk-footer__bottom">
-          <span className="rk-footer__copyright">
-            &copy; 2025 ArahMasaDepan &bull; Inisiatif Pendampingan Karir Siswa Indonesia
-          </span>
-          <nav className="rk-footer__legal" aria-label="Tautan legal">
-            <a href="/kebijakan-privasi" className="rk-footer__legal-link">Kebijakan Privasi Data Siswa</a>
-            <a href="/ketentuan-layanan" className="rk-footer__legal-link">Ketentuan Layanan</a>
-          </nav>
-        </div>
-      </div>
-    </footer>
-  );
-}
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
@@ -1058,7 +939,7 @@ export default function RekomendasiPage() {
 
   return (
     <div className="page-rekomendasi">
-      <SiteHeader nama={me?.profil.nama ?? "Siswa"} kelas={infoKelas(me)} />
+      <UnifiedNavbar peran="siswa" customUser={{ nama: me?.profil.nama, kelas: infoKelas(me) }} />
 
       <main className="rk-main" id="main-content">
         <div className="rk-container">
@@ -1167,7 +1048,6 @@ export default function RekomendasiPage() {
         </div>
       </main>
 
-      <SiteFooter />
     </div>
   );
 }

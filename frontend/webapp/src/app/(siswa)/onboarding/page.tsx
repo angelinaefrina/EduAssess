@@ -483,7 +483,7 @@ export default function OnboardingPage() {
               <div className="ob-welcome__icon" aria-hidden="true">
                 <IconCompass size={24} color="#FFFFFF" />
               </div>
-              <h2>Selamat Datang di ArahMasaDepan!</h2>
+              <h2>Selamat Datang di EduAssess!</h2>
               <p>
                 Platform pendamping untuk memandu transisi siswa SMA ke pendidikan tinggi dan dunia
                 kerja.

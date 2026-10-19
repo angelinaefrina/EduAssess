@@ -1,5 +1,5 @@
 /* =============================================================
-   Design Tokens — ArahMasaDepan / IvanaMager
+   Design Tokens — EduAssess
    Beranda Siswa SMA  |  extracted from Figma CSS spec
    ============================================================= */
 
@@ -84,14 +84,15 @@
   /* ── Max width ── */
   --max-content: 1280px;
 
-  /* ── ArahIn Official Brand Colors ── */
+  /* ── EduAssess Official Brand Colors ── */
   --brand-navy: #06124D;
   --brand-blue: #1386E8;
 }
 
 /* =============================================================
-   Official ArahIn Brand Typography & Logo Styling
+   Official EduAssess Brand Typography & Logo Styling
    ============================================================= */
+.brand-eduassess,
 .brand-arahin {
   display: inline-flex;
   align-items: center;
@@ -102,11 +103,13 @@
   text-decoration: none;
 }
 
+.brand-eduassess .brand-edu,
 .brand-arahin .brand-arah {
   color: var(--brand-navy, #06124D);
   transition: color 0.15s ease;
 }
 
+.brand-eduassess .brand-assess,
 .brand-arahin .brand-in {
   color: var(--brand-blue, #1386E8);
   transition: color 0.15s ease;

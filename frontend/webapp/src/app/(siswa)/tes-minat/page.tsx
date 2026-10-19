@@ -44,7 +44,6 @@ function Hasil({ h }: { h: HasilAsesmen }) {
       </ul>
       <div className="app-actions">
         <Link href="/rekomendasi" className="app-btn app-btn--primary">Lihat Rekomendasi Prodi</Link>
-        <Link href="/perkembangan" className="app-btn">Riwayat Perkembangan</Link>
       </div>
     </section>
   );

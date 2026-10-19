@@ -6,8 +6,8 @@ type IconProps = {
   color?: string;
 };
 
-/* --- ArahIn Brand Logo Icon (Folded Academic Book / Paper with Blue & Orange Gradients) --- */
-export function IconArahInLogo({ size = 32, className }: { size?: number; className?: string }) {
+/* --- EduAssess Brand Logo Icon (Folded Academic Book / Paper with Blue & Orange Gradients) --- */
+export function IconEduAssessLogo({ size = 32, className }: { size?: number; className?: string }) {
   return (
     <svg width={size} height={size} viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
       <rect width="36" height="36" rx="9" fill="#F8FAFC" />
@@ -40,6 +40,7 @@ export function IconArahInLogo({ size = 32, className }: { size?: number; classN
     </svg>
   );
 }
+export const IconArahInLogo = IconEduAssessLogo;
 
 /* --- Navigation & Utility Icons --- */
 export function IconHelpCircle({ size = 16, color = "currentColor", className }: IconProps) {

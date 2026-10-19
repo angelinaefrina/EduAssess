@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "IvanaMager",
+  title: "EduAssess",
   description: "Platform Rekomendasi Karir & Studi Lanjut Siswa",
 };
 

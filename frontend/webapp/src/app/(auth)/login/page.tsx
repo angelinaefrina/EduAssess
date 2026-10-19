@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { Suspense, useState } from "react";
@@ -8,7 +7,7 @@ import { createSupabaseBrowser } from "../../../lib/supabase/client";
 import "../../../styles/auth.css";
 import {
   IconAlertCircle,
-  IconArahInLogo,
+  IconEduAssessLogo,
   IconArrowRight,
   IconBadgeCheck,
   IconChevronRight,
@@ -165,22 +164,12 @@ function AuthComponent() {
       {/* ================= HEADER ================= */}
       <header className="auth-header">
         <div className="auth-header-container">
-          <Link href="/" className="auth-brand" aria-label="ArahIn Beranda">
+          <Link href="/" className="auth-brand" aria-label="EduAssess Beranda">
             <div className="auth-brand-top">
-              <Image
-                src="/images/logo-tight.png"
-                alt="ArahIn Logo"
-                width={32}
-                height={32}
-                style={{ objectFit: "contain" }}
-              />
               <span className="auth-brand-name">
-                Arah<span className="auth-brand-name-in">In</span>
+                Edu<span className="auth-brand-name-in">Assess</span>
               </span>
             </div>
-            <span className="auth-brand-slogan">
-              Discover Your Potential. Define Your Future.
-            </span>
           </Link>
 
           <nav className="auth-header-nav">
@@ -192,10 +181,6 @@ function AuthComponent() {
               <IconHelpCircle size={16} color="#334155" />
               <span>Bantuan & Panduan</span>
             </button>
-            <Link href="/beranda" className="auth-nav-link">
-              <IconHome size={16} color="#334155" />
-              <span>Kembali ke Beranda</span>
-            </Link>
           </nav>
         </div>
       </header>
@@ -203,63 +188,13 @@ function AuthComponent() {
       {/* ================= MAIN CONTENT ================= */}
       <main className="auth-main">
         <div className="auth-content-container">
-          {/* Breadcrumb & Status Bar */}
-          <div className="auth-topbar">
-            <div className="auth-breadcrumb">
-              <span className="auth-breadcrumb-primary">Portal Masuk Terpadu</span>
-              <span className="auth-breadcrumb-separator">
-                <IconChevronRight size={11} color="#64748B" />
-              </span>
-              <span className="auth-breadcrumb-secondary">
-                {mode === "login"
-                  ? "Autentikasi Kredensial Sekolah (NISN / NIP)"
-                  : "Registrasi Kredensial Baru Sekolah"}
-              </span>
-            </div>
 
-            <div className="auth-status-pill">
-              <span className="auth-status-dot" />
-              <span className="auth-status-text">
-                Gateway SSO Dapodik Aktif • Sesi Aman 256-bit
-              </span>
-            </div>
-          </div>
-
-          {/* Dual Column Layout Grid */}
+          {/* Centered Auth Layout */}
           <div className="auth-grid">
-            {/* ============= SISI KIRI: HERO SHOWCASE ============= */}
-            <div className="auth-hero-column">
-              <div className="auth-hero-card">
-                <Image
-                  src="/images/hero-character.png"
-                  alt="Ilustrasi Siswa ArahMasaDepan Belajar dengan Laptop"
-                  width={460}
-                  height={345}
-                  priority
-                  className="auth-hero-image"
-                />
-              </div>
 
-              {/* Badge */}
-              <div className="auth-hero-badge">
-                <IconSparkle size={13} color="#0284C7" />
-                <span>Eksplorasi Minat & Bakat Terpadu</span>
-              </div>
-
-              {/* Title */}
-              <h1 className="auth-hero-title">
-                Selamat Datang di
-                <br />
-                Arah<span className="auth-hero-title-in">In</span>
-              </h1>
-
-              {/* Subtitle */}
-              <p className="auth-hero-subtitle">
-                Mulai petualangan menuju jurusan dan kampus impianmu dengan
-                panduan data rapor serta rekomendasi diagnostik ilmiah yang
-                akurat.
-              </p>
-            </div>
+            <h1 className="auth-hero-title" style={{ textAlign: "center", marginBottom: "20px" }}>
+              Selamat Datang di Edu<span className="auth-hero-title-in">Assess</span>
+            </h1>
 
             {/* ============= SISI KANAN: INTERACTIVE AUTH CARD ============= */}
             <div className="auth-card-wrapper">
@@ -358,9 +293,6 @@ function AuthComponent() {
                             ? "NISN atau Email Terdaftar"
                             : "NIP atau Email Resmi"}
                         </label>
-                        <span className="auth-field-hint">
-                          {role === "siswa" ? "10 digit NISN" : "18 digit NIP"}
-                        </span>
                       </div>
                       <div className="auth-input-container">
                         <span className="auth-input-icon">
@@ -437,10 +369,6 @@ function AuthComponent() {
                         />
                         <span>Ingat akun di perangkat ini</span>
                       </label>
-                      <div className="auth-security-indicator">
-                        <IconLockShield size={13} color="#475569" />
-                        <span>Kredensial Aman</span>
-                      </div>
                     </div>
 
                     {/* CTA Submit Button */}
@@ -462,18 +390,6 @@ function AuthComponent() {
                         </>
                       )}
                     </button>
-
-                    {/* Dapodik Sync Notice Box */}
-                    <div className="auth-notice-box">
-                      <span className="auth-notice-icon">
-                        <IconBadgeCheck size={18} color="#006190" />
-                      </span>
-                      <span className="auth-notice-text">
-                        <span className="auth-notice-bold">Sinkronisasi Dapodik: </span>
-                        Akun siswa otomatis tersinkronisasi jika sekolah Anda telah
-                        mengaktifkan integrasi Dapodik SMAN 1 Jakarta.
-                      </span>
-                    </div>
 
                     {/* Alternative Switch Helper */}
                     <div className="auth-switch-helper">
@@ -499,7 +415,6 @@ function AuthComponent() {
                         <label htmlFor="reg-name" className="auth-field-label">
                           Nama Lengkap
                         </label>
-                        <span className="auth-field-hint">Sesuai Rapor / Dokumen</span>
                       </div>
                       <div className="auth-input-container">
                         <span className="auth-input-icon">
@@ -525,7 +440,6 @@ function AuthComponent() {
                             ? "Email Siswa / Akun Belajar.id"
                             : "Email Resmi Guru / Sekolah"}
                         </label>
-                        <span className="auth-field-hint">Wajib Diisi</span>
                       </div>
                       <div className="auth-input-container">
                         <span className="auth-input-icon">
@@ -549,7 +463,6 @@ function AuthComponent() {
                         <label htmlFor="reg-password" className="auth-field-label">
                           Kata Sandi
                         </label>
-                        <span className="auth-field-hint">Min. 6 Karakter</span>
                       </div>
                       <div className="auth-input-container">
                         <span className="auth-input-icon">
@@ -639,52 +552,13 @@ function AuthComponent() {
                   </form>
                 )}
 
-                {/* 4. Strict Security Assurance Footer Badge */}
-                <div className="auth-card-footer-badge">
-                  <span className="auth-card-footer-icon">
-                    <IconShieldCheck size={14} color="#006190" />
-                  </span>
-                  <span className="auth-card-footer-text">
-                    Autentikasi Internal Sekolah • Tanpa Integrasi Akun Pihak Ketiga
-                  </span>
-                </div>
               </div>
             </div>
           </div>
         </div>
       </main>
 
-      {/* ================= FOOTER ================= */}
-      <footer className="auth-footer">
-        <div className="auth-footer-container">
-          <div className="auth-footer-copy">
-            © 2025 ArahMasaDepan • Terintegrasi Data Pokok Pendidikan (Dapodik)
-          </div>
-          <div className="auth-footer-links">
-            <button
-              type="button"
-              className="auth-footer-link"
-              onClick={() => setActiveModal("help")}
-            >
-              Pusat Bantuan
-            </button>
-            <button
-              type="button"
-              className="auth-footer-link"
-              onClick={() => setActiveModal("privacy")}
-            >
-              Kebijakan Privasi
-            </button>
-            <button
-              type="button"
-              className="auth-footer-link"
-              onClick={cekStatusServer}
-            >
-              Status Server
-            </button>
-          </div>
-        </div>
-      </footer>
+
 
       {/* ================= MODAL DIALOGS ================= */}
       {activeModal && (
@@ -701,7 +575,7 @@ function AuthComponent() {
                   Pusat Bantuan & Panduan
                 </h3>
                 <p style={{ margin: 0, fontSize: "13px", color: "#475569", lineHeight: "20px" }}>
-                  ArahIn membantu siswa SMA mengeksplorasi minat, bakat (RIASEC), dan pilihan jurusan kuliah secara akurat menggunakan data nilai rapor terverifikasi dan rekomendasi kecerdasan buatan.
+                  EduAssess membantu siswa SMA mengeksplorasi minat, bakat (RIASEC), dan pilihan jurusan kuliah secara akurat menggunakan data nilai rapor terverifikasi dan rekomendasi kecerdasan buatan.
                 </p>
                 <div style={{ background: "#F1F5F9", padding: "12px", borderRadius: "8px", fontSize: "12.5px", color: "#334155" }}>
                   <strong>Panduan Akses:</strong>

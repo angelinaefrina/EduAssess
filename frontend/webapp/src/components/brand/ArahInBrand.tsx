@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-export interface ArahInBrandProps {
+export interface EduAssessBrandProps {
   /**
    * "full": Icon mark + two-tone text
    * "text-only": Two-tone text without icon
@@ -20,7 +20,7 @@ export interface ArahInBrandProps {
   priority?: boolean;
 }
 
-export function ArahInText({
+export function EduAssessText({
   size = "md",
   className = "",
 }: {
@@ -36,7 +36,7 @@ export function ArahInText({
 
   return (
     <span
-      className={`brand-arahin ${className}`}
+      className={`brand-eduassess brand-arahin ${className}`}
       style={{
         display: "inline-flex",
         alignItems: "center",
@@ -46,13 +46,13 @@ export function ArahInText({
         ...sizeStyles,
       }}
     >
-      <span style={{ color: "#06124D" }}>Arah</span>
-      <span style={{ color: "#1386E8" }}>In</span>
+      <span style={{ color: "#06124D" }}>Edu</span>
+      <span style={{ color: "#1386E8" }}>Assess</span>
     </span>
   );
 }
 
-export default function ArahInBrand({
+export default function EduAssessBrand({
   variant = "full",
   size = "md",
   href,
@@ -62,7 +62,7 @@ export default function ArahInBrand({
   className = "",
   textClassName = "",
   priority = false,
-}: ArahInBrandProps) {
+}: EduAssessBrandProps) {
   const iconSizes = {
     sm: { width: 24, height: 24 },
     md: { width: 32, height: 32 },
@@ -72,7 +72,7 @@ export default function ArahInBrand({
 
   const content = (
     <div
-      className={`arahin-brand-container ${className}`}
+      className={`eduassess-brand-container arahin-brand-container ${className}`}
       style={{
         display: "inline-flex",
         flexDirection: slogan || school ? "column" : "row",
@@ -85,7 +85,7 @@ export default function ArahInBrand({
         <div style={{ display: "inline-flex", alignItems: "center" }}>
           <Image
             src="/images/logo-brand-horizontal.png"
-            alt="ArahIn"
+            alt="EduAssess"
             width={iconSizes.width * 3.7}
             height={iconSizes.height}
             style={{ objectFit: "contain", height: iconSizes.height, width: "auto" }}
@@ -131,7 +131,7 @@ export default function ArahInBrand({
             >
               <Image
                 src="/images/logo-tight.png"
-                alt="ArahIn Logo"
+                alt="EduAssess Logo"
                 width={iconSizes.width}
                 height={iconSizes.height}
                 style={{
@@ -152,7 +152,7 @@ export default function ArahInBrand({
                 gap: "6px",
               }}
             >
-              <ArahInText size={size} className={textClassName} />
+              <EduAssessText size={size} className={textClassName} />
               {badge && (
                 <span
                   style={{
@@ -218,3 +218,7 @@ export default function ArahInBrand({
 
   return content;
 }
+
+export type ArahInBrandProps = EduAssessBrandProps;
+export const ArahInText = EduAssessText;
+export const ArahInBrand = EduAssessBrand;

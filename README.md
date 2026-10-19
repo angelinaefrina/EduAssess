@@ -1,8 +1,8 @@
-# ArahIn
+# EduAssess
 
-**ArahIn** membantu siswa SMA menemukan arah studi lanjut — program studi, contoh karir,
+**EduAssess** membantu siswa SMA menemukan arah studi lanjut — program studi, contoh karir,
 mapel pilihan, dan jenjang pendidikan — berdasarkan **minat (tes RIASEC)**, **nilai rapor**,
-dan **target karir** siswa. Guru BK memakai ArahIn untuk memantau dan mendampingi siswa
+dan **target karir** siswa. Guru BK memakai EduAssess untuk memantau dan mendampingi siswa
 agar mengurangi risiko "salah jurusan".
 
 Dibuat untuk hackathon JOINTS dengan tema Education.
