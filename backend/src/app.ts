@@ -1,7 +1,7 @@
 import path from 'node:path';
 import cors from 'cors';
 import express, { Router } from 'express';
-import { corsOrigins } from './config/env';
+import { corsOrigins, env } from './config/env';
 import { errorHandler, notFoundHandler } from './middleware/errorHandler';
 import { asesmenRouter } from './routes/asesmen.routes';
 import { bkRouter } from './routes/bk.routes';
@@ -14,6 +14,10 @@ import { siswaRouter } from './routes/siswa.routes';
 export const app = express();
 
 app.disable('x-powered-by');
+app.use((_req, res, next) => {
+  res.setHeader('X-Node-Id', env.NODE_ID);
+  next();
+});
 app.use(cors({ origin: corsOrigins }));
 app.use(express.json({ limit: '1mb' }));
 

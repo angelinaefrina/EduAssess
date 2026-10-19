@@ -1,4 +1,5 @@
 import type { RequestHandler } from 'express';
+import { env } from '../config/env';
 import { ProfilModel } from '../models/profil.model';
 
 export const getHealth: RequestHandler = async (_req, res) => {
@@ -6,6 +7,7 @@ export const getHealth: RequestHandler = async (_req, res) => {
   res.json({
     data: {
       status: 'ok',
+      node: env.NODE_ID,
       db: dbOk ? 'ok' : 'error',
       waktu: new Date().toISOString(),
     },

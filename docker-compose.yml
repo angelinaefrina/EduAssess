@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+  # ==========================================
+  # NODE 1: BACKEND INSTANCE A
+  # ==========================================
+  backend-node-1:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: arahin-backend-node-1
+    env_file:
+      - ./backend/.env
+    environment:
+      - NODE_ID=node-1
+      - PORT=4000
+    restart: unless-stopped
+    # Batasan resource simulasi VM / Cloud Instance (dapat disesuaikan)
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+    networks:
+      - arahin-network
+
+  # ==========================================
+  # NODE 2: BACKEND INSTANCE B
+  # ==========================================
+  backend-node-2:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: arahin-backend-node-2
+    env_file:
+      - ./backend/.env
+    environment:
+      - NODE_ID=node-2
+      - PORT=4000
+    restart: unless-stopped
+    # Batasan resource simulasi VM / Cloud Instance (dapat disesuaikan)
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+    networks:
+      - arahin-network
+
+  # ==========================================
+  # REVERSE PROXY & LOAD BALANCER
+  # ==========================================
+  load-balancer:
+    image: nginx:alpine
+    container_name: arahin-load-balancer
+    ports:
+      - "80:80"     # Port HTTP standar (untuk load test dan produksi)
+      - "4000:80"   # Port 4000 (agar kompatibel langsung dengan frontend dev lokal)
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - backend-node-1
+      - backend-node-2
+    restart: unless-stopped
+    networks:
+      - arahin-network
+
+networks:
+  arahin-network:
+    driver: bridge
