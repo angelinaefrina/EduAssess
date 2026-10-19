@@ -12,6 +12,10 @@ const envSchema = z
     NODE_ID: z.string().default('node-1'),
     SUPABASE_URL: z.url(),
     SUPABASE_SERVICE_ROLE_KEY: z.string().min(1),
+    // Pembatas beban ke Supabase per instance backend (lihat config/supabase.ts).
+    SUPABASE_MAX_SERENTAK: z.coerce.number().int().positive().default(30),
+    SUPABASE_MAX_ANTRE: z.coerce.number().int().min(0).default(300),
+    SUPABASE_MAX_TUNGGU_MS: z.coerce.number().int().positive().default(5000),
     CORS_ORIGIN: z.string().default('http://localhost:3000'),
     DATASET_SUMBER: z.enum(['sintetis', 'survei', 'semua']).default('sintetis'),
     // Penjelasan rekomendasi (UC14).

@@ -52,21 +52,21 @@ export const RiasecService = {
   },
 
   async kirim(siswaId: string, jawaban: JawabanAsesmen) {
-    const siswa = await SiswaModel.findById(siswaId);
-    if (!siswa) {
-      throw AppError.badRequest('Lengkapi profil (onboarding) terlebih dahulu', 'SISWA_BELUM_ADA');
-    }
-
-    const [butir, dimensi] = await Promise.all([
+    const [siswa, butir, dimensi] = await Promise.all([
+      SiswaModel.findById(siswaId),
       AsesmenModel.listButirAktif(),
       AsesmenModel.listDimensi(),
     ]);
+    if (!siswa) {
+      throw AppError.badRequest('Lengkapi profil (onboarding) terlebih dahulu', 'SISWA_BELUM_ADA');
+    }
     cekLengkap('minat (RIASEC)', butir.map((b) => b.id), jawaban.riasec.map((j) => j.butir_id));
     cekLengkap('kemampuan diri', dimensi.map((d) => d.id), jawaban.kemampuan.map((j) => j.dimensi_id));
 
     // selesai_at diisi PALING AKHIR: view hanya membaca asesmen yang selesai,
     // jadi kegagalan di tengah tidak pernah menghasilkan skor setengah jadi.
-    const asesmenId = await AsesmenModel.insertSiswa(siswaId, hitungSemester(siswa.tingkat));
+    const semester = hitungSemester(siswa.tingkat);
+    const asesmenId = await AsesmenModel.insertSiswa(siswaId, semester);
     try {
       await AsesmenModel.insertJawaban(asesmenId, jawaban.riasec, jawaban.kemampuan);
       await AsesmenModel.tandaiSelesai(asesmenId);
@@ -75,6 +75,10 @@ export const RiasecService = {
       throw err;
     }
 
+    // Semester asesmen ini sudah diketahui; query semester hanya bila view
+    // ternyata mengembalikan asesmen lain (mis. kiriman serentak lebih baru).
+    const hasil = await AsesmenModel.terakhirSiswa(siswaId);
+    if (hasil?.asesmen_id === asesmenId) return { ...hasil, semester };
     return RiasecService.terakhir(siswaId);
   },
 

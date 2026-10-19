@@ -33,11 +33,17 @@ export class AppError extends Error {
   }
 }
 
-/** Ubah `error` dari supabase-js menjadi exception agar ditangani errorHandler. */
+/**
+ * Ubah `error` dari supabase-js menjadi exception agar ditangani errorHandler.
+ * Error dari Postgres/PostgREST selalu membawa `code`; tanpa `code` berarti gagal
+ * di transport (timeout, koneksi putus, antrean penuh, gateway 5xx) -> 503.
+ */
 export function throwIfSupabaseError(error: { message: string; code?: string } | null): void {
-  if (error) {
-    throw new AppError(500, 'DB_ERROR', error.message);
+  if (!error) return;
+  if (!error.code) {
+    throw AppError.serviceUnavailable('Database sedang sibuk, coba lagi', 'DB_UNAVAILABLE');
   }
+  throw new AppError(500, 'DB_ERROR', error.message);
 }
 
 export const notFoundHandler: RequestHandler = (req, _res, next) => {
