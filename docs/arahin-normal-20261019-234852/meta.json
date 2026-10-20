@@ -1,0 +1,9 @@
+{
+  "testid": "arahin-normal-20261019-234852",
+  "level": "normal",
+  "started_at": "2026-10-19T16:48:52.976Z",
+  "finished_at": "2026-10-19T16:57:31.044Z",
+  "k6_exit_code": 99,
+  "status": "selesai/dihentikan, ada threshold yang dilanggar (lihat report.md)",
+  "grafana": "http://localhost:3001/d/arahin-k6/arahin-k6-load-test?var-testid=arahin-normal-20261019-234852&var-phase=load&from=1792428502976&to=1792429081044"
+}
