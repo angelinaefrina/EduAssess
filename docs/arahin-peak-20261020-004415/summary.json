@@ -1,0 +1,563 @@
+{
+  "root_group": {
+    "checks": [],
+    "name": "",
+    "path": "",
+    "id": "d41d8cd98f00b204e9800998ecf8427e",
+    "groups": [
+        {
+          "name": "beranda",
+          "path": "::beranda",
+          "id": "d8b4430ced512fcfb43f8ef6350715d4",
+          "groups": [],
+          "checks": [
+              {
+                "name": "GET /me -> 200",
+                "path": "::beranda::GET /me -> 200",
+                "id": "f95ed81e64c9573725f5af5bdcc9fb99",
+                "passes": 5331,
+                "fails": 368
+              },
+              {
+                "name": "GET /siswa/me -> 200",
+                "path": "::beranda::GET /siswa/me -> 200",
+                "id": "d8d5fc860b6d10a12001fb0c46d88be1",
+                "passes": 4243,
+                "fails": 1456
+              },
+              {
+                "id": "125732aac6c128421ad8fa80b4d02b3f",
+                "passes": 5082,
+                "fails": 617,
+                "name": "GET /siswa/me/asesmen/terakhir -> 200",
+                "path": "::beranda::GET /siswa/me/asesmen/terakhir -> 200"
+              }
+            ]
+        },
+        {
+          "path": "::tes-minat",
+          "id": "04e2f50fd10857d45de2b0f940050767",
+          "groups": [],
+          "checks": [
+              {
+                "name": "GET /asesmen/instrumen -> 200",
+                "path": "::tes-minat::GET /asesmen/instrumen -> 200",
+                "id": "dbfc424dc2ff97a94b67d126392f5e8b",
+                "passes": 5605,
+                "fails": 94
+              },
+              {
+                "id": "8ee4ca0dcbfec57ec9f279d3329979ce",
+                "passes": 1582,
+                "fails": 180,
+                "name": "POST /siswa/me/asesmen -> 201",
+                "path": "::tes-minat::POST /siswa/me/asesmen -> 201"
+              }
+            ],
+          "name": "tes-minat"
+        },
+        {
+          "groups": [],
+          "checks": [
+              {
+                "name": "GET /siswa/me/rekomendasi/prodi -> 200",
+                "path": "::rekomendasi::GET /siswa/me/rekomendasi/prodi -> 200",
+                "id": "9ddd25233cd36b5b675cc531d0bfd2da",
+                "passes": 4633,
+                "fails": 1046
+              },
+              {
+                "id": "a7d06387581112e1cfe38df6acee4d82",
+                "passes": 5158,
+                "fails": 518,
+                "name": "GET /siswa/me/rekomendasi/jenjang -> 200",
+                "path": "::rekomendasi::GET /siswa/me/rekomendasi/jenjang -> 200"
+              }
+            ],
+          "name": "rekomendasi",
+          "path": "::rekomendasi",
+          "id": "79a699dc0c8383fa946e256b666fe16e"
+        },
+        {
+          "groups": [],
+          "checks": [
+              {
+                "name": "GET /katalog/prodi -> 200",
+                "path": "::katalog::GET /katalog/prodi -> 200",
+                "id": "6fc080bb5230deb584854670cd2ccf63",
+                "passes": 5542,
+                "fails": 117
+              },
+              {
+                "path": "::katalog::GET /master/mapel -> 200",
+                "id": "8f6caf1f24e1cd917b022c4ddff74763",
+                "passes": 5541,
+                "fails": 116,
+                "name": "GET /master/mapel -> 200"
+              }
+            ],
+          "name": "katalog",
+          "path": "::katalog",
+          "id": "53c0af664df3d4a91b53eaa487cca07e"
+        }
+      ]
+  },
+  "options": {
+    "summaryTrendStats": [
+      "avg",
+      "min",
+      "med",
+      "p(90)",
+      "p(95)",
+      "p(99)",
+      "max"
+    ],
+    "summaryTimeUnit": "",
+    "noColor": false
+  },
+  "state": {
+    "isStdOutTTY": true,
+    "isStdErrTTY": true,
+    "testRunDurationMs": 555263.962551
+  },
+  "metrics": {
+    "http_req_failed": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "passes": 4512,
+        "fails": 42718,
+        "rate": 0.09553250052932458
+      }
+    },
+    "vus": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "value": 2,
+        "min": 0,
+        "max": 500
+      }
+    },
+    "http_req_duration{expected_response:true}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 2731.2661951192367,
+        "min": 31.816754,
+        "med": 2259.7652104999997,
+        "p(90)": 6087.128007500001,
+        "p(95)": 7566.444433300001,
+        "p(99)": 15709.343965570017,
+        "max": 24493.206155
+      }
+    },
+    "http_req_duration{phase:load,name:GET /master/mapel}": {
+      "values": {
+        "avg": 626.9994837516559,
+        "min": 31.816754,
+        "med": 84.999753,
+        "p(90)": 2551.154044,
+        "p(95)": 3190.300673,
+        "p(99)": 4464.907382199997,
+        "max": 7207.71417
+      },
+      "thresholds": {
+        "p(95)>=0": {
+          "ok": true
+        }
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "http_reqs": {
+      "values": {
+        "count": 47230,
+        "rate": 85.05864451028913
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "http_req_waiting": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(90)": 5924.5236438,
+        "p(95)": 7409.2834312999985,
+        "p(99)": 15426.668304239982,
+        "max": 24492.756178,
+        "avg": 2520.3594171587183,
+        "min": 31.485815,
+        "med": 2124.0896199999997
+      }
+    },
+    "http_req_duration{phase:load,name:GET /asesmen/instrumen}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 8052.806874,
+        "avg": 842.8047616405688,
+        "min": 33.389711,
+        "med": 115.8937795,
+        "p(90)": 2988.9141683000007,
+        "p(95)": 3498.72903505,
+        "p(99)": 5222.973361780005
+      },
+      "thresholds": {
+        "p(95)>=0": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_duration{phase:load,name:GET /siswa/me/rekomendasi/jenjang}": {
+      "contains": "time",
+      "values": {
+        "avg": 2823.9347712165027,
+        "min": 37.048786,
+        "med": 2567.0158745,
+        "p(90)": 5489.8090024,
+        "p(95)": 6244.695761149999,
+        "p(99)": 7483.0565732099985,
+        "max": 8869.861046
+      },
+      "thresholds": {
+        "p(95)>=0": {
+          "ok": true
+        }
+      },
+      "type": "trend"
+    },
+    "iteration_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 8129.331792,
+        "med": 29859.585219,
+        "p(90)": 49176.1337442,
+        "p(95)": 54413.97107459999,
+        "p(99)": 61107.82822891999,
+        "max": 72071.515544,
+        "avg": 31918.15196044487
+      }
+    },
+    "http_req_failed{phase:load}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0.09685729005667182,
+        "passes": 4512,
+        "fails": 42072
+      },
+      "thresholds": {
+        "rate<0.02": {
+          "ok": false
+        }
+      }
+    },
+    "http_req_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 7411.470829799998,
+        "p(99)": 15430.739632099992,
+        "max": 24493.206155,
+        "avg": 2524.1902918741202,
+        "min": 31.816754,
+        "med": 2125.9064559999997,
+        "p(90)": 5927.7699680000005
+      }
+    },
+    "http_req_tls_handshaking": {
+      "contains": "time",
+      "values": {
+        "p(99)": 48.562650299999504,
+        "max": 4716.492667,
+        "avg": 1.2398894296845218,
+        "min": 0,
+        "med": 0,
+        "p(90)": 0,
+        "p(95)": 0
+      },
+      "type": "trend"
+    },
+    "group_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(90)": 13277.1577025,
+        "p(95)": 16763.84425275,
+        "p(99)": 22625.82645725,
+        "max": 32151.707749,
+        "avg": 5404.908816754932,
+        "min": 33.704938,
+        "med": 3840.428361
+      }
+    },
+    "http_req_blocked": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(99)": 90.12388219999988,
+        "max": 4796.029612,
+        "avg": 4.853515815477483,
+        "min": 0.000167,
+        "med": 0.000766,
+        "p(90)": 0.001412,
+        "p(95)": 0.001583
+      }
+    },
+    "http_req_duration{phase:load,name:GET /siswa/me}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 2222.949029276867,
+        "min": 31.944453,
+        "med": 2242.98306,
+        "p(90)": 4493.8142482,
+        "p(95)": 5479.627354550001,
+        "p(99)": 7216.358171740001,
+        "max": 10894.295408
+      },
+      "thresholds": {
+        "p(95)>=0": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_duration{phase:load,name:GET /siswa/me/asesmen/terakhir}": {
+      "values": {
+        "p(90)": 7406.2354151,
+        "p(95)": 8418.77658285,
+        "p(99)": 10643.510470900002,
+        "max": 15529.528917,
+        "avg": 4207.766297908002,
+        "min": 32.903184,
+        "med": 4509.401384
+      },
+      "thresholds": {
+        "p(95)>=0": {
+          "ok": true
+        }
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "checks{phase:load}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0.9031427099433282,
+        "passes": 42072,
+        "fails": 4512
+      },
+      "thresholds": {
+        "rate>=0": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_receiving": {
+      "values": {
+        "avg": 3.663540918314643,
+        "min": 0.011542,
+        "med": 0.18318,
+        "p(90)": 4.376493599999993,
+        "p(95)": 9.736487949999999,
+        "p(99)": 51.95775851999996,
+        "max": 3058.87572
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "http_req_waiting{phase:load}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(99)": 15471.560969139991,
+        "max": 24492.756178,
+        "avg": 2548.395360751788,
+        "min": 31.485815,
+        "med": 2148.6687970000003,
+        "p(90)": 5944.901695300001,
+        "p(95)": 7427.627054899996
+      },
+      "thresholds": {
+        "p(95)>=0": {
+          "ok": true
+        }
+      }
+    },
+    "iterations": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 5624,
+        "rate": 10.128516128009021
+      }
+    },
+    "vus_max": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "value": 500,
+        "min": 500,
+        "max": 500
+      }
+    },
+    "http_req_duration{phase:load,name:POST /siswa/me/asesmen}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 42.085915,
+        "med": 12511.070734,
+        "p(90)": 17873.598889,
+        "p(95)": 19498.5097,
+        "p(99)": 21205.3042388,
+        "max": 24493.206155,
+        "avg": 11701.109360576087
+      },
+      "thresholds": {
+        "p(95)>=0": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_duration{phase:load,name:GET /siswa/me/rekomendasi/prodi}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 2905.058380993752,
+        "min": 33.559606,
+        "med": 2652.477639,
+        "p(90)": 5957.96685,
+        "p(95)": 6817.305445,
+        "p(99)": 8009.225326,
+        "max": 10313.489023
+      },
+      "thresholds": {
+        "p(95)>=0": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_duration{phase:load}": {
+      "contains": "time",
+      "values": {
+        "p(99)": 15472.063397239988,
+        "max": 24493.206155,
+        "avg": 2552.2223986822223,
+        "min": 31.816754,
+        "med": 2150.770327,
+        "p(90)": 5947.276156500002,
+        "p(95)": 7431.917899499996
+      },
+      "thresholds": {
+        "p(95)<1500": {
+          "ok": false
+        },
+        "p(99)<3000": {
+          "ok": false
+        }
+      },
+      "type": "trend"
+    },
+    "asesmen_submitted": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 1582,
+        "rate": 2.8490953973169044
+      }
+    },
+    "data_sent": {
+      "type": "counter",
+      "contains": "data",
+      "values": {
+        "count": 4256665,
+        "rate": 7666.020644386827
+      }
+    },
+    "http_req_connecting": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 3.606488489328813,
+        "min": 0,
+        "med": 0,
+        "p(90)": 0,
+        "p(95)": 0,
+        "p(99)": 35.01322635999994,
+        "max": 3405.180704
+      }
+    },
+    "http_req_sending": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 0.021752,
+        "med": 0.139661,
+        "p(90)": 0.28459840000000003,
+        "p(95)": 0.3266738499999999,
+        "p(99)": 0.4744730399999999,
+        "max": 9.693042,
+        "avg": 0.16733379709930293
+      }
+    },
+    "data_received": {
+      "values": {
+        "count": 74804458,
+        "rate": 134718.73387268375
+      },
+      "type": "counter",
+      "contains": "data"
+    },
+    "http_req_duration{phase:load,name:GET /me}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "min": 34.347199,
+        "med": 2668.044538,
+        "p(90)": 5380.583996000001,
+        "p(95)": 6351.28664405,
+        "p(99)": 7721.691806940001,
+        "max": 10464.116846,
+        "avg": 2893.926658485409
+      },
+      "thresholds": {
+        "p(95)>=0": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_duration{phase:load,name:GET /katalog/prodi}": {
+      "values": {
+        "med": 177.756232,
+        "p(90)": 3132.5807212,
+        "p(95)": 3631.7218373999995,
+        "p(99)": 4909.007919840001,
+        "max": 8849.537117,
+        "avg": 1039.0727464676709,
+        "min": 34.621124
+      },
+      "thresholds": {
+        "p(95)>=0": {
+          "ok": true
+        }
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "checks": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0.904465476719812,
+        "passes": 42717,
+        "fails": 4512
+      }
+    }
+  },
+  "setup_data": {
+    "baseUrl": "https://copy-of-arahin-staging.up.railway.app/api/v1"
+  }
+}

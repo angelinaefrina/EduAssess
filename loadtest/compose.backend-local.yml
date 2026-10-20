@@ -1,0 +1,30 @@
+# Override untuk docker-compose.yml di root: arahkan 2 node backend ke Supabase LOKAL.
+# Dari root repo:
+#   docker compose -f docker-compose.yml -f loadtest/compose.backend-local.yml \
+#     --env-file loadtest/.env up -d --build backend-node-1 backend-node-2 load-balancer
+#
+# Backend digabungkan ke network Docker milik Supabase CLI dan memanggil Kong langsung
+# (container-ke-container). Jangan lewat host.docker.internal:54321: di Docker Desktop
+# Windows jalur via host sesekali membekukan koneksi saat beban tinggi (request macet 30 dtk).
+# Nama network = supabase_network_<project_id di supabase/config.toml>.
+x-backend-loadtest: &backend-loadtest
+  environment:
+    SUPABASE_URL: ${LT_BACKEND_SUPABASE_URL:-http://supabase_kong_IvanaMager_JOINTS:8000}
+    SUPABASE_SERVICE_ROLE_KEY: ${SUPABASE_SERVICE_ROLE_KEY:?isi SUPABASE_SERVICE_ROLE_KEY di loadtest/.env}
+    NODE_ENV: production
+    # Jangan memanggil Claude API saat load test
+    LLM_PROVIDER: mock
+  networks:
+    - arahin-network
+    - supabase
+  extra_hosts:
+    - "host.docker.internal:host-gateway"
+
+services:
+  backend-node-1: *backend-loadtest
+  backend-node-2: *backend-loadtest
+
+networks:
+  supabase:
+    name: supabase_network_IvanaMager_JOINTS
+    external: true

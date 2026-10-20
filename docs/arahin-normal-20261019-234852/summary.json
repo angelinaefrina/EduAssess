@@ -1,0 +1,563 @@
+{
+  "root_group": {
+    "groups": [
+      {
+        "id": "d8b4430ced512fcfb43f8ef6350715d4",
+        "groups": [],
+        "checks": [
+            {
+              "name": "GET /me -> 200",
+              "path": "::beranda::GET /me -> 200",
+              "id": "f95ed81e64c9573725f5af5bdcc9fb99",
+              "passes": 1154,
+              "fails": 0
+            },
+            {
+              "path": "::beranda::GET /siswa/me -> 200",
+              "id": "d8d5fc860b6d10a12001fb0c46d88be1",
+              "passes": 1154,
+              "fails": 0,
+              "name": "GET /siswa/me -> 200"
+            },
+            {
+              "path": "::beranda::GET /siswa/me/asesmen/terakhir -> 200",
+              "id": "125732aac6c128421ad8fa80b4d02b3f",
+              "passes": 1154,
+              "fails": 0,
+              "name": "GET /siswa/me/asesmen/terakhir -> 200"
+            }
+          ],
+        "name": "beranda",
+        "path": "::beranda"
+      },
+      {
+        "path": "::tes-minat",
+        "id": "04e2f50fd10857d45de2b0f940050767",
+        "groups": [],
+        "checks": [
+            {
+              "name": "GET /asesmen/instrumen -> 200",
+              "path": "::tes-minat::GET /asesmen/instrumen -> 200",
+              "id": "dbfc424dc2ff97a94b67d126392f5e8b",
+              "passes": 1154,
+              "fails": 0
+            },
+            {
+              "id": "8ee4ca0dcbfec57ec9f279d3329979ce",
+              "passes": 346,
+              "fails": 1,
+              "name": "POST /siswa/me/asesmen -> 201",
+              "path": "::tes-minat::POST /siswa/me/asesmen -> 201"
+            }
+          ],
+        "name": "tes-minat"
+      },
+      {
+        "name": "rekomendasi",
+        "path": "::rekomendasi",
+        "id": "79a699dc0c8383fa946e256b666fe16e",
+        "groups": [],
+        "checks": [
+            {
+              "name": "GET /siswa/me/rekomendasi/prodi -> 200",
+              "path": "::rekomendasi::GET /siswa/me/rekomendasi/prodi -> 200",
+              "id": "9ddd25233cd36b5b675cc531d0bfd2da",
+              "passes": 1153,
+              "fails": 0
+            },
+            {
+              "name": "GET /siswa/me/rekomendasi/jenjang -> 200",
+              "path": "::rekomendasi::GET /siswa/me/rekomendasi/jenjang -> 200",
+              "id": "a7d06387581112e1cfe38df6acee4d82",
+              "passes": 1153,
+              "fails": 0
+            }
+          ]
+      },
+      {
+        "name": "katalog",
+        "path": "::katalog",
+        "id": "53c0af664df3d4a91b53eaa487cca07e",
+        "groups": [],
+        "checks": [
+            {
+              "path": "::katalog::GET /katalog/prodi -> 200",
+              "id": "6fc080bb5230deb584854670cd2ccf63",
+              "passes": 1151,
+              "fails": 0,
+              "name": "GET /katalog/prodi -> 200"
+            },
+            {
+              "path": "::katalog::GET /master/mapel -> 200",
+              "id": "8f6caf1f24e1cd917b022c4ddff74763",
+              "passes": 1151,
+              "fails": 0,
+              "name": "GET /master/mapel -> 200"
+            }
+          ]
+      }
+    ],
+    "checks": [],
+    "name": "",
+    "path": "",
+    "id": "d41d8cd98f00b204e9800998ecf8427e"
+  },
+  "options": {
+    "summaryTrendStats": [
+      "avg",
+      "min",
+      "med",
+      "p(90)",
+      "p(95)",
+      "p(99)",
+      "max"
+    ],
+    "summaryTimeUnit": "",
+    "noColor": false
+  },
+  "state": {
+    "isStdOutTTY": true,
+    "isStdErrTTY": true,
+    "testRunDurationMs": 513856.898269
+  },
+  "metrics": {
+    "iteration_duration": {
+      "contains": "time",
+      "values": {
+        "avg": 15825.629714376968,
+        "min": 9308.590594,
+        "med": 13940.5030605,
+        "p(90)": 21922.857336,
+        "p(95)": 27296.86131675,
+        "p(99)": 32864.31888429999,
+        "max": 37712.773162
+      },
+      "type": "trend"
+    },
+    "http_req_duration{phase:load,name:GET /me}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 707.6152069456427,
+        "min": 123.973983,
+        "med": 210.33617,
+        "p(90)": 541.9292358,
+        "p(95)": 1718.738512199997,
+        "p(99)": 15268.74551082,
+        "max": 16699.295713
+      },
+      "thresholds": {
+        "p(95)>=0": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_duration{phase:load,name:GET /siswa/me/rekomendasi/jenjang}": {
+      "contains": "time",
+      "values": {
+        "p(95)": 596.2948081999996,
+        "p(99)": 1728.7467935399595,
+        "max": 7666.158489,
+        "avg": 289.5720892849111,
+        "min": 125.675849,
+        "med": 190.741867,
+        "p(90)": 415.1894152
+      },
+      "thresholds": {
+        "p(95)>=0": {
+          "ok": true
+        }
+      },
+      "type": "trend"
+    },
+    "http_req_failed{phase:load}": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "fails": 8856,
+        "rate": 0.00011290504685559444,
+        "passes": 1
+      },
+      "thresholds": {
+        "rate<0.01": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_duration{phase:load,name:GET /katalog/prodi}": {
+      "thresholds": {
+        "p(95)>=0": {
+          "ok": true
+        }
+      },
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 17019.235959,
+        "avg": 570.2761112671049,
+        "min": 137.14916,
+        "med": 215.173018,
+        "p(90)": 522.607186,
+        "p(95)": 1307.954981499998,
+        "p(99)": 10242.669157199982
+      }
+    },
+    "http_req_receiving": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 2.6049132104053663,
+        "min": 0.016137,
+        "med": 0.1579785,
+        "p(90)": 3.2434644999999986,
+        "p(95)": 8.243022299999941,
+        "p(99)": 45.31520416999908,
+        "max": 1166.016989
+      }
+    },
+    "http_req_duration{phase:load,name:POST /siswa/me/asesmen}": {
+      "values": {
+        "p(95)": 3314.300813,
+        "p(99)": 16100.265107600002,
+        "max": 19409.900483,
+        "avg": 1851.7127176355136,
+        "min": 845.941362,
+        "med": 1060.726216,
+        "p(90)": 2158.918983
+      },
+      "thresholds": {
+        "p(95)>=0": {
+          "ok": true
+        }
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "http_req_failed": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "passes": 1,
+        "fails": 9571,
+        "rate": 0.00010447137484329294
+      }
+    },
+    "http_req_duration{phase:load,name:GET /master/mapel}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 309.4123606944704,
+        "min": 132.433248,
+        "med": 195.59968,
+        "p(90)": 423.5072988,
+        "p(95)": 668.701624199999,
+        "p(99)": 2792.6870930799187,
+        "max": 7755.987906
+      },
+      "thresholds": {
+        "p(95)>=0": {
+          "ok": true
+        }
+      }
+    },
+    "iterations": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 1146,
+        "rate": 2.2301928880598156
+      }
+    },
+    "http_req_waiting": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(99)": 5882.341714709974,
+        "max": 19409.630513,
+        "avg": 485.4604083210405,
+        "min": 122.593434,
+        "med": 241.534614,
+        "p(90)": 672.8211806999998,
+        "p(95)": 1093.5607365499995
+      }
+    },
+    "http_req_duration{phase:load}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "med": 242.237317,
+        "p(90)": 684.1414990000004,
+        "p(95)": 1103.29829,
+        "p(99)": 6365.306887400094,
+        "max": 19409.900483,
+        "avg": 497.7670737236069,
+        "min": 123.792741
+      },
+      "thresholds": {
+        "p(95)<1000": {
+          "ok": false
+        },
+        "p(99)<2000": {
+          "ok": false
+        }
+      }
+    },
+    "checks{phase:load}": {
+      "contains": "default",
+      "values": {
+        "rate": 0.9998870949531444,
+        "passes": 8856,
+        "fails": 1
+      },
+      "thresholds": {
+        "rate>=0": {
+          "ok": true
+        }
+      },
+      "type": "rate"
+    },
+    "checks": {
+      "type": "rate",
+      "contains": "default",
+      "values": {
+        "rate": 0.9998955177097482,
+        "passes": 9570,
+        "fails": 1
+      }
+    },
+    "http_req_duration{phase:load,name:GET /siswa/me}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(99)": 3804.4666702199975,
+        "max": 17269.314664,
+        "avg": 413.53295260731056,
+        "min": 151.429934,
+        "med": 245.949622,
+        "p(90)": 596.0793101999999,
+        "p(95)": 889.8194867999996
+      },
+      "thresholds": {
+        "p(95)>=0": {
+          "ok": true
+        }
+      }
+    },
+    "http_req_tls_handshaking": {
+      "contains": "time",
+      "values": {
+        "p(90)": 0,
+        "p(95)": 0,
+        "p(99)": 0,
+        "max": 201.727291,
+        "avg": 0.41960952444630173,
+        "min": 0,
+        "med": 0
+      },
+      "type": "trend"
+    },
+    "http_req_duration{phase:load,name:GET /siswa/me/rekomendasi/prodi}": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(95)": 832.2698464999997,
+        "p(99)": 5259.97269051999,
+        "max": 16549.457727,
+        "avg": 425.15651229334577,
+        "min": 150.937624,
+        "med": 235.489864,
+        "p(90)": 513.2762225999999
+      },
+      "thresholds": {
+        "p(95)>=0": {
+          "ok": true
+        }
+      }
+    },
+    "group_duration": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "p(90)": 3433.527561,
+        "p(95)": 6121.8077515,
+        "p(99)": 15266.212239199976,
+        "max": 22523.411852,
+        "avg": 1304.4301138726964,
+        "min": 124.139468,
+        "med": 532.210972
+      }
+    },
+    "http_req_sending": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 0.18356607407020525,
+        "min": 0.022275,
+        "med": 0.1576215,
+        "p(90)": 0.3017988,
+        "p(95)": 0.3445084499999996,
+        "p(99)": 0.46792737999999856,
+        "max": 7.85411
+      }
+    },
+    "asesmen_submitted": {
+      "type": "counter",
+      "contains": "default",
+      "values": {
+        "count": 346,
+        "rate": 0.67333921402155
+      }
+    },
+    "http_req_duration{phase:load,name:GET /siswa/me/asesmen/terakhir}": {
+      "values": {
+        "med": 300.345198,
+        "p(90)": 569.6918948,
+        "p(95)": 816.3633345999996,
+        "p(99)": 1663.0327623199921,
+        "max": 5506.69555,
+        "avg": 392.34655752202457,
+        "min": 131.018543
+      },
+      "thresholds": {
+        "p(95)>=0": {
+          "ok": true
+        }
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "data_sent": {
+      "type": "counter",
+      "contains": "data",
+      "values": {
+        "count": 785334,
+        "rate": 1528.3126540589592
+      }
+    },
+    "vus": {
+      "contains": "default",
+      "values": {
+        "value": 1,
+        "min": 1,
+        "max": 50
+      },
+      "type": "gauge"
+    },
+    "vus_max": {
+      "type": "gauge",
+      "contains": "default",
+      "values": {
+        "value": 50,
+        "min": 50,
+        "max": 50
+      }
+    },
+    "http_reqs": {
+      "values": {
+        "count": 9572,
+        "rate": 18.62775420986785
+      },
+      "type": "counter",
+      "contains": "default"
+    },
+    "http_req_connecting": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 156.418199,
+        "avg": 0.3105377100919349,
+        "min": 0,
+        "med": 0,
+        "p(90)": 0,
+        "p(95)": 0,
+        "p(99)": 0
+      }
+    },
+    "http_req_blocked": {
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "avg": 0.8043968609486049,
+        "min": 0.000154,
+        "med": 0.000847,
+        "p(90)": 0.0014588999999999997,
+        "p(95)": 0.001598899999999998,
+        "p(99)": 0.002157319999999992,
+        "max": 793.939948
+      }
+    },
+    "http_req_duration": {
+      "values": {
+        "min": 123.792741,
+        "med": 243.397288,
+        "p(90)": 678.8701969,
+        "p(95)": 1094.6760929499987,
+        "p(99)": 5882.811951089975,
+        "max": 19409.900483,
+        "avg": 488.2488876055137
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "data_received": {
+      "type": "counter",
+      "contains": "data",
+      "values": {
+        "rate": 30327.07754337087,
+        "count": 15583778
+      }
+    },
+    "http_req_duration{expected_response:true}": {
+      "values": {
+        "med": 243.393117,
+        "p(90)": 678.720508,
+        "p(95)": 1093.9387975,
+        "p(99)": 5794.460464899917,
+        "max": 19409.900483,
+        "avg": 486.63625366325107,
+        "min": 123.792741
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "http_req_duration{phase:load,name:GET /asesmen/instrumen}": {
+      "values": {
+        "avg": 466.89907124929636,
+        "min": 123.792741,
+        "med": 208.910162,
+        "p(90)": 453.42651579999995,
+        "p(95)": 871.7720484999986,
+        "p(99)": 7220.419738159696,
+        "max": 16788.965183
+      },
+      "thresholds": {
+        "p(95)>=0": {
+          "ok": true
+        }
+      },
+      "type": "trend",
+      "contains": "time"
+    },
+    "http_req_waiting{phase:load}": {
+      "thresholds": {
+        "p(95)>=0": {
+          "ok": true
+        }
+      },
+      "type": "trend",
+      "contains": "time",
+      "values": {
+        "max": 19409.630513,
+        "avg": 494.9814705381062,
+        "min": 122.593434,
+        "med": 239.867444,
+        "p(90)": 678.3736926,
+        "p(95)": 1102.6665282,
+        "p(99)": 6363.729304360095
+      }
+    }
+  },
+  "setup_data": {
+    "baseUrl": "https://copy-of-arahin-staging.up.railway.app/api/v1"
+  }
+}

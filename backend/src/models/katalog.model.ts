@@ -2,6 +2,7 @@ import { supabase } from '../config/supabase';
 import { throwIfSupabaseError } from '../middleware/errorHandler';
 import type { Database } from '../../types/database';
 import { polaMengandung } from './like';
+import { memo } from './memo';
 
 type JenisPendidikan = Database['public']['Enums']['jenis_pendidikan'];
 
@@ -11,13 +12,13 @@ export interface Halaman {
 }
 
 export const KatalogModel = {
-  async listBidangStudi() {
+  listBidangStudi: memo(async () => {
     const { data, error } = await supabase.from('bidang_studi').select('id, kode, nama, deskripsi').order('id');
     throwIfSupabaseError(error);
     return data ?? [];
-  },
+  }),
 
-  async listProdi(filter: { q?: string; bidangStudi?: string; jenis?: JenisPendidikan }, hal: Halaman) {
+  listProdi: memo(async (filter: { q?: string; bidangStudi?: string; jenis?: JenisPendidikan }, hal: Halaman) => {
     let q = supabase
       .from('prodi')
       .select('id, nama, kode_riasec, jenis_pendidikan, sumber_url, catatan_sumber, bidang_studi!inner(id, kode, nama)', {
@@ -29,7 +30,7 @@ export const KatalogModel = {
     const { data, error, count } = await q.order('nama').range(hal.offset, hal.offset + hal.limit - 1);
     throwIfSupabaseError(error);
     return { items: data ?? [], total: count ?? 0 };
-  },
+  }),
 
   async findProdi(id: string) {
     const { data, error } = await supabase
@@ -47,7 +48,7 @@ export const KatalogModel = {
     return data;
   },
 
-  async listKarir(filter: { q?: string; bidangKarir?: string; trending?: boolean }, hal: Halaman) {
+  listKarir: memo(async (filter: { q?: string; bidangKarir?: string; trending?: boolean }, hal: Halaman) => {
     // karir.bidang_karir_id boleh null: inner join hanya saat memfilter bidang karir.
     const kolom = filter.bidangKarir
       ? 'id, nama, kode_riasec, is_trending, catatan_sumber, bidang_karir!inner(id, kode, nama)'
@@ -62,7 +63,7 @@ export const KatalogModel = {
       .range(hal.offset, hal.offset + hal.limit - 1);
     throwIfSupabaseError(error);
     return { items: data ?? [], total: count ?? 0 };
-  },
+  }),
 
   async findKarir(id: string) {
     const { data, error } = await supabase

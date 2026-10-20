@@ -1,22 +1,23 @@
 import { supabase } from '../config/supabase';
 import { throwIfSupabaseError } from '../middleware/errorHandler';
 import { polaMengandung } from './like';
+import { memo } from './memo';
 
 export const MasterModel = {
-  async listMapel() {
+  listMapel: memo(async () => {
     const { data, error } = await supabase
       .from('mapel')
       .select('id, kode, nama, is_pilihan, kelompok')
       .order('id');
     throwIfSupabaseError(error);
     return data ?? [];
-  },
+  }),
 
-  async listBidangKarir() {
+  listBidangKarir: memo(async () => {
     const { data, error } = await supabase.from('bidang_karir').select('id, kode, nama').order('id');
     throwIfSupabaseError(error);
     return data ?? [];
-  },
+  }),
 
   async cariKarir(q: string | undefined, limit: number) {
     let query = supabase.from('karir').select('id, nama, bidang_karir_id, is_trending');

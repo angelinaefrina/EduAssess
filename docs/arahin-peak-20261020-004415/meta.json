@@ -1,0 +1,9 @@
+{
+  "testid": "arahin-peak-20261020-004415",
+  "level": "peak",
+  "started_at": "2026-10-19T17:44:15.825Z",
+  "finished_at": "2026-10-19T17:53:34.801Z",
+  "k6_exit_code": 99,
+  "status": "selesai/dihentikan, ada threshold yang dilanggar (lihat report.md)",
+  "grafana": "http://localhost:3001/d/arahin-k6/arahin-k6-load-test?var-testid=arahin-peak-20261020-004415&var-phase=load&from=1792431825825&to=1792432444801"
+}

@@ -1,0 +1,93 @@
+# ==============================================================================
+# Stack observability untuk load test ArahIn: Prometheus + Grafana + k6.
+#
+#   docker compose up -d                 -> nyalakan Prometheus, Grafana, renderer
+#   npm run level:normal (dst.)          -> k6 dijalankan lewat `docker compose run k6`
+#
+# Grafana : http://localhost:3001  (admin / GRAFANA_ADMIN_PASSWORD, default admin)
+# Prometheus: http://localhost:9090
+# k6 web dashboard (live, hanya saat tes jalan): http://localhost:5665
+# ==============================================================================
+name: arahin-loadtest
+
+services:
+  prometheus:
+    image: prom/prometheus:v2.55.1
+    container_name: arahin-lt-prometheus
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --storage.tsdb.retention.time=7d
+      # k6 mengirim metrik lewat remote write (bukan di-scrape)
+      - --web.enable-remote-write-receiver
+      # p95/p99 per jendela waktu dihitung dari native histogram k6
+      - --enable-feature=native-histograms
+      # dibutuhkan untuk menghapus data metrik setelah tes (delete_series)
+      - --web.enable-admin-api
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    ports:
+      - "9090:9090"
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:11.3.0
+    container_name: arahin-lt-grafana
+    depends_on:
+      - prometheus
+      - renderer
+    environment:
+      GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER:-admin}
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:-admin}
+      GF_AUTH_ANONYMOUS_ENABLED: "true"
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
+      GF_DATE_FORMATS_DEFAULT_TIMEZONE: Asia/Jakarta
+      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /var/lib/grafana/dashboards/arahin-k6.json
+      # Render PNG dashboard otomatis (pengganti screenshot manual)
+      GF_RENDERING_SERVER_URL: http://renderer:8081/render
+      GF_RENDERING_CALLBACK_URL: http://grafana:3000/
+      GF_LOG_FILTERS: rendering:debug
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+      - grafana-data:/var/lib/grafana
+    ports:
+      - "3001:3000"
+    restart: unless-stopped
+
+  renderer:
+    image: grafana/grafana-image-renderer:3.11.0
+    container_name: arahin-lt-renderer
+    environment:
+      ENABLE_METRICS: "false"
+      RENDERING_MODE: default
+    restart: unless-stopped
+
+  # Tidak ikut `up`; dipanggil oleh scripts/run-level.mjs lewat `docker compose run`.
+  k6:
+    image: grafana/k6:1.0.0
+    profiles: ["k6"]
+    # root agar bisa menulis ke bind mount ./results di Linux (uid image k6 = 12345)
+    user: root
+    depends_on:
+      - prometheus
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      K6_PROMETHEUS_RW_SERVER_URL: http://prometheus:9090/api/v1/write
+      K6_PROMETHEUS_RW_TREND_AS_NATIVE_HISTOGRAM: "true"
+      K6_PROMETHEUS_RW_PUSH_INTERVAL: 5s
+      K6_WEB_DASHBOARD: "true"
+      K6_WEB_DASHBOARD_PORT: "5665"
+      K6_WEB_DASHBOARD_PERIOD: 5s
+    volumes:
+      - ./k6:/scripts:ro
+      - ./.data:/data:ro
+      - ./results:/results
+    ports:
+      - "5665:5665"
+
+volumes:
+  prometheus-data:
+  grafana-data:

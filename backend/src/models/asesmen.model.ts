@@ -1,8 +1,9 @@
 import { supabase } from '../config/supabase';
 import { throwIfSupabaseError } from '../middleware/errorHandler';
+import { memo } from './memo';
 
 export const AsesmenModel = {
-  async listButirAktif() {
+  listButirAktif: memo(async () => {
     const { data, error } = await supabase
       .from('riasec_butir')
       .select('id, tipe, pernyataan, urutan')
@@ -10,16 +11,16 @@ export const AsesmenModel = {
       .order('urutan');
     throwIfSupabaseError(error);
     return data ?? [];
-  },
+  }),
 
-  async listDimensi() {
+  listDimensi: memo(async () => {
     const { data, error } = await supabase
       .from('dimensi_kemampuan')
       .select('id, kode, pernyataan, urutan')
       .order('urutan');
     throwIfSupabaseError(error);
     return data ?? [];
-  },
+  }),
 
   async insertSiswa(siswaId: string, semester: number | null) {
     const { data, error } = await supabase
@@ -36,13 +37,12 @@ export const AsesmenModel = {
     riasec: { butir_id: number; skor: number }[],
     kemampuan: { dimensi_id: number; skor: number }[],
   ) {
-    const r = await supabase
-      .from('asesmen_riasec')
-      .insert(riasec.map((j) => ({ asesmen_id: asesmenId, ...j })));
+    // Dua tabel independen: kirim bersamaan (1 round-trip, bukan 2).
+    const [r, k] = await Promise.all([
+      supabase.from('asesmen_riasec').insert(riasec.map((j) => ({ asesmen_id: asesmenId, ...j }))),
+      supabase.from('asesmen_kemampuan').insert(kemampuan.map((j) => ({ asesmen_id: asesmenId, ...j }))),
+    ]);
     throwIfSupabaseError(r.error);
-    const k = await supabase
-      .from('asesmen_kemampuan')
-      .insert(kemampuan.map((j) => ({ asesmen_id: asesmenId, ...j })));
     throwIfSupabaseError(k.error);
   },
 

@@ -1,0 +1,14 @@
+apiVersion: 1
+
+datasources:
+  - name: Prometheus
+    uid: prometheus-k6
+    type: prometheus
+    access: proxy
+    url: http://prometheus:9090
+    isDefault: true
+    editable: false
+    jsonData:
+      # Sama dengan K6_PROMETHEUS_RW_PUSH_INTERVAL, supaya $__rate_interval pas.
+      timeInterval: 5s
+      httpMethod: POST

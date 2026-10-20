@@ -1,0 +1,5 @@
+.env
+# Token akses & daftar akun dummy
+.data/
+# Hasil tes (PNG/HTML besar). Salin yang dibutuhkan ke docs/ bila ingin di-commit.
+results/

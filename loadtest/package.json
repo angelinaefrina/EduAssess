@@ -1,0 +1,23 @@
+{
+  "name": "arahin-loadtest",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Load test ArahIn: k6 + Prometheus + Grafana",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "stack:up": "docker compose up -d",
+    "stack:down": "docker compose down",
+    "stack:purge": "docker compose down -v",
+    "seed": "node scripts/seed.mjs",
+    "tokens": "node scripts/tokens.mjs",
+    "level:normal": "node scripts/run-level.mjs normal",
+    "level:peak": "node scripts/run-level.mjs peak",
+    "level:stress": "node scripts/run-level.mjs stress",
+    "cleanup:data": "node scripts/cleanup-data.mjs",
+    "teardown": "node scripts/teardown.mjs",
+    "all": "node scripts/run-all.mjs"
+  }
+}
